@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="loop-engineering">
+  <title>Modulo 3.1 — Loop Basico com Claude Code | Loop Engineering</title>
+
+  <!-- Anti-FOUC (PRIMEIRO no head, antes de tudo) -->
+  <script>
+  (function(){try{var h=document.documentElement,D={theme:'inema-dark',font:'inter',fontScale:100,lineWidth:68,leading:1.7,accent:'emerald'};function c(o){var r={};for(var x in o)r[x]=o[x];return r}var p=c(D);try{var raw=localStorage.getItem('inema.prefs');if(raw){var j=JSON.parse(raw);if(j&&typeof j==='object')for(var k in D)if(j[k]!=null)p[k]=j[k]}else{var l=localStorage.getItem('theme');if(l==='light')p.theme='claro';else if(l==='dark')p.theme='inema-dark'}}catch(e){p=c(D)}var T={'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'}};var t=T[p.theme]||T['inema-dark'];if(t.dark===true)h.classList.add('dark');else if(t.dark===false)h.classList.remove('dark');if(t.attr)h.setAttribute('data-theme',t.attr);else h.removeAttribute('data-theme');h.style.colorScheme=t.cs?t.cs:(h.classList.contains('dark')?'dark':'light');h.setAttribute('data-font',p.font||'inter');h.setAttribute('data-accent',p.accent||'emerald');var s=h.style,sc=+p.fontScale||100;s.setProperty('--inema-font-scale',(sc/100).toString());s.setProperty('font-size',sc+'%');s.setProperty('--measure',(+p.lineWidth||68)+'ch');s.setProperty('--lh-body',(+p.leading||1.7).toString());var fam=p.font==='system'?'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif':p.font==='leitura'?'"Atkinson Hyperlegible","Inter",system-ui,sans-serif':'"Inter",system-ui,sans-serif';s.setProperty('--font-body',fam);var A={emerald:[152,76,45],blue:[217,91,60],purple:[258,90,66],amber:[38,92,50],teal:[174,72,41],rose:[350,89,60]};var a=A[p.accent]||A.emerald;s.setProperty('--accent-h',a[0]+'');s.setProperty('--accent-s',a[1]+'%');s.setProperty('--accent-l',a[2]+'%');s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)')}catch(err){try{document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}catch(e){}}})();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/learn.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Manifesto do curso (OBRIGATORIO em toda pagina) -->
+  <script type="application/json" data-inema-manifest>
+  {
+    "course": "loop-engineering",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "O Que E Loop Engineering", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "Os Blocos Fundamentais", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Arquitetura Orchestrator-Workers", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" }
+      ]},
+      { "n": "2", "title": "Vantagens vs Desvantagens", "modules": [
+        { "id": "2-1", "title": "Vantagens Reais", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Desvantagens e Riscos", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Quando Usar e Quando Nao Usar", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" }
+      ]},
+      { "n": "3", "title": "Implementacao Tecnica", "modules": [
+        { "id": "3-1", "title": "Loop Basico com Claude Code", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Workflows Deterministicos com Archon", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Dashboard de Controle", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Otimizacao de Custos", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" }
+      ]},
+      { "n": "4", "title": "Exemplos Praticos e Prompts", "modules": [
+        { "id": "4-1", "title": "Loop Simples: Task Runner", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "Loop Intermediario: GitHub Issue Bot", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Loop Avancado: Orchestrator Multi-Agent", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Anti-Patterns e Troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" }
+      ]}
+    ]
+  }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple T3) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(124, 58, 237, 0.10); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG light mode */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* SVG pulse animation */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s}
+    }
+
+    /* Scroll margin for sticky nav */
+    [id^="topico-"] { scroll-margin-top: 4rem; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🔁</span>
+            <span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span><span class="hidden sm:inline">Trade-offs</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="sm:hidden">T3</span><span class="hidden sm:inline">Implementacao</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span><span class="hidden sm:inline">Pratica</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a>
+      <span>/</span>
+      <span class="text-purple-400">Modulo 3.1</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULO 3.1</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔄 Loop Basico com Claude Code</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">O ponto de partida tecnico: como configurar /loop, /goal e /routines no Claude Code, criar um plan.md e deixar o agente trabalhar sozinho, com wake-up automatico entre ciclos.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">35</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Hands-on</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="3-1" data-inema-track="3">
+
+    <!-- SVG FUTURISTA: Loop cycle diagram -->
+    <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+      <svg viewBox="0 0 1000 280" class="w-full h-auto" role="img" aria-label="Ciclo de loop basico: plan.md alimenta Claude Code que executa tarefas, valida, e reinicia o loop via wake-up automatico">
+        <defs>
+          <linearGradient id="m31-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/>
+          </linearGradient>
+          <filter id="m31-glow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <pattern id="m31-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+            <circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.12"/>
+          </pattern>
+          <marker id="m31-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"/></marker>
+          <marker id="m31-ahc" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"/></marker>
+        </defs>
+        <rect x="0" y="0" width="1000" height="280" fill="url(#m31-grid)"/>
+
+        <!-- plan.md box -->
+        <g filter="url(#m31-glow)">
+          <rect x="40" y="100" width="160" height="80" rx="14" fill="#1a1230" stroke="url(#m31-grad)" stroke-width="2.5"/>
+        </g>
+        <text x="120" y="132" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-weight="600" font-size="18">plan.md</text>
+        <text x="120" y="155" text-anchor="middle" fill="#d4b8ff" font-family="Inter,sans-serif" font-size="12">lista de tarefas</text>
+
+        <!-- Arrow plan -> claude -->
+        <path d="M200,140 L290,140" fill="none" stroke="#c084fc" stroke-width="2" opacity="0.65" marker-end="url(#m31-ah)"/>
+
+        <!-- Claude Code box -->
+        <rect x="300" y="85" width="180" height="110" rx="14" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/>
+        <text x="390" y="118" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-weight="600" font-size="17">Claude Code</text>
+        <text x="390" y="140" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12">/loop skill</text>
+        <text x="390" y="158" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12">executa + valida</text>
+        <text x="390" y="176" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12">marca ✓ no plan</text>
+
+        <!-- Arrow claude -> task done -->
+        <path d="M480,140 L580,140" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.55" marker-end="url(#m31-ahc)"/>
+
+        <!-- Task done box -->
+        <rect x="590" y="100" width="160" height="80" rx="14" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/>
+        <text x="670" y="132" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-weight="600" font-size="16">Tarefa N ✓</text>
+        <text x="670" y="155" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12">validacao ok</text>
+
+        <!-- Arrow task -> wake-up -->
+        <path d="M750,140 L840,140" fill="none" stroke="#c084fc" stroke-width="2" opacity="0.65" marker-end="url(#m31-ah)"/>
+
+        <!-- Wake-up box -->
+        <rect x="850" y="100" width="120" height="80" rx="14" fill="#1a1230" stroke="#c084fc" stroke-width="2"/>
+        <text x="910" y="130" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-weight="600" font-size="14">/loop</text>
+        <text x="910" y="150" text-anchor="middle" fill="#d4b8ff" font-family="Inter,sans-serif" font-size="12">wake-up</text>
+        <text x="910" y="167" text-anchor="middle" fill="#d4b8ff" font-family="Inter,sans-serif" font-size="11">proximo ciclo</text>
+
+        <!-- Loop back arrow (curved, bottom) -->
+        <path d="M910,180 C910,250 120,250 120,180" fill="none" stroke="#c084fc" stroke-width="1.8" opacity="0.45" stroke-dasharray="9 6" marker-end="url(#m31-ah)"/>
+        <text x="500" y="248" text-anchor="middle" fill="#d4b8ff" font-family="Inter,sans-serif" font-size="12" opacity="0.7">proximo ciclo ate todas as tarefas estarem completas</text>
+
+        <!-- Labels -->
+        <text x="245" y="128" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-size="11" opacity="0.7">input</text>
+        <text x="535" y="128" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" opacity="0.7">output</text>
+      </svg>
+    </div>
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" data-inema-topic="modulo-3-1#topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">⚡ Os Tres Comandos Fundamentais</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t1-p1">
+        Antes de montar qualquer sistema de loop, voce precisa entender os tres primitivos que o Claude Code oferece nativamente. Eles sao os tijolos de qualquer automacao ciclica. Como Cole Medin coloca: <strong class="text-purple-400">"Loop engineering is really not that complicated. I don't even know if it deserves its own term."</strong>
+      </p>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">🧱</span> Os Tres Primitivos
+        </h3>
+        <div class="space-y-4">
+          <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2"><code class="text-purple-400">/loop</code> - Intervalo de execucao</h4>
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-t1-p2">Define um intervalo (ex: cada 5 minutos) para o agente acordar e executar um prompt. O uso mais comum: monitorar algo externo (GitHub issues, fila de tarefas) e agir quando ha trabalho.</p>
+            <p class="text-neutral-400 text-xs mt-2 italic">"Every five minutes, I'm going to check for new GitHub issues in this repo and handle any that come in." - Cole Medin</p>
+          </div>
+          <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2"><code class="text-purple-400">/goal</code> - Criterio de conclusao</h4>
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-t1-p3">Voce define o que "pronto" significa. O agente trabalha ate satisfazer o criterio, sem intervalo fixo. Parecido com o conceito de Ralph loops que viralizou: trabalhe ate estar feito.</p>
+          </div>
+          <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2"><code class="text-purple-400">/routines</code> - Jobs agendados</h4>
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-t1-p4">Jobs agendados recorrentes. Ex: "A cada hora, acorde, leia o spec document e execute a proxima tarefa pendente." E o cron do mundo dos agentes.</p>
+            <p class="text-neutral-400 text-xs mt-2 italic">"Every hour, I want you to wake up, look at some larger spec document, and then handle the next task." - Cole Medin</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300" data-inema-block="m3-1-t1-p5">Na maioria dos casos, voce so precisa do <code>/loop</code> com um plan.md. Os outros dois sao ferramentas complementares. Nao complique se o problema e simples.</p>
+      </div>
+
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span>
+          <span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" data-inema-topic="modulo-3-1#topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📋 Criando o plan.md</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t2-p1">
+        O <strong class="text-purple-400">plan.md</strong> e o coracao de qualquer loop basico. E um arquivo Markdown simples com uma lista de tarefas. O agente le, executa a primeira tarefa nao-concluida, valida, marca como feita, e dorme ate o proximo ciclo. Cole Medin demonstrou isso ao vivo: <strong class="text-purple-400">"I just have this as an example. These are the tasks that we wanted to go through incrementally."</strong>
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+          <span class="mr-2">📄</span> Template de plan.md
+        </h3>
+        <pre class="bg-dark-900 rounded-lg p-4 text-sm font-mono text-neutral-300 overflow-x-auto"><code># Plano de Tarefas
+
+## Contexto
+Projeto: [nome do projeto]
+Objetivo: [o que queremos construir/fazer]
+Regras: uma tarefa por ciclo, validar antes de marcar
+
+## Tarefas
+
+- [ ] Tarefa 1: Criar estrutura base do projeto
+      Criterio: pasta criada, package.json init, deps instaladas
+- [ ] Tarefa 2: Implementar componente principal
+      Criterio: componente renderiza sem erros
+- [ ] Tarefa 3: Adicionar testes unitarios
+      Criterio: npm test passa com 0 falhas
+- [ ] Tarefa 4: Configurar linting e formatacao
+      Criterio: npm run lint sem warnings
+- [ ] Tarefa 5: Documentar API no README
+      Criterio: README com exemplos de uso
+
+## Notas
+- Nao pular tarefas
+- Se uma tarefa falhar, reportar o erro e parar
+- Cada tarefa deve ser auto-contida</code></pre>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Bom plan.md</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tarefas atomicas e independentes</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criterio de validacao explicito</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Contexto do projeto no topo</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Checkboxes Markdown para tracking</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ Plan.md problematico</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tarefas vagas ("melhorar o codigo")</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sem criterio de "pronto"</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tarefas interdependentes demais</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>10+ tarefas num unico plan</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-3">🤔 Ponto de Reflexao</h3>
+        <p class="text-neutral-300" data-inema-block="m3-1-t2-p2">O plan.md e essencialmente um contrato entre voce e o agente. Quanto mais explicito o criterio de validacao, menos chance do agente "achar" que terminou quando nao terminou. Pergunte-se: se eu der esse plan para um estagiario, ele saberia quando cada tarefa esta feita?</p>
+      </div>
+
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span>
+          <span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" data-inema-topic="modulo-3-1#topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🚀 O Prompt que Monta o Loop Sozinho</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t3-p1">
+        A parte mais elegante do sistema: voce nao precisa configurar o loop manualmente. Voce pede ao Claude Code para <strong class="text-purple-400">carregar a loop skill</strong> e ele configura o ciclo por conta propria. Cole Medin mostrou exatamente isso: <strong class="text-purple-400">"You just tell it to use the loop skill. So there's a capability built right into the tool where it knows how to set up these loop systems based on what we ask it to do."</strong>
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+          <span class="mr-2">📦</span> Prompt Pack: Setup do Loop
+        </h3>
+        <p class="text-neutral-400 text-sm mb-4">Copie e cole diretamente no Claude Code. O agente vai configurar tudo sozinho.</p>
+
+        <div class="space-y-4">
+          <div class="bg-dark-900 rounded-lg p-4 border border-purple-500/20">
+            <p class="text-xs text-purple-400 font-semibold mb-2">PROMPT 1 - Setup basico</p>
+            <pre class="text-sm font-mono text-neutral-300 whitespace-pre-wrap"><code>Load the loop skill. Read plan.md in the project root.
+Work through the tasks one at a time. For each cycle:
+1. Find the first unchecked task
+2. Execute it completely
+3. Validate against the criteria listed
+4. Mark it as done with [x] in plan.md
+5. Schedule a quick wake-up for the next task
+
+If all tasks are complete, report back with a summary.</code></pre>
+          </div>
+
+          <div class="bg-dark-900 rounded-lg p-4 border border-purple-500/20">
+            <p class="text-xs text-purple-400 font-semibold mb-2">PROMPT 2 - Com intervalo definido</p>
+            <pre class="text-sm font-mono text-neutral-300 whitespace-pre-wrap"><code>/loop 5m
+
+Check plan.md. Execute the next unchecked task.
+Validate the result. Mark complete if validation passes.
+If validation fails, note the error in plan.md and move on.</code></pre>
+          </div>
+
+          <div class="bg-dark-900 rounded-lg p-4 border border-purple-500/20">
+            <p class="text-xs text-purple-400 font-semibold mb-2">PROMPT 3 - O que Cole Medin usou (simplificado)</p>
+            <pre class="text-sm font-mono text-neutral-300 whitespace-pre-wrap"><code>/loop work through plan.md one task at a time</code></pre>
+            <p class="text-neutral-400 text-xs mt-2 italic">"I didn't write this prompt myself at all... it wrote the prompt: /loop work through plan.md one task at a time." - Cole Medin</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Como funciona por dentro
+        </h3>
+        <p class="text-neutral-300 mb-3" data-inema-block="m3-1-t3-p2">Quando voce diz "load the loop skill", o Claude Code:</p>
+        <ol class="space-y-2 text-neutral-300 list-decimal list-inside">
+          <li>Reconhece que existe uma capability de loop interna</li>
+          <li>Le o plan.md para entender o escopo</li>
+          <li>Executa a primeira tarefa pendente</li>
+          <li>Valida o resultado</li>
+          <li>Configura o <code>/loop</code> wake-up automaticamente</li>
+          <li>Repete ate tudo estar marcado como feito</li>
+        </ol>
+      </div>
+
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span>
+          <span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" data-inema-topic="modulo-3-1#topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">👁️ Wake-Up Automatico e Monitoramento</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t4-p1">
+        O wake-up e o mecanismo que transforma uma execucao unica em um loop real. Depois de completar uma tarefa, o Claude Code agenda o proximo ciclo sozinho. <strong class="text-purple-400">"It sets up the /loop by itself. And if we scroll down after it does and validates the first task, we can see that it's resuming with a /loop wake up."</strong>
+      </p>
+
+      <!-- Timeline do ciclo -->
+      <div class="space-y-6 mb-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">1</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Leitura do plan.md</h4>
+            <p class="text-sm text-neutral-400 mb-2">Primeiro ciclo</p>
+            <p class="text-neutral-300 text-sm">O agente le o arquivo, identifica que e uma "sequential task list" e encontra a primeira tarefa nao-marcada.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">2</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Execucao + Validacao</h4>
+            <p class="text-sm text-neutral-400 mb-2">Trabalho real</p>
+            <p class="text-neutral-300 text-sm">Executa a tarefa, roda os testes ou verificacoes definidas no criterio, marca <code>[x]</code> no plan.md.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">3</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Wake-Up Automatico</h4>
+            <p class="text-sm text-neutral-400 mb-2">Continuidade</p>
+            <p class="text-neutral-300 text-sm">O agente agenda um <code>/loop</code> wake-up com o prompt que ele mesmo escreveu: <em class="text-purple-400">"work through plan.md one task at a time"</em>. No proximo ciclo, repete do passo 1.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <span class="text-purple-400 font-bold">4</span>
+          </div>
+          <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Conclusao</h4>
+            <p class="text-sm text-neutral-400 mb-2">Fim do loop</p>
+            <p class="text-neutral-300 text-sm">Quando todas as tarefas estao marcadas, o agente para de agendar wake-ups e reporta o resultado final.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">⚠️</span> Limitacao Importante
+        </h3>
+        <p class="text-neutral-300" data-inema-block="m3-1-t4-p2">O terminal precisa estar aberto durante todo o processo. Se voce fechar o terminal, o loop morre. Isso e diferente de um daemon ou servico em background. Cole Medin alerta: <strong class="text-red-400">"As long as our terminal is up and running with Claude Code, it's able to autonomously handle this."</strong> Isso significa: sem terminal, sem loop.</p>
+      </div>
+
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span>
+          <span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" data-inema-topic="modulo-3-1#topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔧 Contexto e Boas Praticas</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t5-p1">
+        O loop basico e simples, mas tem armadilhas que sabotam o resultado se voce nao tomar cuidado. A mais perigosa: <strong class="text-purple-400">context bloat</strong>. Num loop, tudo roda na mesma sessao. Cada ciclo acumula mais contexto, e eventualmente o LLM fica sobrecarregado.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ Boas Praticas</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tarefas curtas (1-2 arquivos por ciclo)</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Criterios de validacao automatizaveis</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Plan.md com no maximo 5-7 tarefas</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Monitorar a sessao periodicamente</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que Evitar</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Loops com 20+ tarefas na mesma sessao</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Deixar rodando sem olhar por horas</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tarefas que dependem de output anterior</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignorar erros e deixar o loop continuar</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Dados do Mundo Real
+        </h3>
+        <p class="text-neutral-300 mb-3" data-inema-block="m3-1-t5-p2">Cole Medin testou o loop basico e compartilhou resultados concretos:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li><strong class="text-blue-400">2 minutos</strong> para completar as 2 primeiras tarefas de um plan simples</li>
+          <li><strong class="text-blue-400">Automatico</strong> o agente escreveu o proprio prompt de wake-up</li>
+          <li><strong class="text-blue-400">Sequencial</strong> uma tarefa por ciclo, sem tentar fazer tudo de uma vez</li>
+        </ul>
+        <p class="text-neutral-400 text-xs mt-3 italic">"I came back a couple of minutes later and it's already done with the first two tasks. So it's gone through two iterations of the loop already." - Cole Medin</p>
+      </div>
+
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-3">🤔 Ponto de Reflexao</h3>
+        <p class="text-neutral-300" data-inema-block="m3-1-t5-p3">O loop basico e poderoso para tarefas simples e sequenciais. Mas perceba: tudo roda numa unica sessao, com um unico modelo, sem observabilidade. Para qualquer coisa mais complexa, voce vai precisar dos recursos das proximas secoes (Archon, dashboard, mix de modelos). O loop basico e o "Hello World" do loop engineering, nao o sistema de producao.</p>
+      </div>
+
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span>
+          <span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" data-inema-topic="modulo-3-1#topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">❓ Questionamentos e Limites</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t6-p1">
+        O loop basico e a forma mais simples de loop engineering, mas levanta questoes que voce precisa considerar antes de investir tempo nessa abordagem.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Questoes Abertas</h3>
+        <div class="space-y-4">
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-purple-400 font-semibold mb-2">Boris realmente gerencia "tens of thousands of agents per day"?</p>
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-t6-p2">Cole Medin questiona abertamente: <em>"Boris Cherny says that there are days he manages tens of thousands of AI agents at once. Like really, is that actually practical? Is that going to scale?"</em> A resposta honesta: provavelmente, para a escala da Anthropic, sim. Para voce e para mim, nao necessariamente.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-purple-400 font-semibold mb-2">E se o loop engasgar no meio?</p>
+            <p class="text-neutral-300 text-sm">Sem state externo, um crash no terminal perde todo o progresso. O plan.md salva parte (tarefas ja marcadas), mas o contexto da sessao vai embora. Por isso os proximos modulos cobrem durabilidade via banco externo.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="text-purple-400 font-semibold mb-2">O custo vale a pena para tarefas simples?</p>
+            <p class="text-neutral-300 text-sm" data-inema-block="m3-1-t6-p3">Um loop de 5 tarefas simples pode custar dezenas de milhares de tokens so em overhead de orchestracao. Se voce pode fazer a mesma coisa em 5 prompts diretos, o loop nao faz sentido financeiramente. O valor real aparece em tarefas repetitivas onde o humano seria um gargalo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🎯</span> Quando o loop basico brilha
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span>Provas de conceito rapidas</span></li>
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span>Listas de tarefas mecanicas (refatoracao, migracao)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span>Aprendizado e experimentacao com loops</span></li>
+          <li class="flex items-start space-x-2"><span class="text-primary mt-1">•</span><span>Prototipagem antes de investir em infra mais pesada</span></li>
+        </ul>
+      </div>
+
+      <div class="flex justify-start mt-6">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+          <span class="inema-read-icon" aria-hidden="true">○</span>
+          <span class="inema-read-label">Marcar como lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📝</span> Resumo do Modulo
+        </h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">/loop, /goal, /routines</strong><span class="text-neutral-400"> - os tres primitivos que compoe qualquer sistema de loop no Claude Code</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">plan.md</strong><span class="text-neutral-400"> - arquivo central com tarefas, criterios de validacao e tracking via checkboxes</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Loop skill</strong><span class="text-neutral-400"> - capability interna que configura o ciclo automaticamente quando voce pede</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Wake-up automatico</strong><span class="text-neutral-400"> - o agente agenda o proximo ciclo sozinho ate completar tudo</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Limitacoes</strong><span class="text-neutral-400"> - sessao unica, context bloat, terminal precisa ficar aberto, sem observabilidade</span></div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">3.2 - Workflows Deterministicos com Archon: como ir alem do loop basico com processos controlados e mix de modelos</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+          <a href="modulo-3-2.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Loop Engineering — Agentes em Loop Continuo - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) exp.classList.remove('active');
+        });
+      }
+      explanation.classList.toggle('active');
+    }
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  </script>
+
+  <script src="../../assets/learn.js"></script>
+  <script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') {
+      window.INEMA.init();
+    }
+  </script>
+</body>
+</html>

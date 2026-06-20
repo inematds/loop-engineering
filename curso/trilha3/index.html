@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="loop-engineering">
+  <title>Trilha 3 — Implementacao Tecnica | Loop Engineering</title>
+
+  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+  <script>
+  (function(){try{var h=document.documentElement,D={theme:'inema-dark',font:'inter',fontScale:100,lineWidth:68,leading:1.7,accent:'emerald'};function c(o){var r={};for(var x in o)r[x]=o[x];return r}var p=c(D);try{var raw=localStorage.getItem('inema.prefs');if(raw){var j=JSON.parse(raw);if(j&&typeof j==='object')for(var k in D)if(j[k]!=null)p[k]=j[k]}else{var l=localStorage.getItem('theme');if(l==='light')p.theme='claro';else if(l==='dark')p.theme='inema-dark'}}catch(e){p=c(D)}var T={'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'}};var t=T[p.theme]||T['inema-dark'];if(t.dark===true)h.classList.add('dark');else if(t.dark===false)h.classList.remove('dark');if(t.attr)h.setAttribute('data-theme',t.attr);else h.removeAttribute('data-theme');h.style.colorScheme=t.cs?t.cs:(h.classList.contains('dark')?'dark':'light');h.setAttribute('data-font',p.font||'inter');h.setAttribute('data-accent',p.accent||'emerald');var s=h.style,sc=+p.fontScale||100;s.setProperty('--inema-font-scale',(sc/100).toString());s.setProperty('font-size',sc+'%');s.setProperty('--measure',(+p.lineWidth||68)+'ch');s.setProperty('--lh-body',(+p.leading||1.7).toString());var fam=p.font==='system'?'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif':p.font==='leitura'?'"Atkinson Hyperlegible","Inter",system-ui,sans-serif':'"Inter",system-ui,sans-serif';s.setProperty('--font-body',fam);var A={emerald:[152,76,45],blue:[217,91,60],purple:[258,90,66],amber:[38,92,50],teal:[174,72,41],rose:[350,89,60]};var a=A[p.accent]||A.emerald;s.setProperty('--accent-h',a[0]+'');s.setProperty('--accent-s',a[1]+'%');s.setProperty('--accent-l',a[2]+'%');s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)')}catch(err){try{document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}catch(e){}}})();
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/learn.css">
+
+  <!-- Manifesto do curso -->
+  <script type="application/json" data-inema-manifest>
+  {
+    "course": "loop-engineering",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "O Que E Loop Engineering", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "Os Blocos Fundamentais", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Arquitetura Orchestrator-Workers", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" }
+      ]},
+      { "n": "2", "title": "Vantagens vs Desvantagens", "modules": [
+        { "id": "2-1", "title": "Vantagens Reais", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Desvantagens e Riscos", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Quando Usar e Quando Nao Usar", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" }
+      ]},
+      { "n": "3", "title": "Implementacao Tecnica", "modules": [
+        { "id": "3-1", "title": "Loop Basico com Claude Code", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Workflows Deterministicos com Archon", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Dashboard de Controle", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Otimizacao de Custos", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" }
+      ]},
+      { "n": "4", "title": "Exemplos Praticos e Prompts", "modules": [
+        { "id": "4-1", "title": "Loop Simples: Task Runner", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "Loop Intermediario: GitHub Issue Bot", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Loop Avancado: Orchestrator Multi-Agent", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Anti-Patterns e Troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" }
+      ]}
+    ]
+  }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple T3) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(124, 58, 237, 0.10); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* SVG light mode */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* SVG pulse animation */
+    @keyframes t3-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .t3-a { animation: t3-pulse 2.6s ease-in-out infinite; }
+      .t3-a:nth-child(2){animation-delay:.25s} .t3-a:nth-child(3){animation-delay:.5s}
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">&#x267B;</span>
+            <span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Vantagens</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Tecnica</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Pratica</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex items-center space-x-2 text-sm text-neutral-400 mb-6">
+        <a href="../../index.html" class="hover:text-purple-400">Inicio</a>
+        <span>/</span>
+        <span class="text-purple-400">Trilha 3</span>
+      </nav>
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">TRILHA 3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">&#x1F6E0; Implementacao Tecnica</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Mao na massa: como construir loops com Claude Code, workflows deterministicos com Archon, dashboards de controle e otimizacao de custos.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">4</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">24</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">~2h30</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- HERO SVG -->
+    <section class="mb-12">
+      <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+        <svg viewBox="0 0 1000 260" class="w-full h-auto" role="img" aria-label="Diagrama: pipeline tecnico de loop engineering - Claude Code, Archon, Dashboard e otimizacao de custos">
+          <defs>
+            <linearGradient id="t3-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#7c3aed"/>
+            </linearGradient>
+            <filter id="t3-glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <pattern id="t3-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+              <circle cx="1.3" cy="1.3" r="1.3" fill="#a78bfa" opacity="0.08"/>
+            </pattern>
+            <marker id="t3-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#a78bfa"/></marker>
+            <marker id="t3-ahc" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"/></marker>
+          </defs>
+          <rect x="0" y="0" width="1000" height="260" fill="url(#t3-grid)"/>
+
+          <!-- Claude Code -->
+          <g filter="url(#t3-glow)">
+            <rect x="30" y="90" width="160" height="64" rx="14" fill="#1a0e2e" stroke="url(#t3-grad)" stroke-width="2"/>
+          </g>
+          <text x="110" y="116" text-anchor="middle" fill="#a78bfa" font-family="Inter,sans-serif" font-weight="600" font-size="15">Claude Code</text>
+          <text x="110" y="136" text-anchor="middle" fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11">/loop /goal /routines</text>
+
+          <!-- Arrow -->
+          <path d="M190,122 L260,122" fill="none" stroke="#a78bfa" stroke-width="1.8" opacity="0.55" marker-end="url(#t3-ah)"/>
+
+          <!-- Archon -->
+          <rect x="270" y="78" width="170" height="88" rx="14" fill="#1a0e2e" stroke="#a78bfa" stroke-width="2" stroke-dasharray="8 4"/>
+          <text x="355" y="106" text-anchor="middle" fill="#a78bfa" font-family="Inter,sans-serif" font-weight="600" font-size="15">Archon</text>
+          <text x="355" y="124" text-anchor="middle" fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11">Workflows</text>
+          <text x="355" y="140" text-anchor="middle" fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11">deterministicos</text>
+
+          <!-- Arrow -->
+          <path d="M440,122 L510,122" fill="none" stroke="#a78bfa" stroke-width="1.8" opacity="0.55" marker-end="url(#t3-ah)"/>
+
+          <!-- Dashboard -->
+          <g filter="url(#t3-glow)">
+            <rect x="520" y="78" width="180" height="88" rx="14" fill="#1a0e2e" stroke="url(#t3-grad)" stroke-width="2"/>
+          </g>
+          <text x="610" y="106" text-anchor="middle" fill="#a78bfa" font-family="Inter,sans-serif" font-weight="600" font-size="15">Dashboard</text>
+          <text x="610" y="124" text-anchor="middle" fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11">Control Plane</text>
+          <text x="610" y="140" text-anchor="middle" fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11">Observabilidade</text>
+
+          <!-- Arrow -->
+          <path d="M700,122 L770,122" fill="none" stroke="#a78bfa" stroke-width="1.8" opacity="0.55" marker-end="url(#t3-ah)"/>
+
+          <!-- Cost Optimization -->
+          <rect x="780" y="78" width="180" height="88" rx="14" fill="#1a0e2e" stroke="#a78bfa" stroke-width="2"/>
+          <text x="870" y="106" text-anchor="middle" fill="#a78bfa" font-family="Inter,sans-serif" font-weight="600" font-size="15">Otimizacao</text>
+          <text x="870" y="124" text-anchor="middle" fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11">Mix de providers</text>
+          <text x="870" y="140" text-anchor="middle" fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11">State externo</text>
+
+          <!-- Bottom: Postgres -->
+          <rect x="370" y="200" width="260" height="40" rx="10" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/>
+          <text x="500" y="225" text-anchor="middle" fill="#bfe6ff" font-family="Inter,sans-serif" font-weight="600" font-size="13">Postgres / Neon (State Store)</text>
+          <path d="M355,166 L500,200" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.4" marker-end="url(#t3-ahc)"/>
+          <path d="M610,166 L500,200" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.4" marker-end="url(#t3-ahc)"/>
+          <path d="M870,166 L630,200" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.4"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- MAPA DA TRILHA -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <a href="#modulo-3-1" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-400 font-bold text-sm">3.1</span>
+            <span class="text-xs text-neutral-500">~35 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">&#x1F504; Loop Basico com Claude Code</h3>
+          <p class="text-xs text-neutral-400">/loop, /goal, plan.md</p>
+        </a>
+        <a href="#modulo-3-2" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-400 font-bold text-sm">3.2</span>
+            <span class="text-xs text-neutral-500">~40 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">&#x2699; Workflows com Archon</h3>
+          <p class="text-xs text-neutral-400">Deterministico, mix de modelos</p>
+        </a>
+        <a href="#modulo-3-3" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-400 font-bold text-sm">3.3</span>
+            <span class="text-xs text-neutral-500">~35 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">&#x1F4CA; Dashboard de Controle</h3>
+          <p class="text-xs text-neutral-400">Agent Control Plane, HITL</p>
+        </a>
+        <a href="#modulo-3-4" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-400 font-bold text-sm">3.4</span>
+            <span class="text-xs text-neutral-500">~30 min</span>
+          </div>
+          <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">&#x1F4B0; Otimizacao de Custos</h3>
+          <p class="text-xs text-neutral-400">Providers, routing, metricas</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTEUDO DETALHADO -->
+    <h2 class="text-2xl font-bold mb-6">Conteudo detalhado</h2>
+
+    <!-- MODULO 3.1 -->
+    <div id="modulo-3-1" data-inema-module="modulo-3-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.1</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">&#x1F504; Loop Basico com Claude Code</h3>
+        <p class="text-neutral-400 text-sm">Setup do /loop skill, criacao de plan.md, prompt para o orchestrator configurar o loop, demo com task list sequencial e wake-up automatico.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">&#x2699;</span>
+            <div><span class="font-medium">Setup do /loop skill</span><span class="text-neutral-500 text-sm ml-2">- Ativando a capability no Claude Code</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Claude Code tem uma capability built-in chamada "loop skill" que ensina o agente a configurar loops automaticamente.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">E o ponto de partida mais simples para loop engineering. Um unico prompt carrega todo o sistema.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Loop skill como capability. Prompt inicial. Auto-configuracao pelo agente.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">&#x1F4DD;</span>
+            <div><span class="font-medium">Criando um plan.md</span><span class="text-neutral-500 text-sm ml-2">- O contrato que guia o loop</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Um documento markdown com tarefas numeradas que o agente processa item por item, marcando cada uma como concluida.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A qualidade do plan.md determina a qualidade do output. Tarefas bem definidas = resultados melhores.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Granularidade ideal. Criterio de aceitacao por tarefa. Ordem sequencial vs paralela.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">&#x1F680;</span>
+            <div><span class="font-medium">Prompt para o orchestrator</span><span class="text-neutral-500 text-sm ml-2">- Deixando o agente montar o sistema</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O prompt que carrega o loop skill e instrui o agente a processar o plan.md. O agente configura /loop sozinho.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um bom prompt inicial e a diferenca entre um loop funcional e um loop caótico.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">"Load the loop skill". Auto-setup do /loop. Prompt como sistema, nao como instrucao.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">&#x1F501;</span>
+            <div><span class="font-medium">Demo: wake-up automatico</span><span class="text-neutral-500 text-sm ml-2">- O loop em acao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O agente completa uma tarefa, agenda o proximo wake-up via /loop, e continua ate concluir todas as tarefas do plan.md.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ver o fluxo real ajuda a entender como os primitivos se conectam na pratica.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Wake-up cycle. Validacao entre tarefas. Prompt auto-gerado pelo agente.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">&#x1F4E6;</span>
+            <div><span class="font-medium">Prompt pack para download</span><span class="text-neutral-500 text-sm ml-2">- Templates prontos para usar</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Colecao de prompts copiáveis para os cenarios mais comuns: task runner, code review, e exploracao.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Comecar com prompts testados acelera a adocao e evita erros comuns de configuracao.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Templates reutilizaveis. Parametros ajustaveis. Adaptacao por contexto.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">&#x26A0;</span>
+            <div><span class="font-medium">Limitacoes do loop basico</span><span class="text-neutral-500 text-sm ml-2">- Por que precisamos de mais</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O loop basico roda numa unica sessao, usa um unico modelo e nao tem state externo. Isso limita escala e confiabilidade.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender as limitacoes motiva a busca por solucoes mais robustas nos modulos seguintes.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Single session = context bloat. Single model = custo alto. Sem state = sem durabilidade.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-3-1.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 3.2 -->
+    <div id="modulo-3-2" data-inema-module="modulo-3-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.2</span>
+          <span class="text-xs text-neutral-500">~40 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">&#x2699; Workflows Deterministicos com Archon</h3>
+        <p class="text-neutral-400 text-sm">O harness builder do Cole Medin: workflows onde o humano define o processo, mix de modelos por step, e durabilidade com Postgres/Neon.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">&#x1F3D7;</span>
+            <div><span class="font-medium">O que e Archon</span><span class="text-neutral-500 text-sm ml-2">- Harness builder para coding agents</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Archon e a ferramenta do Cole Medin para orquestrar sessoes de coding agents com workflows definidos pelo humano.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Representa a abordagem oposta ao loop puro: o humano define o processo, nao o agente.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Harness vs loop. Workflow file. Steps deterministicos. Mix de providers.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">&#x1F41B;</span>
+            <div><span class="font-medium">Workflow: Fix GitHub Issue</span><span class="text-neutral-500 text-sm ml-2">- Extract, classify, implement, validate, PR</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pipeline deterministico: extrair issue, buscar contexto, classificar tipo, pesquisar, implementar, validar e criar PR.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">E o exemplo mais pratico de como combinar determinismo com LLM, usando o agente so onde realmente precisa.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pipeline como grafo. Steps deterministicos vs LLM-driven. Classificacao como decisao leve.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">&#x1F500;</span>
+            <div><span class="font-medium">Deterministico vs loop puro</span><span class="text-neutral-500 text-sm ml-2">- Controle humano vs autonomia do agente</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">No deterministico, o humano define quais steps existem e em que ordem. No loop puro, o agente decide tudo sozinho.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender esse trade-off e fundamental para escolher a abordagem certa para cada cenario.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Confiabilidade vs flexibilidade. Agente como executor, nao como tomador de decisao.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">&#x1F4B0;</span>
+            <div><span class="font-medium">Mix de modelos por step</span><span class="text-neutral-500 text-sm ml-2">- Haiku para classify, Claude para implement</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Cada node do workflow pode usar um modelo diferente. Steps leves usam modelos baratos; steps criticos usam modelos fortes.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">E a principal alavanca de otimizacao de custo em workflows autonomos.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Model routing. Custo por step. Provider mixing. Kimi para exploracão, Claude para implementacao.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">&#x1F4BE;</span>
+            <div><span class="font-medium">Durabilidade com Neon</span><span class="text-neutral-500 text-sm ml-2">- State em Postgres, resume apos falha</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Logs, runs e conversations sao gravados em Postgres/Neon. Se a maquina cair, o workflow retoma do step exato.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Durabilidade e o que transforma um experimento em sistema confiavel.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">State store. Resume from step. Neon branching para workers paralelos.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">&#x1F4CB;</span>
+            <div><span class="font-medium">Prompts prontos por step</span><span class="text-neutral-500 text-sm ml-2">- Templates para cada etapa do workflow</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompts otimizados para cada step: classificacao, pesquisa, implementacao, validacao e code review.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Prompts prontos economizam tempo e servem de base para adaptacao ao seu contexto.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Template por step. Markdown como contexto. Handoff entre steps via documentos.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-3-2.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 3.3 -->
+    <div id="modulo-3-3" data-inema-module="modulo-3-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.3</span>
+          <span class="text-xs text-neutral-500">~35 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">&#x1F4CA; Dashboard de Controle (Agent Control Plane)</h3>
+        <p class="text-neutral-400 text-sm">Observabilidade em tempo real: ver decisoes do orchestrator, cost tracking, human-in-the-loop e deploy remoto.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">&#x1F3AF;</span>
+            <div><span class="font-medium">O que e o Agent Control Plane</span><span class="text-neutral-500 text-sm ml-2">- Dashboard open source para loops</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Dashboard open source que Cole construiu para gerenciar loops com durabilidade, observabilidade e human-in-the-loop.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem controle visual, loops sao caixas pretas que queimam tokens sem feedback.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Dashboard como sistema nervoso. Open source no GitHub. Backend com Pi/Kimi.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">&#x1F4BE;</span>
+            <div><span class="font-medium">Postgres/Neon como state store</span><span class="text-neutral-500 text-sm ml-2">- Estado externo ao agente</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Todos os loops, eventos e logs sao gravados em Postgres (via Neon) para durabilidade e analytics.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">State externo permite retomar loops apos crashes e analisar patterns de execucao historicamente.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Orchestrator le state do banco. Workers atualizam state no banco. Banco como fonte de verdade.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">&#x1F50D;</span>
+            <div><span class="font-medium">Observabilidade em tempo real</span><span class="text-neutral-500 text-sm ml-2">- Decisoes do orchestrator ao vivo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Ver em tempo real quais decisoes o orchestrator toma, quantos workers dispara, e o progresso de cada round.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Poder ver e entender as decisoes do orchestrator e essencial para debugar e melhorar o loop.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Decision log. Round history. Worker dispatch tracking. Event stream.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">&#x1F4B0;</span>
+            <div><span class="font-medium">Cost tracking por run</span><span class="text-neutral-500 text-sm ml-2">- Saber quanto cada loop custa</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Metricas de tokens consumidos por round, por worker, e custo total do run. Visivel no dashboard.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem cost tracking, e impossivel otimizar. O dashboard mostrou 1M+ tokens para um app simples.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tokens por round. Custo do orchestrator vs workers. Breakdown por modelo.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">&#x270B;</span>
+            <div><span class="font-medium">Human-in-the-loop: pause + approve</span><span class="text-neutral-500 text-sm ml-2">- Validacao humana entre rounds</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O loop pode pausar apos cada round esperando aprovacao humana antes de continuar.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">HITL e a guardrail essencial que evita o problema de "run for a day, come back to crap".</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pause entre rounds. Approve/reject workflow. Permission groups. Identity verification.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">&#x2601;</span>
+            <div><span class="font-medium">Deploy remoto com Retool</span><span class="text-neutral-500 text-sm ml-2">- Dashboard acessivel de qualquer lugar</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O dashboard pode ser deployado na cloud via Retool, permitindo acesso remoto e compartilhamento com o time.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Deploy remoto transforma uma ferramenta local em infraestrutura de equipe.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Import React para Retool. Conexao com Neon. Permission groups. Audit trails.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-3-3.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- MODULO 3.4 -->
+    <div id="modulo-3-4" data-inema-module="modulo-3-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.4</span>
+          <span class="text-xs text-neutral-500">~30 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">&#x1F4B0; Otimizacao de Custos</h3>
+        <p class="text-neutral-400 text-sm">Mix de providers, model routing, state externo, worktrees e metricas para manter loops viaveis financeiramente.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">&#x1F500;</span>
+            <div><span class="font-medium">Mix de providers</span><span class="text-neutral-500 text-sm ml-2">- Pi/Kimi para orchestrator, Claude para implementation</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Usar providers diferentes para roles diferentes: modelos baratos para orquestracao, modelos fortes para implementacao.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">E a principal alavanca para reduzir custo sem sacrificar qualidade no output final.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pi/Kimi como orchestrator barato. Claude Code para execucao. Codex para review.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">&#x1F4CA;</span>
+            <div><span class="font-medium">Model routing</span><span class="text-neutral-500 text-sm ml-2">- Modelo certo para cada tipo de raciocinio</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Rotear tarefas para modelos com base na complexidade: classificacao simples usa Haiku, implementacao complexa usa Claude.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada token conta. Usar Opus para classificar bug vs feature e desperdicio.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Complexity-based routing. Custo por token por modelo. Decisoes leves vs pesadas.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">&#x1F4BE;</span>
+            <div><span class="font-medium">State externo contra context bloat</span><span class="text-neutral-500 text-sm ml-2">- Banco como memoria, nao o context window</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Manter estado no banco externo em vez de acumular no context window do LLM. Cada sessao comeca limpa e le o estado.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Context bloat e a causa #1 de degradacao em loops longos. State externo resolve.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Context window como cache. Banco como storage. Sessao stateless. Read-execute-write cycle.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">&#x1F333;</span>
+            <div><span class="font-medium">Worktrees para paralelismo</span><span class="text-neutral-500 text-sm ml-2">- Isolamento entre sessoes de agentes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Git worktrees criam copias isoladas do repo para que N agentes trabalhem em paralelo sem conflitos de codigo.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Paralelismo real requer isolamento real. Worktrees sao o mecanismo mais pratico para isso.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Worktree por worker. Branch por tarefa. Merge apos validacao. Port conflict avoidance.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">&#x23F1;</span>
+            <div><span class="font-medium">Batch vs real-time</span><span class="text-neutral-500 text-sm ml-2">- Quando cada modo vale a pena</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Batch: acumular tarefas e processar de uma vez (mais barato). Real-time: processar imediatamente (mais responsivo).</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Escolher o modo errado desperdiça dinheiro ou tempo. Contexto determina a escolha.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Batch para GitHub issues noturno. Real-time para fixes urgentes. Trade-off latencia vs custo.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">&#x1F4CF;</span>
+            <div><span class="font-medium">Metricas a monitorar</span><span class="text-neutral-500 text-sm ml-2">- tokens/task, custo/round, taxa de sucesso</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">As tres metricas essenciais: tokens consumidos por tarefa, custo por round do orchestrator, e taxa de sucesso dos workers.</p></div><div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O que nao se mede nao se otimiza. Essas metricas sao o minimo para evitar desperdicio.</p></div><div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tokens/task como KPI. Cost per round. Success rate. Trend analysis. Budget alerting.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-3-4.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- NAVEGACAO -->
+    <section class="mb-12">
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="../trilha2/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+          &#x2190; Trilha 2: Trade-offs
+        </a>
+        <a href="../trilha4/index.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">
+          Proxima: Trilha 4 &#x2192;
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODALS -->
+  <div id="modal-3-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.1</span><span class="font-semibold">Loop Basico com Claude Code</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.2</span><span class="font-semibold">Workflows Deterministicos com Archon</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.3</span><span class="font-semibold">Dashboard de Controle</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.4</span><span class="font-semibold">Otimizacao de Custos</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Loop Engineering -- Agentes em Loop Continuo - 2026</p>
+      <p class="mt-1"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(function(exp) {
+        if (exp !== explanation) { exp.classList.remove('active'); exp.previousElementSibling && exp.previousElementSibling.querySelector('button') && exp.previousElementSibling.querySelector('button').setAttribute('aria-expanded','false'); }
+      });
+      var isActive = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+    }
+
+    function openModal(modalId) {
+      var modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(function(m) { m.classList.add('hidden'); });
+      document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+    // Theme toggle
+    var themeToggle = document.getElementById('theme-toggle');
+    var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    var html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+  <script src="../../assets/learn.js"></script>
+  <script>if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }</script>
+</body>
+</html>

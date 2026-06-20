@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="loop-engineering">
+  <title>Modulo 3.4 — Otimizacao de Custos | Loop Engineering</title>
+
+  <!-- Anti-FOUC (PRIMEIRO no head, antes de tudo) -->
+  <script>
+  (function(){try{var h=document.documentElement,D={theme:'inema-dark',font:'inter',fontScale:100,lineWidth:68,leading:1.7,accent:'emerald'};function c(o){var r={};for(var x in o)r[x]=o[x];return r}var p=c(D);try{var raw=localStorage.getItem('inema.prefs');if(raw){var j=JSON.parse(raw);if(j&&typeof j==='object')for(var k in D)if(j[k]!=null)p[k]=j[k]}else{var l=localStorage.getItem('theme');if(l==='light')p.theme='claro';else if(l==='dark')p.theme='inema-dark'}}catch(e){p=c(D)}var T={'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'}};var t=T[p.theme]||T['inema-dark'];if(t.dark===true)h.classList.add('dark');else if(t.dark===false)h.classList.remove('dark');if(t.attr)h.setAttribute('data-theme',t.attr);else h.removeAttribute('data-theme');h.style.colorScheme=t.cs?t.cs:(h.classList.contains('dark')?'dark':'light');h.setAttribute('data-font',p.font||'inter');h.setAttribute('data-accent',p.accent||'emerald');var s=h.style,sc=+p.fontScale||100;s.setProperty('--inema-font-scale',(sc/100).toString());s.setProperty('font-size',sc+'%');s.setProperty('--measure',(+p.lineWidth||68)+'ch');s.setProperty('--lh-body',(+p.leading||1.7).toString());var fam=p.font==='system'?'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif':p.font==='leitura'?'"Atkinson Hyperlegible","Inter",system-ui,sans-serif':'"Inter",system-ui,sans-serif';s.setProperty('--font-body',fam);var A={emerald:[152,76,45],blue:[217,91,60],purple:[258,90,66],amber:[38,92,50],teal:[174,72,41],rose:[350,89,60]};var a=A[p.accent]||A.emerald;s.setProperty('--accent-h',a[0]+'');s.setProperty('--accent-s',a[1]+'%');s.setProperty('--accent-l',a[2]+'%');s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)')}catch(err){try{document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}catch(e){}}})();
+  </script>
+
+  <link rel="stylesheet" href="../../assets/learn.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Manifesto do curso (OBRIGATORIO em toda pagina) -->
+  <script type="application/json" data-inema-manifest>
+  {
+    "course": "loop-engineering",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "O Que E Loop Engineering", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "Os Blocos Fundamentais", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Arquitetura Orchestrator-Workers", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" }
+      ]},
+      { "n": "2", "title": "Vantagens vs Desvantagens", "modules": [
+        { "id": "2-1", "title": "Vantagens Reais", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Desvantagens e Riscos", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Quando Usar e Quando Nao Usar", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" }
+      ]},
+      { "n": "3", "title": "Implementacao Tecnica", "modules": [
+        { "id": "3-1", "title": "Loop Basico com Claude Code", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Workflows Deterministicos com Archon", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Dashboard de Controle", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Otimizacao de Custos", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" }
+      ]},
+      { "n": "4", "title": "Exemplos Praticos e Prompts", "modules": [
+        { "id": "4-1", "title": "Loop Simples: Task Runner", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "Loop Intermediario: GitHub Issue Bot", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Loop Avancado: Orchestrator Multi-Agent", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Anti-Patterns e Troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" }
+      ]}
+    ]
+  }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple T3) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(124, 58, 237, 0.10); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG light mode */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* SVG pulse animation */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s}
+    }
+
+    /* Scroll margin for sticky nav */
+    [id^="topico-"] { scroll-margin-top: 4rem; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🔁</span>
+            <span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span><span class="hidden sm:inline">Trade-offs</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="sm:hidden">T3</span><span class="hidden sm:inline">Implementacao</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span><span class="hidden sm:inline">Pratica</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a>
+      <span>/</span>
+      <span class="text-purple-400">Modulo 3.4</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULO 3.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">💰 Otimizacao de Custos</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Como manter loops financeiramente viaveis: mix de providers, model routing inteligente, state externo contra context bloat, worktrees para paralelismo e metricas essenciais.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">30</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Custo</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="3-4" data-inema-track="3">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" data-inema-topic="modulo-3-4#topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🔀 Mix de Providers: Pi/Kimi + Claude</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t1-p1">
+        A primeira e mais impactante alavanca de custo que Cole demonstra e <strong class="text-purple-400">nao usar o mesmo modelo para tudo</strong>. No dashboard do Agent Control Plane, ele roda o orchestrator inteiro com Kimi (via Pi), reservando Claude apenas para a implementacao real de codigo.
+      </p>
+
+      <blockquote class="border-l-4 border-purple-500/50 pl-4 mb-6 italic text-neutral-300">
+        "I'm driving everything with Pi. So I'm actually using my Kimi subscription with Kimi K 2.6, now Kimi K 2.7 to drive all of these workflows. So yes, it is a lot of tokens, but I'm not using Opus for everything, but I'm still getting really good results because of the harness that I built here that elevates the model."
+        <footer class="text-purple-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+      </blockquote>
+
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+          <span class="mr-2">🧩</span> O Principio: Harness Eleva o Modelo
+        </h3>
+        <p class="text-neutral-300 mb-4" data-inema-block="m3-4-t1-p2">A sacada de Cole e que um harness bem construido (workflow deterministico, state externo, validacao por step) permite usar modelos mais baratos sem sacrificar qualidade final. O harness compensa as limitacoes do modelo ao fornecer contexto preciso e steps bem definidos.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-bold text-purple-400 mb-2 text-sm">Orchestrator</h4>
+            <p class="text-neutral-300 text-sm">Kimi K 2.7 / Pi</p>
+            <p class="text-neutral-500 text-xs mt-1">Planejamento, decisao de rounds</p>
+          </div>
+          <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-bold text-purple-400 mb-2 text-sm">Implementation</h4>
+            <p class="text-neutral-300 text-sm">Claude Code</p>
+            <p class="text-neutral-500 text-xs mt-1">Escrita de codigo real</p>
+          </div>
+          <div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-bold text-purple-400 mb-2 text-sm">Review</h4>
+            <p class="text-neutral-300 text-sm">Codex / modelo leve</p>
+            <p class="text-neutral-500 text-xs mt-1">Validacao e code review</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400">
+          <span class="inema-ico-todo" aria-hidden="true">☐</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" data-inema-topic="modulo-3-4#topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📊 Model Routing: Modelo Certo para Cada Tarefa</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t2-p1">
+        Model routing vai alem do mix de providers: e sobre <strong class="text-purple-400">rotear cada tarefa especifica para o modelo mais adequado</strong> em termos de custo-beneficio. Cole demonstra isso no Archon, onde cada node do workflow pode usar um modelo diferente.
+      </p>
+
+      <blockquote class="border-l-4 border-purple-500/50 pl-4 mb-6 italic text-neutral-300">
+        "Every single node in this Archon workflow, I can actually decide what model am I going to use. So for example, with the classify step, we can use a small model, like maybe using Haiku or Minimax M3, Kimi K 2.7."
+        <footer class="text-purple-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+      </blockquote>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">🎯 Routing por Complexidade</h3>
+        <div class="space-y-4">
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+              <span class="text-purple-400 font-bold text-sm">$</span>
+            </div>
+            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+              <h4 class="font-semibold text-white mb-1">Classificacao (barato)</h4>
+              <p class="text-sm text-neutral-400">Decidir se uma issue e bug ou feature. Haiku, Minimax M3 ou Kimi K 2.7. Raciocinio simples, tokens baratos.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+              <span class="text-purple-400 font-bold text-sm">$$</span>
+            </div>
+            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+              <h4 class="font-semibold text-white mb-1">Exploracao e pesquisa (medio)</h4>
+              <p class="text-sm text-neutral-400">Investigar o codebase, entender dependencias. Kimi K 2.7 com contexto longo. Precisa de raciocinio, mas nao de precisao maxima.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+              <span class="text-purple-400 font-bold text-sm">$$$</span>
+            </div>
+            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+              <h4 class="font-semibold text-white mb-1">Implementacao (caro)</h4>
+              <p class="text-sm text-neutral-400">Escrever codigo real que vai virar PR. Claude Code. Aqui a qualidade importa, e voce paga por ela.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> O Anti-Pattern do Modelo Unico
+        </h3>
+        <p class="text-neutral-300" data-inema-block="m3-4-t2-p2">Cole aponta diretamente: "one of the other big issues I see with using slash goal or routines or loops in Cloud Code is you're just using one model for pretty much everything. That's part of the problem of why it's so expensive." Usar Opus para classificar bug vs feature e como usar um caminhao para ir a padaria.</p>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400">
+          <span class="inema-ico-todo" aria-hidden="true">☐</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" data-inema-topic="modulo-3-4#topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">💾 State Externo: Evitar Context Bloat</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t3-p1">
+        Context bloat e o assassino silencioso de loops. Quando voce roda /loop na mesma sessao do Claude Code, <strong class="text-purple-400">cada round acumula contexto no context window do LLM</strong>. Depois de muitos rounds, o modelo fica sobrecarregado e a qualidade despenca. A solucao e manter estado fora do LLM.
+      </p>
+
+      <blockquote class="border-l-4 border-purple-500/50 pl-4 mb-6 italic text-neutral-300">
+        "If you loop for a while, you're going to completely bloat your context for your LLM and overwhelm it. And so we need a system where we can distribute the work actually between different coding agent sessions."
+        <footer class="text-purple-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+      </blockquote>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">Sem State Externo</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Context window cresce a cada round</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Qualidade degrada progressivamente</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Se a sessao cair, perde tudo</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Custo de tokens cresce exponencialmente</span></li>
+          </ul>
+        </div>
+        <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+          <h4 class="font-bold text-purple-400 mb-4">Com State Externo (Postgres)</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Cada sessao comeca limpa</span></li>
+            <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Orchestrator le so o que precisa do banco</span></li>
+            <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Crash? Retoma do ultimo state gravado</span></li>
+            <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Custo de tokens estavel por round</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-3">O Paradigma: Context Window como Cache</h3>
+        <p class="text-neutral-300 text-sm" data-inema-block="m3-4-t3-p2">A mudanca mental e tratar o context window do LLM como cache temporario, nao como storage permanente. O banco (Postgres/Neon) e o storage. Cada sessao do agente carrega do banco o que precisa, executa, e grava de volta. O context window nunca acumula historico de rounds anteriores.</p>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400">
+          <span class="inema-ico-todo" aria-hidden="true">☐</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" data-inema-topic="modulo-3-4#topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🌳 Worktrees para Isolamento de Sessoes Paralelas</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t4-p1">
+        Quando voce escala loops para processar multiplas tarefas em paralelo, os agentes nao podem compartilhar o mesmo working directory. <strong class="text-purple-400">Git worktrees criam copias isoladas do repositorio</strong> onde cada agente trabalha sem interferir nos outros.
+      </p>
+
+      <blockquote class="border-l-4 border-purple-500/50 pl-4 mb-6 italic text-neutral-300">
+        "Work trees are also a really important part of loop engineering. Boris talks about this as well. If we're having many different agents handling tasks in a loop, we need to make sure they're running in isolation so they're not stepping on each other's toes."
+        <footer class="text-purple-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+      </blockquote>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">Isolamento em Tres Camadas</h3>
+        <div class="space-y-4">
+          <div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">1. Codigo: Git Worktrees</h4>
+            <p class="text-sm text-neutral-400" data-inema-block="m3-4-t4-p2">Cada worker roda em um worktree separado com seu proprio branch. Mudancas em um worker nao afetam os outros. Merge acontece so apos validacao.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">2. Dados: Neon Database Branching</h4>
+            <p class="text-sm text-neutral-400">Neon permite criar branches do banco de dados, assim como Git faz com codigo. Cada worker pode ter seu proprio branch de dados para testes sem afetar producao.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">3. Portas: Conflict Avoidance</h4>
+            <p class="text-sm text-neutral-400">Quando multiplos agentes rodam servidores de dev, cada um precisa de portas diferentes. Sem gerenciamento de portas, agentes em paralelo conflitam e crasham.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400">
+          <span class="inema-ico-todo" aria-hidden="true">☐</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" data-inema-topic="modulo-3-4#topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">⏱ Batch vs Real-Time: Quando Cada Um Vale a Pena</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t5-p1">
+        Nem todo loop precisa rodar em tempo real. <strong class="text-purple-400">Acumular tarefas e processar em batch</strong> pode ser significativamente mais barato do que processar cada tarefa imediatamente. A escolha depende da urgencia e do volume.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-purple-400 mb-4">Batch (lotes)</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Quando:</strong> GitHub issues acumuladas, manutencao noturna, code reviews pendentes</span></li>
+            <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Vantagem:</strong> orchestrator planeja uma vez para N tarefas, amortizando custo de planejamento</span></li>
+            <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Trade-off:</strong> maior latencia, resultados nao sao imediatos</span></li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-purple-400 mb-4">Real-Time (imediato)</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Quando:</strong> bug critico em producao, feature blocker, hotfix urgente</span></li>
+            <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Vantagem:</strong> resposta imediata, resultado rapido</span></li>
+            <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Trade-off:</strong> custo mais alto por tarefa, orchestrator planeja para cada uma</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">🎯</span> Ponto de Reflexao
+        </h3>
+        <p class="text-neutral-300" data-inema-block="m3-4-t5-p2">Cole demonstra o padrao batch ao despachar 4 workflows de GitHub issues simultaneamente. O orchestrator planeja uma vez, despacha todos, e valida depois. Isso e mais eficiente que processar cada issue individualmente, porque o custo de planejamento do orchestrator e amortizado entre as 4 tarefas.</p>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400">
+          <span class="inema-ico-todo" aria-hidden="true">☐</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" data-inema-topic="modulo-3-4#topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">❓ Questionamentos e Metricas Essenciais</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t6-p1">
+        Otimizar custos sem metricas e adivinhar. Cole construiu cost tracking no dashboard exatamente para ter <strong class="text-purple-400">dados concretos sobre onde o dinheiro esta indo</strong>. Tres metricas sao o minimo necessario para qualquer setup de loop.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4">📐 As Tres Metricas Essenciais</h3>
+        <div class="space-y-4">
+          <div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">1. Tokens por tarefa</h4>
+            <p class="text-sm text-neutral-400" data-inema-block="m3-4-t6-p2">Quantos tokens cada tarefa individual consome, incluindo o overhead do orchestrator. Se uma tarefa simples consome 100k tokens, algo esta errado. Comparar entre tarefas similares revela anomalias.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">2. Custo por round</h4>
+            <p class="text-sm text-neutral-400">O custo de cada ciclo orchestrator-workers. Se esta subindo round apos round, indica context bloat ou orchestrator ineficiente. Se esta estavel, o sistema e saudavel.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">3. Taxa de sucesso</h4>
+            <p class="text-sm text-neutral-400">Percentual de workers que completam com sucesso vs falham. Se a taxa cai abaixo de 80%, o custo efetivo por tarefa util dispara porque voce esta pagando por trabalho jogado fora.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-2">Vale a pena otimizar?</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m3-4-t6-p3">Depende do volume. Se voce roda 1 loop por semana, otimizacao de custo nao e prioridade. Se roda dezenas por dia como Boris, cada centavo por token importa. A decisao de investir em otimizacao deve ser proporcional ao volume de uso.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-2">O custo vai cair naturalmente?</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m3-4-t6-p4">Modelos ficam mais baratos com o tempo. Kimi K 2.7 ja e dramaticamente mais barato que Opus para muitas tarefas. Mas "mais barato" nao significa "barato". 1M tokens mesmo com modelo barato ainda e um custo real. As tecnicas desse modulo importam independente do preco por token.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-purple-400 mb-2">A regra final de custo</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m3-4-t6-p5">Cole sintetiza a abordagem: "you got to have the right system. Otherwise, things are going to completely fall apart." Custo nao e so dinheiro, e confiabilidade. Um loop barato que produz lixo e mais caro que um loop caro que entrega valor.</p>
+        </div>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400">
+          <span class="inema-ico-todo" aria-hidden="true">☐</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Mix de providers</strong><span class="text-neutral-400"> - Kimi/Pi para orchestrator, Claude para implementation, modelos leves para classificacao</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Model routing</strong><span class="text-neutral-400"> - modelo certo para cada tipo de raciocinio: barato para decisoes simples, forte para codigo</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">State externo</strong><span class="text-neutral-400"> - Postgres como storage, context window como cache: evita bloat e permite resumabilidade</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Worktrees + Neon branching</strong><span class="text-neutral-400"> - isolamento de codigo e dados para workers paralelos</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-purple-400 mt-1">✓</span>
+            <div><strong class="text-white">Metricas</strong><span class="text-neutral-400"> - tokens/tarefa, custo/round e taxa de sucesso como KPIs minimos</span></div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">4.1 - Loop Simples: Task Runner - receita pronta com prompt copiavel e template de plan.md</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-3-3.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Modulo Anterior</a>
+          <a href="../trilha4/modulo-4-1.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Loop Engineering — Agentes em Loop Continuo - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+  <script src="../../assets/learn.js"></script>
+  <script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') {
+      window.INEMA.init();
+    }
+  </script>
+</body>
+</html>

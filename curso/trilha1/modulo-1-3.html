@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="loop-engineering">
+  <title>Modulo 1.3 — Arquitetura Orchestrator-Workers | Loop Engineering</title>
+
+  <!-- ANTI-FOUC: script bloqueante ANTES de tudo -->
+  <script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+          }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro';
+          else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark');
+      else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr);
+      else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style;
+      var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0] + '');
+      s.setProperty('--accent-s', a[1] + '%');
+      s.setProperty('--accent-l', a[2] + '%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) {
+      try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+    }
+  })();
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/learn.css">
+
+  <!-- Manifesto do curso -->
+  <script type="application/json" data-inema-manifest>
+  {
+    "course": "loop-engineering",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "O Que E Loop Engineering", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "Os Blocos Fundamentais", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Arquitetura Orchestrator-Workers", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" }
+      ]},
+      { "n": "2", "title": "Vantagens vs Desvantagens", "modules": [
+        { "id": "2-1", "title": "Vantagens Reais", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Desvantagens e Riscos", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Quando Usar e Quando Nao Usar", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" }
+      ]},
+      { "n": "3", "title": "Implementacao Tecnica", "modules": [
+        { "id": "3-1", "title": "Loop Basico com Claude Code", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Workflows Deterministicos com Archon", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Dashboard de Controle", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Otimizacao de Custos", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" }
+      ]},
+      { "n": "4", "title": "Exemplos Praticos e Prompts", "modules": [
+        { "id": "4-1", "title": "Loop Simples: Task Runner", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "Loop Intermediario: GitHub Issue Bot", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Loop Avancado: Orchestrator Multi-Agent", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Anti-Patterns e Troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" }
+      ]}
+    ]
+  }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha emerald) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(5, 150, 105, 0.06); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5, 150, 105, 0.18); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG light mode */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* SVG animation */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+
+    /* Scroll margin for sticky nav */
+    [id^="topico-"] { scroll-margin-top: 4rem; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">&#x267B;</span>
+            <span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Fundamentos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Vantagens</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Tecnica</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Pratica</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-emerald-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-emerald-400">Trilha 1 — Fundamentos</a>
+      <span>/</span>
+      <span class="text-emerald-400">Modulo 1.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULO 1.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">&#x1F3D7; Arquitetura Orchestrator-Workers</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">O padrao de design que sustenta loops escalaveis: um orchestrator decide, workers executam, e o state store persiste tudo.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">30</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Basico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Teoria</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="1-3" data-inema-track="1">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" data-inema-topic="modulo-1-3#topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">&#x1F3AD; O Orchestrator: Cerebro do Sistema</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t1-p1">
+        No centro de qualquer sistema de loop engineering escalavel esta o <strong class="text-emerald-400">orchestrator</strong>: a sessao de agente que le a especificacao, decide quais tarefas executar, dispara workers e valida resultados. Ele nao escreve codigo diretamente. Seu papel e raciocinar sobre o estado do projeto e tomar decisoes de alto nivel sobre o que fazer a seguir.
+      </p>
+
+      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+          <span class="mr-2">&#x1F4AC;</span> Como Cole Medin Descreve o Orchestrator
+        </h3>
+        <blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-4 italic text-neutral-300">
+          "We send in our initial spec to the orchestrator and it has to reason about that and then figure out how many workers to spin off. And then it has to prompt them all. They each spend tokens and then the results come back."
+          <footer class="text-emerald-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+        </blockquote>
+        <p class="text-neutral-300 text-sm" data-inema-block="m1-3-t1-p2">O orchestrator funciona como um gerente de projeto automatizado. Ele recebe a spec (o que precisa ser feito), analisa o estado atual do repositorio, e decide: quantos workers preciso? Quais tarefas atribuir a cada um? Em que ordem? Quando o trabalho esta completo? Cada uma dessas decisoes custa tokens de reasoning, e e por isso que o orchestrator e uma das partes mais caras do sistema.</p>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4">&#x1F4CB; Responsabilidades do Orchestrator</h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">&#x2713;</span><span><strong class="text-white">Ler a spec</strong> e entender o escopo total do trabalho</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">&#x2713;</span><span><strong class="text-white">Planejar rounds</strong>: dividir o trabalho em ondas de execucao</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">&#x2713;</span><span><strong class="text-white">Despachar workers</strong>: criar prompts especificos para cada worker</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">&#x2713;</span><span><strong class="text-white">Validar resultados</strong>: verificar se os workers entregaram o esperado</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">&#x2713;</span><span><strong class="text-white">Decidir proximo passo</strong>: lancar nova onda ou declarar conclusao</span></li>
+        </ul>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
+          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" data-inema-topic="modulo-1-3#topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">&#x2699; Workers: Execucao Paralela e Isolada</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t2-p1">
+        Workers sao <strong class="text-emerald-400">sessoes de agente independentes</strong> que recebem uma tarefa especifica do orchestrator e a executam. Cada worker opera em isolamento, idealmente numa worktree propria do git, para que multiplos workers possam trabalhar em paralelo sem pisar no codigo um do outro.
+      </p>
+
+      <!-- SVG DIAGRAM: orchestrator -> workers flow -->
+      <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+        <svg viewBox="0 0 900 300" class="w-full h-auto" role="img" aria-label="Diagrama: orchestrator envia tarefas para workers paralelos, workers retornam resultados ao state store">
+          <defs>
+            <linearGradient id="m13-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/>
+            </linearGradient>
+            <filter id="m13-glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <pattern id="m13-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+              <circle cx="1.3" cy="1.3" r="1.3" fill="#34d399" opacity="0.10"/>
+            </pattern>
+            <marker id="m13-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"/></marker>
+            <marker id="m13-ahc" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"/></marker>
+          </defs>
+          <rect x="0" y="0" width="900" height="300" fill="url(#m13-grid)"/>
+
+          <!-- Spec -->
+          <rect x="30" y="120" width="120" height="50" rx="10" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
+          <text x="90" y="140" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600">Spec</text>
+          <text x="90" y="156" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="10">plan.md</text>
+
+          <!-- Seta spec -> orchestrator -->
+          <path d="M150,145 L210,145" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.55" marker-end="url(#m13-ah)"/>
+
+          <!-- Orchestrator -->
+          <g filter="url(#m13-glow)">
+            <rect x="220" y="100" width="160" height="90" rx="14" fill="#0e2018" stroke="url(#m13-grad)" stroke-width="2.5"/>
+          </g>
+          <text x="300" y="130" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-weight="600" font-size="15">Orchestrator</text>
+          <text x="300" y="148" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">planeja rounds</text>
+          <text x="300" y="164" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">despacha workers</text>
+          <text x="300" y="180" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">valida resultados</text>
+
+          <!-- Setas orchestrator -> workers -->
+          <path d="M380,120 C430,120 440,60 490,60" fill="none" stroke="#38bdf8" stroke-width="1.8" opacity="0.55" marker-end="url(#m13-ahc)"/>
+          <path d="M380,145 L490,145" fill="none" stroke="#38bdf8" stroke-width="1.8" opacity="0.55" marker-end="url(#m13-ahc)"/>
+          <path d="M380,170 C430,170 440,230 490,230" fill="none" stroke="#38bdf8" stroke-width="1.8" opacity="0.55" marker-end="url(#m13-ahc)"/>
+
+          <!-- Workers -->
+          <g font-family="Inter,sans-serif" font-size="12" font-weight="600">
+            <g class="wf-a"><rect x="500" y="40" width="130" height="40" rx="9" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/><text x="565" y="57" text-anchor="middle" fill="#bfe6ff">Worker 1</text><text x="565" y="72" text-anchor="middle" fill="#7dd3fc" font-size="9" font-weight="400">worktree-a</text></g>
+            <g class="wf-a"><rect x="500" y="125" width="130" height="40" rx="9" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/><text x="565" y="142" text-anchor="middle" fill="#bfe6ff">Worker 2</text><text x="565" y="157" text-anchor="middle" fill="#7dd3fc" font-size="9" font-weight="400">worktree-b</text></g>
+            <g class="wf-a"><rect x="500" y="210" width="130" height="40" rx="9" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/><text x="565" y="227" text-anchor="middle" fill="#bfe6ff">Worker N</text><text x="565" y="242" text-anchor="middle" fill="#7dd3fc" font-size="9" font-weight="400">worktree-n</text></g>
+          </g>
+
+          <!-- Setas workers -> state store -->
+          <path d="M630,60 C680,60 690,145 730,145" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.55" marker-end="url(#m13-ah)"/>
+          <path d="M630,145 L730,145" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.55" marker-end="url(#m13-ah)"/>
+          <path d="M630,230 C680,230 690,145 730,145" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.55" marker-end="url(#m13-ah)"/>
+
+          <!-- State Store -->
+          <g filter="url(#m13-glow)">
+            <rect x="740" y="110" width="140" height="70" rx="14" fill="#0e2018" stroke="url(#m13-grad)" stroke-width="2"/>
+          </g>
+          <text x="810" y="138" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-weight="600" font-size="14">State Store</text>
+          <text x="810" y="156" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11">Postgres / Neon</text>
+          <text x="810" y="172" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="10">logs, estado, custo</text>
+
+          <!-- Seta loop: state store -> orchestrator -->
+          <path d="M810,180 C810,270 300,270 300,190" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.4" stroke-dasharray="6 4" marker-end="url(#m13-ah)"/>
+          <text x="550" y="280" text-anchor="middle" fill="#6ee7b7" font-family="Inter,sans-serif" font-size="11">proximo round</text>
+        </svg>
+      </div>
+
+      <blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-6 italic text-neutral-300">
+        "If we're having many different agents handling tasks in a loop, we need to make sure they're running in isolation so they're not stepping on each other's toes. That is how we scale our output with AI coding assistance."
+        <footer class="text-emerald-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+      </blockquote>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">&#x2713; Worktrees para Isolamento</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">&#x2713;</span><span>Cada worker opera numa copia isolada do repositorio</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">&#x2713;</span><span>Sem conflitos de arquivo entre workers paralelos</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">&#x2713;</span><span>Cada um pode commitar e criar branches independentes</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">&#x2713;</span><span>Merge controlado pelo orchestrator ao final</span></li>
+          </ul>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">&#x2699; Anatomia de um Worker</h4>
+          <ul class="space-y-3 text-neutral-300 text-sm">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">1.</span><span>Recebe tarefa especifica do orchestrator</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">2.</span><span>Inicia sessao de agente numa worktree</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">3.</span><span>Executa: escreve codigo, roda testes, valida</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">4.</span><span>Reporta resultado ao state store</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
+          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" data-inema-topic="modulo-1-3#topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">&#x1F4BE; State Management Externo</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t3-p1">
+        Um dos problemas mais criticos de loops longos e o <strong class="text-emerald-400">context bloat</strong>: conforme o agente acumula historico de conversacao, a janela de contexto do LLM fica sobrecarregada e a qualidade das respostas degrada. A solucao arquitetural e mover o estado para fora do LLM, usando um <strong class="text-emerald-400">banco de dados externo</strong> como fonte de verdade.
+      </p>
+
+      <blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-6 italic text-neutral-300">
+        "When you're just using slash loop in Claude Code, it's really just continuing in the same coding agent session. So if you loop for a while, you're going to completely bloat your context for your LLM and overwhelm it."
+        <footer class="text-emerald-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+      </blockquote>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4">&#x1F4CA; Context Window vs State Store</h3>
+        <div class="space-y-4">
+          <div class="bg-red-900/20 rounded-lg border border-red-500/30 p-4">
+            <h4 class="font-semibold text-red-400 mb-2">&#x2717; Sem State Externo</h4>
+            <p class="text-neutral-300 text-sm">Todo o historico vive no context window. Apos 10-20 iteracoes, o LLM comeca a "esquecer" instrucoes iniciais, gerar codigo repetido, e perder coerencia. E como tentar memorizar um livro inteiro em vez de consultar notas.</p>
+          </div>
+          <div class="bg-emerald-900/20 rounded-lg border border-emerald-500/30 p-4">
+            <h4 class="font-semibold text-emerald-400 mb-2">&#x2713; Com State Externo (Postgres/Neon)</h4>
+            <p class="text-neutral-300 text-sm">O banco armazena: tarefas concluidas, tarefas pendentes, resultados de validacao, logs de decisao, custo acumulado. Cada nova sessao do orchestrator le apenas o estado atual, nao o historico inteiro. O context window vira cache, nao storage.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4">&#x1F5C4; O que o State Store armazena</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">Runs</h4>
+            <p class="text-sm text-neutral-400">Historico de execucoes: spec original, rounds realizados, status geral (running, paused, completed, failed).</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">Events / Logs</h4>
+            <p class="text-sm text-neutral-400">Cada decisao do orchestrator e cada resultado de worker. Permite auditoria e debug pos-execucao.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">Task State</h4>
+            <p class="text-sm text-neutral-400">Status de cada tarefa individual: pending, in_progress, completed, failed. O orchestrator le isso para decidir o proximo round.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-1">Cost Tracking</h4>
+            <p class="text-sm text-neutral-400">Tokens consumidos por round, por worker, custo total acumulado. Permite definir budget limits.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
+          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" data-inema-topic="modulo-1-3#topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">&#x1F504; O Fluxo Completo de um Round</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t4-p1">
+        Um "round" e a <strong class="text-emerald-400">unidade de trabalho</strong> do sistema orchestrator-workers. Cada round segue um fluxo previsivel: o orchestrator le o estado, decide o que fazer, despacha workers, coleta resultados, e avalia se precisa de mais rounds. Esse ciclo se repete ate que o goal seja atingido ou o budget se esgote.
+      </p>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4">&#x1F3C3; Passo a Passo de um Round</h3>
+        <div class="space-y-6">
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+              <span class="text-emerald-400 font-bold text-sm">1</span>
+            </div>
+            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+              <h4 class="font-semibold text-white mb-1">Orchestrator le o state store</h4>
+              <p class="text-sm text-neutral-400">Consulta o banco para saber: quais tarefas estao pendentes? O que os workers do round anterior entregaram? Ha erros para corrigir?</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+              <span class="text-emerald-400 font-bold text-sm">2</span>
+            </div>
+            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+              <h4 class="font-semibold text-white mb-1">Planeja a onda de workers</h4>
+              <p class="text-sm text-neutral-400">Decide quantos workers disparar, quais tarefas atribuir a cada um, e monta os prompts especificos. Esse e o fan-out.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+              <span class="text-emerald-400 font-bold text-sm">3</span>
+            </div>
+            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+              <h4 class="font-semibold text-white mb-1">Workers executam em paralelo</h4>
+              <p class="text-sm text-neutral-400">Cada worker inicia numa worktree isolada, executa sua tarefa (escreve codigo, roda testes), e grava o resultado no state store.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+              <span class="text-emerald-400 font-bold text-sm">4</span>
+            </div>
+            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+              <h4 class="font-semibold text-white mb-1">Fan-in: orchestrator coleta resultados</h4>
+              <p class="text-sm text-neutral-400">Quando todos os workers terminam, o orchestrator le os resultados do state store e avalia: tudo passou? Ha falhas? Preciso re-rodar algum worker?</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+              <span class="text-emerald-400 font-bold text-sm">5</span>
+            </div>
+            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+              <h4 class="font-semibold text-white mb-1">Decisao: proximo round ou conclusao</h4>
+              <p class="text-sm text-neutral-400">Se ha trabalho restante, o orchestrator planeja o proximo round. Se o goal foi atingido, declara a run como completa e reporta ao humano.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-6 italic text-neutral-300">
+        "The orchestrator spent 6,000 tokens with that initial planning and then prompting our first three workers in round number one."
+        <footer class="text-emerald-400 text-sm mt-1 not-italic">— Cole Medin, sobre o dashboard</footer>
+      </blockquote>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
+          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" data-inema-topic="modulo-1-3#topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">&#x1F6E1; Durabilidade e Resumabilidade</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t5-p1">
+        Loops longos inevitavelmente falham em algum ponto. A maquina pode reiniciar, a sessao do agente pode cair, a rede pode oscilar. A questao nao e <em>se</em> vai falhar, mas <em>quando</em>. <strong class="text-emerald-400">Durabilidade</strong> significa que o sistema pode retomar de onde parou, sem perder o trabalho ja feito. E isso so e possivel com state management externo.
+      </p>
+
+      <blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-6 italic text-neutral-300">
+        "All of the loops that we run and the different events and logs, I'm storing this here so we can always resume a workflow later on. So we're managing all of our state in an external database."
+        <footer class="text-emerald-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+      </blockquote>
+
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-emerald-400 mb-4">&#x1F527; Como a Resumabilidade Funciona</h3>
+        <div class="space-y-4">
+          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Checkpoint por round</h4>
+            <p class="text-neutral-300 text-sm">Ao final de cada round, o estado completo e gravado no banco: tarefas concluidas, resultados de workers, decisoes do orchestrator. Se o sistema cair entre rounds, basta ler o ultimo checkpoint e continuar.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Resume from last good state</h4>
+            <p class="text-neutral-300 text-sm">O orchestrator nao precisa de historico de conversacao para retomar. Ele le o state store e sabe exatamente onde o projeto esta. Uma nova sessao de agente e tao eficaz quanto a anterior.</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+            <h4 class="font-semibold text-white mb-2">Cleanup de workers orfaos</h4>
+            <p class="text-neutral-300 text-sm">Se um worker cai no meio da execucao, o orchestrator detecta (via timeout ou status no banco) e pode re-despachar a tarefa para um novo worker no proximo round.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">&#x1F3AF;</span> Ponto de Reflexao
+        </h3>
+        <p class="text-neutral-300" data-inema-block="m1-3-t5-p2">Sem durabilidade, loop engineering e um brinquedo caro. Imagine rodar um loop por 4 horas, gastar centenas de milhares de tokens, e perder tudo porque o terminal fechou. O state externo transforma um experimento fragil num sistema que pode rodar de verdade. Cole Medin construiu exatamente isso no seu dashboard: "I'm storing this here so we can always resume a workflow later on."</p>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
+          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" data-inema-topic="modulo-1-3#topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">&#x2753; Questionamentos</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t6-p1">
+        A arquitetura orchestrator-workers e elegante no papel, mas levanta questoes praticas serias. Cole Medin, apesar de construir um dashboard funcional para isso, mantem uma posicao cautelosa.
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-emerald-400 mb-2">O orchestrator e um gargalo de custo?</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m1-3-t6-p2">Cada decisao do orchestrator consome tokens de reasoning. Quanto mais complexa a spec, mais tokens para planejar rounds e avaliar resultados. Cole mostrou que uma unica run de um app simples consumiu mais de 1 milhao de tokens. A pergunta e: vale a pena pagar esse preco de reasoning para cada decisao, ou um workflow deterministico (como o Archon) resolve melhor?</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-emerald-400 mb-2">Quem valida o validador?</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m1-3-t6-p3">O orchestrator valida os resultados dos workers, mas o orchestrator tambem e um LLM. Se ele alucinara na validacao (aceitando resultado ruim como bom), o erro se propaga para os rounds seguintes. Sem human-in-the-loop em pontos criticos, a auto-validacao pode ser um ponto cego perigoso.</p>
+        </div>
+        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+          <h4 class="font-semibold text-emerald-400 mb-2">Determinismo vs. autonomia: onde esta o equilibrio?</h4>
+          <p class="text-neutral-300 text-sm" data-inema-block="m1-3-t6-p4">Cole Medin prefere workflows deterministicos onde o humano define os steps. Boris Cherny prefere autonomia total com o orchestrator decidindo tudo. A verdade provavelmente esta no meio: usar o orchestrator para decisoes de roteamento e modelo para codigo, mas nao para definir o processo inteiro.</p>
+        </div>
+      </div>
+
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+          <span class="mr-2">&#x26A0;</span> A Provocacao de Cole
+        </h3>
+        <p class="text-neutral-300" data-inema-block="m1-3-t6-p5">Cole sintetiza sua posicao sobre dar autonomia total ao orchestrator: "We want to actually take the decision away from the coding agent as much as we can, only applying the reasoning of the LLM when we actually need it to write the code." O orchestrator deve ser o minimo necessario, nao o maximo possivel.</p>
+      </div>
+
+      <div class="flex justify-start">
+        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
+          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
+          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
+          <span class="inema-label-todo">Marcar como lido</span>
+          <span class="inema-label-done hidden">Lido</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">&#x1F4CB;</span> Resumo do Modulo
+        </h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">&#x2713;</span>
+            <div><strong class="text-white">Orchestrator</strong><span class="text-neutral-400"> — le a spec, planeja rounds, despacha workers, valida resultados</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">&#x2713;</span>
+            <div><strong class="text-white">Workers</strong><span class="text-neutral-400"> — sessoes isoladas em worktrees que executam tarefas especificas em paralelo</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">&#x2713;</span>
+            <div><strong class="text-white">State Store</strong><span class="text-neutral-400"> — Postgres/Neon como fonte de verdade; context window e cache, nao storage</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">&#x2713;</span>
+            <div><strong class="text-white">Fluxo de round</strong><span class="text-neutral-400"> — spec entra, fan-out para workers, fan-in de resultados, validacao, proximo round</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-emerald-400 mt-1">&#x2713;</span>
+            <div><strong class="text-white">Durabilidade</strong><span class="text-neutral-400"> — checkpoints no banco permitem resumir de onde parou apos falhas</span></div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-emerald-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">2.1 — Vantagens Reais (Trilha 2: Vantagens vs Desvantagens)</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-1-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">&#x2190; Modulo Anterior</a>
+          <a href="../trilha2/modulo-2-1.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Proximo Modulo &#x2192;</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>Loop Engineering — Agentes em Loop Continuo | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> | 2026</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) exp.classList.remove('active');
+        });
+      }
+      explanation.classList.toggle('active');
+    }
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  </script>
+
+  <script src="../../assets/learn.js"></script>
+  <script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') {
+      window.INEMA.init();
+    }
+  </script>
+</body>
+</html>
