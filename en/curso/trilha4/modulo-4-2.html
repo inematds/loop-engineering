@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="loop-engineering" name="inema-course"/>
+<title>Module 4.2 — Intermediate Loop: GitHub Issue Bot | Loop Engineering</title>
+<!-- ANTI-FOUC -->
+<script>
+  (function(){try{var h=document.documentElement,D={theme:'inema-dark',font:'inter',fontScale:100,lineWidth:68,leading:1.7,accent:'emerald'};function c(o){var r={};for(var x in o)r[x]=o[x];return r}var p=c(D);try{var raw=localStorage.getItem('inema.prefs');if(raw){var j=JSON.parse(raw);if(j&&typeof j==='object')for(var k in D)if(j[k]!=null)p[k]=j[k]}else{var l=localStorage.getItem('theme');if(l==='light')p.theme='claro';else if(l==='dark')p.theme='inema-dark'}}catch(e){p=c(D)}var T={'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'}};var t=T[p.theme]||T['inema-dark'];if(t.dark===true)h.classList.add('dark');else if(t.dark===false)h.classList.remove('dark');if(t.attr)h.setAttribute('data-theme',t.attr);else h.removeAttribute('data-theme');h.style.colorScheme=t.cs?t.cs:(h.classList.contains('dark')?'dark':'light');h.setAttribute('data-font',p.font||'inter');h.setAttribute('data-accent',p.accent||'emerald');var s=h.style,sc=+p.fontScale||100;s.setProperty('--inema-font-scale',(sc/100).toString());s.setProperty('font-size',sc+'%');s.setProperty('--measure',(+p.lineWidth||68)+'ch');s.setProperty('--lh-body',(+p.leading||1.7).toString());var fam=p.font==='system'?'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif':p.font==='leitura'?'"Atkinson Hyperlegible","Inter",system-ui,sans-serif':'"Inter",system-ui,sans-serif';s.setProperty('--font-body',fam);var A={emerald:[152,76,45],blue:[217,91,60],purple:[258,90,66],amber:[38,92,50],teal:[174,72,41],rose:[350,89,60]};var a=A[p.accent]||A.emerald;s.setProperty('--accent-h',a[0]+'');s.setProperty('--accent-s',a[1]+'%');s.setProperty('--accent-l',a[2]+'%');s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)')}catch(err){try{document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}catch(e){}}})();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {"course":"loop-engineering","tracks":[{"n":"1","title":"Fundamentos","modules":[{"id":"1-1","title":"O Que E Loop Engineering","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Os Blocos Fundamentais","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"Arquitetura Orchestrator-Workers","topics":6,"href":"curso/trilha1/modulo-1-3.html"}]},{"n":"2","title":"Vantagens vs Desvantagens","modules":[{"id":"2-1","title":"Vantagens Reais","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Desvantagens e Riscos","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"Quando Usar e Quando Nao Usar","topics":6,"href":"curso/trilha2/modulo-2-3.html"}]},{"n":"3","title":"Implementacao Tecnica","modules":[{"id":"3-1","title":"Loop Basico com Claude Code","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Workflows Deterministicos com Archon","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Dashboard de Controle","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Otimizacao de Custos","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Exemplos Praticos e Prompts","modules":[{"id":"4-1","title":"Loop Simples: Task Runner","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"Loop Intermediario: GitHub Issue Bot","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Loop Avancado: Orchestrator Multi-Agent","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Anti-Patterns e Troubleshooting","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-amber-400 { color: #b45309; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(180, 83, 9, 0.12); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(180, 83, 9, 0.08); }
+    html:not(.dark) .bg-amber-900\/30 { background-color: rgba(180, 83, 9, 0.10); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(180, 83, 9, 0.25); }
+    html:not(.dark) .border-amber-500\/50 { border-color: rgba(180, 83, 9, 0.35); }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+    .dark .border-dark-600 { border-color: #374151; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s}
+    }
+    [id^="topico-"] { scroll-margin-top: 4rem; }
+  </style>
+<link href="https://inematds.github.io/loop-engineering/curso/trilha4/modulo-4-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/en/curso/trilha4/modulo-4-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/es/curso/trilha4/modulo-4-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔄</span>
+<span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Advantages</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Technical</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Practical</span></a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Track 4</a><span>/</span>
+<span class="text-amber-400">Module 4.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🐛 Intermediate Loop: GitHub Issue Bot</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">An orchestrator dispatches parallel workflows to fix 4 GitHub issues simultaneously, using worktrees and database branches.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">30</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Intermediate.</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Hands-on</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="4-2" data-inema-track="4" id="conteudo">
+<!-- TOPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🏗 Orchestrator Setup</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t1-p1">
+        The GitHub Issue Bot uses a primary Claude Code session as <strong class="text-amber-400">orchestrator</strong> that dispatches 4 parallel workflows. Each workflow is an independent session that receives an issue, implements the fix, runs tests, and creates the PR.
+      </p>
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+        "We can use Archon to send off workflows to run in parallel, handling multiple GitHub issues at the exact same time. And this is very much like loop engineering because we have our primary cloud code here as our orchestrator."
+        <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">📋 Orchestrator Prompt</h3>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-amber-300">You are the orchestrator for a GitHub issue fixing system.
+
+1. Read the list of open issues from the GitHub API
+2. For each issue, dispatch a worker workflow in a separate worktree
+3. Each worker will: extract context, classify (bug/feature), implement, validate, create PR
+4. Monitor all workers. When all PRs are ready, dispatch review workflows
+5. Report final status with PR links
+
+Issues to handle: #42, #45, #51, #58</code></pre>
+</div>
+<!-- SVG DIAGRAM: Orchestrator -> Workers flow -->
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Diagram: orchestrator dispatches 4 parallel workers that create PRs, then validates and dispatches reviews" class="w-full h-auto" role="img" viewbox="0 0 900 320">
+<defs>
+<lineargradient id="m42-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
+<filter height="180%" id="m42-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m42-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.08" r="1.3"></circle></pattern>
+<marker id="m42-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"></path></marker>
+<marker id="m42-ahb" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m42-grid)" height="320" width="900" x="0" y="0"></rect>
+<!-- Orchestrator -->
+<g filter="url(#m42-glow)"><rect fill="#1a1506" height="55" rx="14" stroke="url(#m42-grad)" stroke-width="2.5" width="220" x="340" y="20"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="450" y="45">Orchestrator</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="450" y="62">Claude Code (main session)</text>
+<!-- Arrows to workers -->
+<path d="M370,75 L150,115" fill="none" marker-end="url(#m42-ah)" opacity="0.5" stroke="#fbbf24" stroke-width="1.5"></path>
+<path d="M410,75 L340,115" fill="none" marker-end="url(#m42-ah)" opacity="0.5" stroke="#fbbf24" stroke-width="1.5"></path>
+<path d="M490,75 L560,115" fill="none" marker-end="url(#m42-ah)" opacity="0.5" stroke="#fbbf24" stroke-width="1.5"></path>
+<path d="M530,75 L750,115" fill="none" marker-end="url(#m42-ah)" opacity="0.5" stroke="#fbbf24" stroke-width="1.5"></path>
+<!-- Workers -->
+<g class="wf-a"><rect fill="#0e1b26" height="45" rx="9" stroke="#38bdf8" stroke-width="2" width="160" x="70" y="120"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="150" y="140">Worker #42</text><text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="150" y="155">worktree-42</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="45" rx="9" stroke="#38bdf8" stroke-width="2" width="160" x="260" y="120"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="340" y="140">Worker #45</text><text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="340" y="155">worktree-45</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="45" rx="9" stroke="#38bdf8" stroke-width="2" width="160" x="480" y="120"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="560" y="140">Worker #51</text><text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="560" y="155">worktree-51</text></g>
+<g class="wf-a"><rect fill="#0e1b26" height="45" rx="9" stroke="#38bdf8" stroke-width="2" width="160" x="670" y="120"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="750" y="140">Worker #58</text><text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="750" y="155">worktree-58</text></g>
+<!-- PRs -->
+<path d="M150,165 L150,195" fill="none" marker-end="url(#m42-ahb)" opacity="0.5" stroke="#38bdf8" stroke-width="1.5"></path>
+<path d="M340,165 L340,195" fill="none" marker-end="url(#m42-ahb)" opacity="0.5" stroke="#38bdf8" stroke-width="1.5"></path>
+<path d="M560,165 L560,195" fill="none" marker-end="url(#m42-ahb)" opacity="0.5" stroke="#38bdf8" stroke-width="1.5"></path>
+<path d="M750,165 L750,195" fill="none" marker-end="url(#m42-ahb)" opacity="0.5" stroke="#38bdf8" stroke-width="1.5"></path>
+<rect fill="#0e2018" height="28" rx="7" stroke="#34d399" stroke-width="1.5" width="100" x="100" y="200"></rect><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="150" y="219">PR #42</text>
+<rect fill="#0e2018" height="28" rx="7" stroke="#34d399" stroke-width="1.5" width="100" x="290" y="200"></rect><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="340" y="219">PR #45</text>
+<rect fill="#0e2018" height="28" rx="7" stroke="#34d399" stroke-width="1.5" width="100" x="510" y="200"></rect><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="560" y="219">PR #51</text>
+<rect fill="#0e2018" height="28" rx="7" stroke="#34d399" stroke-width="1.5" width="100" x="700" y="200"></rect><text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="750" y="219">PR #58</text>
+<!-- Arrows back to orchestrator for review -->
+<path d="M150,228 C150,260 450,260 450,248" fill="none" marker-end="url(#m42-ah)" opacity="0.4" stroke="#fbbf24" stroke-width="1.5"></path>
+<path d="M750,228 C750,260 450,260 450,248" fill="none" marker-end="url(#m42-ah)" opacity="0.4" stroke="#fbbf24" stroke-width="1.5"></path>
+<!-- Orchestrator validates -->
+<rect fill="#1a1506" height="35" rx="10" stroke="#fbbf24" stroke-width="1.5" width="180" x="360" y="252"></rect><text fill="#fbbf24" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="450" y="274">Validate + Review</text>
+<!-- Labels -->
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="450" y="310">9+ agent sessions: 1 orchestrator + 4 fix + 4 review</text>
+</svg>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🌳 Worktrees for Isolation</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t2-p1">
+        When multiple workers edit code in parallel, they need <strong class="text-amber-400">complete isolation</strong>. Git worktrees solve this: each worker operates in its own repository checkout, with its own branch.
+      </p>
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+        "Work trees are also a really important part of loop engineering. Boris talks about this as well. If we're having many different agents handling tasks in a loop, we need to make sure they're running in isolation so they're not stepping on each other's toes."
+        <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">💻 Worktree Commands</h3>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-amber-300"># Criar worktree para cada issue
+git worktree add ../worktree-42 -b fix/issue-42
+git worktree add ../worktree-45 -b fix/issue-45
+git worktree add ../worktree-51 -b fix/issue-51
+git worktree add ../worktree-58 -b fix/issue-58
+
+# Cada worker roda em seu diretorio
+cd ../worktree-42 &amp;&amp; claude --prompt "Fix issue #42..."
+
+# Limpar apos merge
+git worktree remove ../worktree-42</code></pre>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">💾 Database Branches with Neon</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t3-p1">
+        Code isolation (worktrees) solves half the problem. The other half is <strong class="text-amber-400">data isolation</strong>. Neon lets you create Postgres database branches for each worker, preventing migrations and test data from conflicting.
+      </p>
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+        "One thing that you have to do a lot is branches in your database. If each coding agent is working on something in parallel, you don't want them to be stepping on each other's toes, not just with code changes, but also database changes. So work trees and Neon is a super powerful thing."
+        <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">🗄 Branch per Worker</h3>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-amber-300"># Criar branch de banco para cada worker (via Neon CLI)
+neonctl branches create --name worker-42 --parent main
+neonctl branches create --name worker-45 --parent main
+
+# Cada worker recebe sua DATABASE_URL isolada
+export DATABASE_URL=$(neonctl connection-string --branch worker-42)
+
+# Apos merge do PR, deletar branch
+neonctl branches delete worker-42</code></pre>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🎯</span> Reflection Point</h3>
+<p class="text-neutral-300" data-inema-block="m4-2-t3-p2">Database branches are essential when workers run migrations or modify the schema. Without them, one worker can break the database another is using. Neon makes this trivial, but any database branching system (PlanetScale, Supabase branching) works.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔄 Full Flow: Issue to PR</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t4-p1">
+        Each worker follows a deterministic 7-step pipeline. The process is <strong class="text-amber-400">fixed</strong> (the human defines the steps), but each step uses an LLM to execute. This combines the best of loops and deterministic workflows.
+      </p>
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+        "Another really important thing about Archon is that we don’t let the agent drive everything. The process is more deterministic because we configure it in this workflow file."
+        <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">🔧 Worker Pipeline (7 Steps)</h3>
+<div class="space-y-4">
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">1</span></div><div class="flex-1"><h4 class="font-semibold text-white">Extract issue number</h4><p class="text-sm text-neutral-400">Deterministic: parses the input to get the issue ID</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">2</span></div><div class="flex-1"><h4 class="font-semibold text-white">Fetch issue context</h4><p class="text-sm text-neutral-400">GitHub API: title, description, labels, comments</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">3</span></div><div class="flex-1"><h4 class="font-semibold text-white">Classify (bug vs. feature)</h4><p class="text-sm text-neutral-400">Small LLM (Haiku/Kimi): decides the issue type</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">4</span></div><div class="flex-1"><h4 class="font-semibold text-white">Research</h4><p class="text-sm text-neutral-400">Medium LLM: investigates the codebase, identifies relevant files</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">5</span></div><div class="flex-1"><h4 class="font-semibold text-white">Implement</h4><p class="text-sm text-neutral-400">Strong LLM (Claude): writes the fix code</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">6</span></div><div class="flex-1"><h4 class="font-semibold text-white">Validate</h4><p class="text-sm text-neutral-400">Deterministic: runs tests, lint, and type checks</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">7</span></div><div class="flex-1"><h4 class="font-semibold text-white">Create PR</h4><p class="text-sm text-neutral-400">Deterministic: git push + gh pr create</p></div></div>
+</div>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">💰 Model Mix by Step</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t5-p1">
+        One of the biggest advantages of deterministic workflows over pure loops is the ability to <strong class="text-amber-400">use different models at each step</strong>. This drastically reduces cost without sacrificing quality where it matters.
+      </p>
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+        "One of the other big issues I see with using slash goal or routines or loops in cloud code is you're just using one model for pretty much everything. That's part of the problem of why it's so expensive."
+        <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">🎯 Model Map by Step</h3>
+<div class="overflow-x-auto">
+<table class="w-full text-sm">
+<thead><tr class="text-left border-b border-dark-600"><th class="py-2 px-3 text-amber-400">Step</th><th class="py-2 px-3 text-amber-400">Model</th><th class="py-2 px-3 text-amber-400">Rationale</th></tr></thead>
+<tbody class="text-neutral-300">
+<tr class="border-b border-dark-700"><td class="py-2 px-3">Extract / Fetch</td><td class="py-2 px-3">Deterministic</td><td class="py-2 px-3">No LLM, pure code</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 px-3">Classify</td><td class="py-2 px-3">Haiku / Kimi K2.7</td><td class="py-2 px-3">Simple decision, inexpensive model</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 px-3">Research</td><td class="py-2 px-3">Kimi K2.7</td><td class="py-2 px-3">Exploration, medium model</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 px-3">Implement</td><td class="py-2 px-3">Claude Code</td><td class="py-2 px-3">Requires maximum quality</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 px-3">Validate</td><td class="py-2 px-3">Deterministic</td><td class="py-2 px-3">Runs tests, no LLM</td></tr>
+<tr><td class="py-2 px-3">Review</td><td class="py-2 px-3">Codex / Claude</td><td class="py-2 px-3">Code review requires reasoning</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">❓ Questions</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t6-p1">The issue bot is powerful, but it's not magic. Real questions that come up in practice.</p>
+<div class="space-y-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-amber-400 mb-2">Actual cost of 4 issues in parallel</h4>
+<p class="text-neutral-300 text-sm">Cole reports that a single run with an orchestrator and workers cost more than 1 million tokens. With 4 running in parallel, multiply that. A mix of models helps, but the cost is still significant for anyone without an infinite budget.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-amber-400 mb-2">Quality of generated PRs</h4>
+<p class="text-neutral-300 text-sm">Automatic PRs need human review. Agent code review helps, but Cole emphasizes keeping a human in the loop: "we can always have it pause for us to validate something before it continues."</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-amber-400 mb-2">When it is and isn't worth it</h4>
+<p class="text-neutral-300 text-sm">For batches of simple issues (typos, dependency updates, standard refactorings), it's very useful. For complex issues that require design thinking, the agent will produce superficial fixes. Use it judiciously.</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🎯</span> Reflection Point</h3>
+<p class="text-neutral-300">The issue bot is the bridge between the simple loop (module 4.1) and the multi-agent orchestrator (module 4.3). It introduces parallelism, isolation, and a model mix. Once you master these concepts, the jump to multi-agent will feel natural.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Module Summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Orchestrator</strong><span class="text-neutral-400"> -- main session that dispatches and monitors workers</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Worktrees</strong><span class="text-neutral-400"> -- code isolation for parallel workers</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Neon branches</strong><span class="text-neutral-400"> -- database isolation per worker</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">7-step pipeline</strong><span class="text-neutral-400"> -- extract, fetch, classify, research, implement, validate, PR</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Model mix</strong><span class="text-neutral-400"> -- the right model for each step reduces cost</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">4.3 -- Advanced Loop: Multi-Agent Orchestrator (spec, rounds, HITL)</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-4-1.html">← Previous Module</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-3.html">Next Module →</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Loop Engineering -- Agents in Continuous Loops | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> | 2026</p>
+</div>
+</footer>
+<script>
+    function toggleTopic(b){const t=b.closest('.topic-item');const e=t.querySelector('.topic-explanation');const m=b.closest('.bg-dark-800');if(m){m.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active');})}e.classList.toggle('active')}
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark')}else{themeToggleLightIcon.classList.remove('hidden')}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light')});
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>if(window.INEMA&&typeof window.INEMA.init==='function'){window.INEMA.init()}</script>
+</body>
+</html>

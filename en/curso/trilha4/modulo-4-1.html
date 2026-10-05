@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="loop-engineering" name="inema-course"/>
+<title>Module 4.1 — Simple Loop: Task Runner | Loop Engineering</title>
+<!-- ANTI-FOUC: script bloqueante ANTES de tudo -->
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+          }
+        } else {
+          var legacy = localStorage.getItem('theme');
+          if (legacy === 'light') p.theme = 'claro';
+          else if (legacy === 'dark') p.theme = 'inema-dark';
+        }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = {
+        'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+        'claro':      { dark: false, attr: null,        cs: 'light' },
+        'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+        'foco':       { dark: null,  attr: 'foco',      cs: null    },
+        'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+      };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark');
+      else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr);
+      else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style;
+      var scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66], amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0] + '');
+      s.setProperty('--accent-s', a[1] + '%');
+      s.setProperty('--accent-l', a[2] + '%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) {
+      try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+    }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso -->
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "loop-engineering",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "O Que E Loop Engineering", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "Os Blocos Fundamentais", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Arquitetura Orchestrator-Workers", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" }
+      ]},
+      { "n": "2", "title": "Vantagens vs Desvantagens", "modules": [
+        { "id": "2-1", "title": "Vantagens Reais", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Desvantagens e Riscos", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Quando Usar e Quando Nao Usar", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" }
+      ]},
+      { "n": "3", "title": "Implementacao Tecnica", "modules": [
+        { "id": "3-1", "title": "Loop Basico com Claude Code", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Workflows Deterministicos com Archon", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Dashboard de Controle", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Otimizacao de Custos", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" }
+      ]},
+      { "n": "4", "title": "Exemplos Praticos e Prompts", "modules": [
+        { "id": "4-1", "title": "Loop Simples: Task Runner", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "Loop Intermediario: GitHub Issue Bot", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Loop Avancado: Orchestrator Multi-Agent", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Anti-Patterns e Troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-amber-400 { color: #b45309; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(180, 83, 9, 0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(180, 83, 9, 0.08); }
+    html:not(.dark) .bg-amber-900\/20 { background-color: rgba(180, 83, 9, 0.08); }
+    html:not(.dark) .bg-amber-900\/30 { background-color: rgba(180, 83, 9, 0.10); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(180, 83, 9, 0.25); }
+    html:not(.dark) .border-amber-500\/50 { border-color: rgba(180, 83, 9, 0.35); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(180, 83, 9, 0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    [id^="topico-"] { scroll-margin-top: 4rem; }
+  </style>
+<link href="https://inematds.github.io/loop-engineering/curso/trilha4/modulo-4-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/en/curso/trilha4/modulo-4-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/es/curso/trilha4/modulo-4-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔄</span>
+<span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Advantages</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Technical</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html">
+<span class="sm:hidden">T4</span>
+<span class="hidden sm:inline">Practical</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Start</a>
+<span>/</span>
+<a class="hover:text-amber-400" href="index.html">Track 4 — Practical Examples</a>
+<span>/</span>
+<span class="text-amber-400">Module 4.1</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎯 Simple Loop: Task Runner</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">The most basic example of loop engineering: a plan.md with tasks, Claude Code's loop skill, and the agent executing everything on its own.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">6</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">30</div>
+<div class="text-xs text-neutral-400">Minutes</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">Basic</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">Hands-on</div>
+<div class="text-xs text-neutral-400">Type</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="4-1" data-inema-track="4" id="conteudo">
+<!-- TOPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📝 The Prompt That Triggers the Loop</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t1-p1">
+        The starting point for any task runner is the prompt that loads Claude Code's loop capability. With a single line, the agent knows how to set up the loop system, iterate through tasks, and schedule itself again.
+      </p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+<span class="mr-2">📋</span> Ready-to-Use Prompt (copy and use)
+        </h3>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 mb-4"><code class="text-amber-300 text-sm">Load the loop skill, work through plan.md one task at a time</code></pre>
+<p class="text-neutral-300 text-sm mb-4" data-inema-block="m4-1-t1-p2">This prompt does three things: loads the "loop skill" (a native Claude Code capability), points to the plan.md file as the source of tasks, and instructs the agent to process one task per cycle.</p>
+</div>
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+        "Sei que este é um exemplo muito, muito básico, mas quero manter tudo simples de propósito. Mas ele escreveu o prompt: /loop work through plan.md one task at a time."
+        <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
+</blockquote>
+<div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">⚙ What Happens Internally</h3>
+<div class="space-y-3">
+<div class="flex items-start space-x-3">
+<span class="text-amber-400 font-bold text-sm mt-0.5">1.</span>
+<p class="text-neutral-300 text-sm">Claude Code loads the loop skill as its first action: "it loads the loop skill as the very first thing"</p>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-amber-400 font-bold text-sm mt-0.5">2.</span>
+<p class="text-neutral-300 text-sm">Identifies that plan.md contains a sequential task list</p>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-amber-400 font-bold text-sm mt-0.5">3.</span>
+<p class="text-neutral-300 text-sm">Automatically configures /loop and schedules the first wake-up</p>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-amber-400 font-bold text-sm mt-0.5">4.</span>
+<p class="text-neutral-300 text-sm">The agent writes the loop prompt itself: “/loop work through plan.md one task at a time”</p>
+</div>
+</div>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📋 plan.md Template</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t2-p1">
+        The plan.md is the contract between you and the loop. Each task must be <strong class="text-amber-400">specific, verifiable, and independent</strong>. Vague tasks produce vague results. Interdependent tasks break the loop's isolation.
+      </p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+<span class="mr-2">📄</span> Template (copy and adapt)
+        </h3>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-neutral-300"># Plan - [Nome do Projeto]
+
+## Tasks
+
+- [ ] **Task 1: Setup inicial**
+  Criar a estrutura de diretorios e arquivos base.
+  Criterio: diretorios existem, arquivos criados sem erros.
+
+- [ ] **Task 2: Implementar componente X**
+  Criar o componente principal com props tipadas.
+  Criterio: componente renderiza sem erros, tipos corretos.
+
+- [ ] **Task 3: Adicionar estilos**
+  Aplicar Tailwind CSS seguindo o design system.
+  Criterio: visual consistente, responsivo em mobile.
+
+- [ ] **Task 4: Escrever testes**
+  Testes unitarios para cada funcao publica.
+  Criterio: todos os testes passam, coverage &gt; 80%.
+
+- [ ] **Task 5: Documentacao**
+  README com instrucoes de uso e exemplos.
+  Criterio: novo dev consegue rodar seguindo o README.</code></pre>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Best Practices</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>One task per checkbox</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Explicit acceptance criteria</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Tasks that are independent of each other</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Logical execution order</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Anti-Patterns</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Make the app work" (too vague)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>10+ tasks (excessive fragmentation)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tasks that depend on external input</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>No "done" criteria</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔍 Monitoring Progress</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t3-p1">
+        After you start the loop, the agent works autonomously. Each cycle follows the same pattern: wake up, check the next task, execute, validate, and schedule the next wake-up. You can monitor it directly in the terminal.
+      </p>
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+        "It says this is a sequential list of tasks: it’ll run the first one and then schedule a short wake-up. So it sets up /loop itself."
+        <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">📊 The Cycle of a Wake-up</h3>
+<div class="space-y-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-sm">1</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Wake-up</h4>
+<p class="text-sm text-neutral-400">The /loop wakes the agent with the prompt it wrote itself</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-sm">2</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Check plan.md</h4>
+<p class="text-sm text-neutral-400">Reads the file, identifies the next unmarked task</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-sm">3</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Execute task</h4>
+<p class="text-sm text-neutral-400">Implements, generates files, runs necessary commands</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-sm">4</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Validate and mark</h4>
+<p class="text-sm text-neutral-400">Checks the acceptance criterion, marks [x] in plan.md, schedules the next wake-up</p>
+</div>
+</div>
+</div>
+</div>
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+        "It’s resuming with a /loop wake-up. And look, I didn’t write that prompt."
+        <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
+</blockquote>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">⚙ Configuring Exit Conditions</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t4-p1">
+        A loop without an exit condition is the costliest mistake you can make. The agent will run indefinitely, spending tokens without converging on a result. <strong class="text-amber-400">Always define when the loop should stop.</strong>
+</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">🛑 Three Ways to Stop</h3>
+<div class="space-y-4">
+<div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">1. Natural completion</h4>
+<p class="text-neutral-300 text-sm mb-2">All tasks in plan.md marked as [x].</p>
+<pre class="bg-dark-900 rounded-lg p-3 text-sm"><code class="text-amber-300">/goal All tasks in plan.md are checked off</code></pre>
+</div>
+<div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">2. Max iterations</h4>
+<p class="text-neutral-300 text-sm mb-2">Safety net: stop after N cycles, regardless of state.</p>
+<pre class="bg-dark-900 rounded-lg p-3 text-sm"><code class="text-amber-300">/loop --max-iterations 10 work through plan.md one task at a time</code></pre>
+</div>
+<div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">3. Failure condition</h4>
+<p class="text-neutral-300 text-sm mb-2">If a task fails 3 times, stop and report it.</p>
+<pre class="bg-dark-900 rounded-lg p-3 text-sm"><code class="text-amber-300">If a task fails validation 3 times, stop the loop and report what went wrong.</code></pre>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">🎯</span> Reflection Point
+        </h3>
+<p class="text-neutral-300" data-inema-block="m4-1-t4-p2">The safest exit condition is a combination of /goal (natural completion) + max iterations (safety net). That way, if something goes wrong and the agent can’t finish, it stops instead of burning tokens indefinitely.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🔄 Prompt Variations</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t5-p1">
+        The basic prompt works for simple task lists, but different scenarios call for variations. Here are prompts adapted for the most common use cases.
+      </p>
+<div class="space-y-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="flex items-center space-x-3 mb-3">
+<span class="px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-bold rounded-full">REFACTORING</span>
+</div>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm mb-2"><code class="text-amber-300">Load the loop skill. Work through refactor-plan.md one file at a time.
+For each file: refactor, run tests, commit if green. Skip if tests fail after 2 retries.</code></pre>
+<p class="text-neutral-400 text-sm">Ideal for incremental refactoring with a test safety net.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="flex items-center space-x-3 mb-3">
+<span class="px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-bold rounded-full">MIGRATION</span>
+</div>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm mb-2"><code class="text-amber-300">Load the loop skill. Work through migration-plan.md one step at a time.
+After each step, validate by running the app and checking for errors.
+Never proceed to the next step if the current one has errors.</code></pre>
+<p class="text-neutral-400 text-sm">For version or framework migrations with rigorous validation.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="flex items-center space-x-3 mb-3">
+<span class="px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-bold rounded-full">DOCUMENTATION</span>
+</div>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm mb-2"><code class="text-amber-300">Load the loop skill. Work through docs-plan.md one section at a time.
+For each section: read the source code, write documentation, include code examples.
+Mark the task done when the doc file is created and has at least 200 words.</code></pre>
+<p class="text-neutral-400 text-sm">Generating documentation from source code.</p>
+</div>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">❓ Questions</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t6-p1">
+        Before using the task runner for everything, it’s worth raising the questions Cole Medin himself asks about the basic approach.
+      </p>
+<div class="space-y-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-amber-400 mb-2">Does the simple loop scale?</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m4-1-t6-p2">For 5 tasks, it works. For 50, the context window will explode. Cole Medin notes that "if you loop for a while, you're going to completely bloat your context for your LLM and overwhelm it." The simple task runner has a natural scaling limit.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-amber-400 mb-2">Quality vs. speed</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m4-1-t6-p3">The loop executes quickly, but without human review between tasks. For PoCs and exploration, that's acceptable. For production code, Cole is direct: “there is no way you're gonna convince me that loop engineering is the way to get the best results possible.”</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-amber-400 mb-2">Cost of a basic loop</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m4-1-t6-p4">Even the simplest loop accumulates tokens quickly. Each wake-up reloads the context. For 5 tasks with validation, expect to spend between 50k and 200k tokens depending on complexity.</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">🎯</span> Reflection Point
+        </h3>
+<p class="text-neutral-300" data-inema-block="m4-1-t6-p5">The task runner is the entry point. Start here, understand the mechanism, and when you need more control, move on to module 4.2 (orchestrator + workers). The progression is deliberate: simple first, complex when needed.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done hidden">Read</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">📋</span> Module Summary
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-amber-400 mt-1">✓</span>
+<div><strong class="text-white">Basic prompt</strong><span class="text-neutral-400"> -- "Load the loop skill, work through plan.md one task at a time"</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-amber-400 mt-1">✓</span>
+<div><strong class="text-white">plan.md</strong><span class="text-neutral-400"> -- specific, verifiable, independent tasks with checkboxes</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-amber-400 mt-1">✓</span>
+<div><strong class="text-white">Loop cycle</strong><span class="text-neutral-400"> -- wake up, check, execute, validate, schedule next</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-amber-400 mt-1">✓</span>
+<div><strong class="text-white">Exit conditions</strong><span class="text-neutral-400"> -- /goal + max iterations as a safety net</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-amber-400 mt-1">✓</span>
+<div><strong class="text-white">Limitation</strong><span class="text-neutral-400"> -- doesn't scale beyond ~5-10 tasks without context bloat</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">4.2 -- Intermediate Loop: GitHub Issue Bot (orchestrator + parallel workers)</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-2.html">Next Module →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Loop Engineering -- Agents in Continuous Loops | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> | 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      if (moduleCard) {
+        moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+          if (exp !== explanation) exp.classList.remove('active');
+        });
+      }
+      explanation.classList.toggle('active');
+    }
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+      document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') {
+      window.INEMA.init();
+    }
+  </script>
+</body>
+</html>

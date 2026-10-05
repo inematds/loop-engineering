@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="loop-engineering" name="inema-course"/>
+<title>Módulo 3.3 — Dashboard de control (Agent Control Plane) | Loop Engineering</title>
+<!-- Anti-FOUC (PRIMEIRO no head, antes de tudo) -->
+<script>
+  (function(){try{var h=document.documentElement,D={theme:'inema-dark',font:'inter',fontScale:100,lineWidth:68,leading:1.7,accent:'emerald'};function c(o){var r={};for(var x in o)r[x]=o[x];return r}var p=c(D);try{var raw=localStorage.getItem('inema.prefs');if(raw){var j=JSON.parse(raw);if(j&&typeof j==='object')for(var k in D)if(j[k]!=null)p[k]=j[k]}else{var l=localStorage.getItem('theme');if(l==='light')p.theme='claro';else if(l==='dark')p.theme='inema-dark'}}catch(e){p=c(D)}var T={'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'}};var t=T[p.theme]||T['inema-dark'];if(t.dark===true)h.classList.add('dark');else if(t.dark===false)h.classList.remove('dark');if(t.attr)h.setAttribute('data-theme',t.attr);else h.removeAttribute('data-theme');h.style.colorScheme=t.cs?t.cs:(h.classList.contains('dark')?'dark':'light');h.setAttribute('data-font',p.font||'inter');h.setAttribute('data-accent',p.accent||'emerald');var s=h.style,sc=+p.fontScale||100;s.setProperty('--inema-font-scale',(sc/100).toString());s.setProperty('font-size',sc+'%');s.setProperty('--measure',(+p.lineWidth||68)+'ch');s.setProperty('--lh-body',(+p.leading||1.7).toString());var fam=p.font==='system'?'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif':p.font==='leitura'?'"Atkinson Hyperlegible","Inter",system-ui,sans-serif':'"Inter",system-ui,sans-serif';s.setProperty('--font-body',fam);var A={emerald:[152,76,45],blue:[217,91,60],purple:[258,90,66],amber:[38,92,50],teal:[174,72,41],rose:[350,89,60]};var a=A[p.accent]||A.emerald;s.setProperty('--accent-h',a[0]+'');s.setProperty('--accent-s',a[1]+'%');s.setProperty('--accent-l',a[2]+'%');s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)')}catch(err){try{document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}catch(e){}}})();
+  </script>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em toda pagina) -->
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "loop-engineering",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "O Que E Loop Engineering", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "Os Blocos Fundamentais", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Arquitetura Orchestrator-Workers", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" }
+      ]},
+      { "n": "2", "title": "Vantagens vs Desvantagens", "modules": [
+        { "id": "2-1", "title": "Vantagens Reais", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Desvantagens e Riscos", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Quando Usar e Quando Nao Usar", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" }
+      ]},
+      { "n": "3", "title": "Implementacao Tecnica", "modules": [
+        { "id": "3-1", "title": "Loop Basico com Claude Code", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Workflows Deterministicos com Archon", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Dashboard de Controle", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Otimizacao de Custos", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" }
+      ]},
+      { "n": "4", "title": "Exemplos Praticos e Prompts", "modules": [
+        { "id": "4-1", "title": "Loop Simples: Task Runner", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "Loop Intermediario: GitHub Issue Bot", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Loop Avancado: Orchestrator Multi-Agent", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Anti-Patterns e Troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple T3) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(124, 58, 237, 0.10); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG light mode */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* SVG pulse animation */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s}
+    }
+
+    /* Scroll margin for sticky nav */
+    [id^="topico-"] { scroll-margin-top: 4rem; }
+  </style>
+<link href="https://inematds.github.io/loop-engineering/curso/trilha3/modulo-3-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/en/curso/trilha3/modulo-3-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/es/curso/trilha3/modulo-3-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔁</span>
+<span class="font-bold text-lg hidden sm:inline">Ingeniería de bucles</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span><span class="hidden sm:inline">Trade-offs</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="sm:hidden">T3</span><span class="hidden sm:inline">Implementación</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="sm:hidden">T4</span><span class="hidden sm:inline">Práctica</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a>
+<span>/</span>
+<span class="text-purple-400">Módulo 3.3</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📊 Panel de control (Agent Control Plane)</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">El sistema nervioso de los loops: cómo observar las decisiones del orchestrator en tiempo real, rastrear costos, implementar human-in-the-loop y hacer deploy para acceso remoto.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">35</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Práctico</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Infraestructura</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="3-3" data-inema-track="3" id="conteudo">
+<!-- TOPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🎯 Qué es el Agent Control Plane</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t1-p1">
+        Cole Medin construyó Agent Control Plane como respuesta directa a los problemas que identificó con el loop engineering puro. Y es un <strong class="text-purple-400">dashboard de código abierto en GitHub</strong> que funciona como el sistema nervioso central de cualquier configuración de loops: durabilidad, observabilidad y human-in-the-loop en un solo lugar.
+      </p>
+<blockquote class="border-l-4 border-purple-500/50 pl-4 mb-6 italic text-neutral-300">
+        "Construí este dashboard que me entusiasma mucho mostrarte ahora mismo. De hecho, lo publiqué como código abierto en GitHub. Lo hice para resolver muchos de los problemas que tenemos ahora con la ingeniería de loops."
+        <footer class="text-purple-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+</blockquote>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🧩</span> Los tres pilares del dashboard
+        </h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-bold text-purple-400 mb-2">Durabilidad</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-t1-p2">Todos los loops, eventos y logs quedan en Postgres. Si el agente falla, el orchestrator retoma desde donde se detuvo leyendo el state de la base de datos.</p>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-bold text-purple-400 mb-2">Observabilidad</h4>
+<p class="text-neutral-300 text-sm">Ver en tiempo real las decisiones del orchestrator, el progreso de los workers y el costo acumulado por run.</p>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-bold text-purple-400 mb-2">Human-in-the-Loop</h4>
+<p class="text-neutral-300 text-sm">Pausar el loop entre rondas, validar los resultados y aprobarlos o rechazarlos antes de continuar.</p>
+</div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Contexto: por qué existe esto</h3>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-t1-p3">Cole es honesto al decir que esto es "more experimental". Pero la motivación es concreta: sin un dashboard, los loops son cajas negras. Los pones en marcha, te vas y, cuando vuelves, no sabes si el resultado es bueno o si gastó tokens en vano. Agent Control Plane es un intento de resolver esto de forma práctica y replicable.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done hidden">Leído</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">💾 Postgres/Neon como almacén de estado</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t2-p1">
+        El corazón del sistema es una base de datos Postgres alojada en <strong class="text-purple-400">Neon</strong> (Postgres serverless). Todo el estado de los loops está ahí: en qué ronda estamos, qué workers se iniciaron, cuáles terminaron, cuáles fallaron y cuál es el costo acumulado.
+      </p>
+<blockquote class="border-l-4 border-purple-500/50 pl-4 mb-6 italic text-neutral-300">
+        "Gestionamos todo nuestro estado en una base de datos externa. Así no dependemos de que se conserve en una sesión de un agente de programación."
+        <footer class="text-purple-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4">🔄 El ciclo orchestrator-state-workers</h3>
+<div class="space-y-4">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+<span class="text-purple-400 font-bold text-sm">1</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">El orchestrator lee el state</h4>
+<p class="text-sm text-neutral-400">Consulta la base de datos para saber: ¿qué tareas están pendientes? ¿Qué workers completaron su trabajo? ¿Cuál es el progreso general?</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+<span class="text-purple-400 font-bold text-sm">2</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">El orchestrator decide y asigna workers</h4>
+<p class="text-sm text-neutral-400">Con base en el estado, planifica la siguiente ronda y lanza workers con prompts específicos.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+<span class="text-purple-400 font-bold text-sm">3</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Los workers actualizan el estado</h4>
+<p class="text-sm text-neutral-400">Cada worker guarda su resultado en la base de datos. El orquestador ve el estado actualizado en la siguiente ronda.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+<span class="text-purple-400 font-bold text-sm">4</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">El loop continúa hasta completarse</h4>
+<p class="text-sm text-neutral-400">El ciclo se repite hasta que el orchestrator determine que todas las tareas están completas o hasta que intervenga una persona en el human-in-the-loop.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done hidden">Leído</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔍 Observabilidad: decisiones en tiempo real</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t3-p1">
+        El verdadero poder del dashboard está en <strong class="text-purple-400">ver exactamente qué decide el orchestrator en cada round</strong>: cuántos workers inicia, qué prompts envía y cómo reacciona a los resultados que recibe. Sin esto, estás pilotando a ciegas.
+      </p>
+<blockquote class="border-l-4 border-purple-500/50 pl-4 mb-6 italic text-neutral-300">
+        "Poder ver exactamente las decisiones que se toman aquí hace que me resulte más fácil revisar todo esto, incluso hacer que mi agente de programación analice las ejecuciones en la base de datos y luego descubrir cómo mejorar el loop."
+        <footer class="text-purple-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+</blockquote>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">Lo que ves en el dashboard</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Historial completo de ejecuciones con todas las rondas</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Decisiones del orchestrator por ronda (cuántos workers, qué tareas)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Tokens consumidos por ronda y por worker</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Estado de cada worker: completó, falló, en progreso</span></li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-bold text-neutral-300 mb-4">La demostración en vivo</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-t3-p2">Cole lo demostró en vivo en el video: creó un prompt para construir un tablero Kanban como single-page app y puso en marcha el loop. En el dashboard, se podía ver al orchestrator planificando, gastando 6.000 tokens en la planificación inicial y despachando tres workers en el primer round. "We can see that the orchestrator is deciding how to split up the work right now."</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Idea clave: el dashboard como herramienta de mejora
+        </h3>
+<p class="text-neutral-300" data-inema-block="m3-3-t3-p3">Cole señala que la observabilidad no sirve solo para monitorear, sino también para mejorar. Al analizar los logs en la base de datos, tú (o incluso tu coding agent) puedes identificar patrones de ineficiencia y ajustar el harness. El dashboard se convierte en una herramienta de aprendizaje continuo sobre el propio sistema.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done hidden">Leído</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">💰 Seguimiento de costos por run</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t4-p1">
+        Uno de los recursos más prácticos del dashboard es el <strong class="text-purple-400">seguimiento de costos integrado</strong>. Cole construyó esto porque se dio cuenta de que, sin visibilidad de los costos, es imposible saber si el loop es eficiente o está quemando dinero.
+      </p>
+<blockquote class="border-l-4 border-purple-500/50 pl-4 mb-6 italic text-neutral-300">
+        "En una sola ejecución, gasté más de un millón de tokens solo para crear una aplicación relativamente sencilla. Y sí, estoy seguro de que podría optimizar muchas cosas. Pero creo que con solo mirar esto se entiende por qué sería tan caro."
+        <footer class="text-purple-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4">📈 Lo que revela el seguimiento de costos</h3>
+<div class="space-y-3">
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 font-bold">1.</span>
+<div>
+<h4 class="font-semibold text-white">Costo del orchestrator frente a los workers</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-t4-p2">El orchestrator gasta tokens razonando sobre el estado y haciendo planes. Los workers gastan tokens ejecutando. Ver el desglose muestra dónde optimizar.</p>
+</div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 font-bold">2.</span>
+<div>
+<h4 class="font-semibold text-white">Costo por ronda</h4>
+<p class="text-neutral-300 text-sm">Si el costo por ronda está aumentando, puede indicar context bloat o un orchestrator ineficiente. Si se mantiene estable, el sistema está saludable.</p>
+</div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 font-bold">3.</span>
+<div>
+<h4 class="font-semibold text-white">Costo total de la ejecución</h4>
+<p class="text-neutral-300 text-sm">La pregunta final: ¿el valor que entrega el loop justifica el costo? Si un tablero Kanban costó 1M tokens, conviene replantear el enfoque.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> El número que asusta
+        </h3>
+<p class="text-neutral-300" data-inema-block="m3-3-t4-p3">1 millón de tokens para una app relativamente simple. Y Cole usa Kimi (el modelo más barato), no Opus. Sin seguimiento de costos, este tipo de gasto pasa desapercibido. El dashboard convierte un número invisible en algo sobre lo que se puede actuar.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done hidden">Leído</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">✋ Intervención humana: pausa + aprobación</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t5-p1">
+        Cole considera el human-in-the-loop la <strong class="text-purple-400">el guardrail más importante</strong> para la ingeniería de loops. El dashboard permite pausar el loop después de cualquier round y exigir aprobación humana antes de continuar. Esto resuelve el problema clásico de los loops descontrolados.
+      </p>
+<blockquote class="border-l-4 border-purple-500/50 pl-4 mb-6 italic text-neutral-300">
+        "Incluso podemos incluir a una persona en el loop para revisar lo que pasó en la primera ronda antes de que el orquestador pase a la siguiente. Ese es el tipo de confiabilidad que creo que realmente necesitamos ahora."
+        <footer class="text-purple-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4">Cómo funciona en la práctica</h3>
+<div class="space-y-4">
+<div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Pausa entre rondas</h4>
+<p class="text-sm text-neutral-400" data-inema-block="m3-3-t5-p2">El loop completa un round, guarda el estado en la base de datos y se detiene. La persona recibe una notificación (o lo ve en el dashboard) y decide: aprobar y continuar, o intervenir y hacer ajustes.</p>
+</div>
+<div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Aprobar con identidad</h4>
+<p class="text-sm text-neutral-400">El botón "approve and resume" del dashboard verifica la identidad del usuario mediante Retool. Solo quien tiene permiso puede aprobar la continuación del loop. Esto es esencial para el trabajo en equipo.</p>
+</div>
+<div class="bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Verificación del estado mediante el orquestador</h4>
+<p class="text-sm text-neutral-400">Mientras se ejecutan los workflows, puedes preguntarle al orchestrator cuál es el estado. "Incluso puedes pedir una actualización del estado mientras se ejecutan los workflows de Archon."</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">🎯</span> Punto de reflexión
+        </h3>
+<p class="text-neutral-300" data-inema-block="m3-3-t5-p3">El problema con muchos setups de loop engineering es que la gente "configura estos sistemas para que sigan y sigan y sigan. Y luego los dejas funcionando durante un día. Cuando vuelven, solo tienes basura". HITL no es una sobrecarga: es la diferencia entre un loop útil y uno destructivo.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done hidden">Leído</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">❓ Preguntas y deploy con Retool</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t6-p1">
+        Cole demuestra cómo el dashboard local puede ser <strong class="text-purple-400">deployado en la cloud mediante Retool</strong>, convirtiendo una herramienta personal en infraestructura para el equipo. El proceso es simple: importar React, conectarse a Neon y tener una URL accesible desde cualquier lugar.
+      </p>
+<blockquote class="border-l-4 border-purple-500/50 pl-4 mb-6 italic text-neutral-300">
+        "También podemos implementar este tipo de dashboard en la nube. Así podemos acceder desde cualquier lugar e incluso empezar a compartir la configuración de nuestro loop con el equipo."
+        <footer class="text-purple-400 text-sm mt-1 not-italic">— Cole Medin</footer>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4">Deploy en 3 pasos</h3>
+<div class="space-y-3">
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 font-bold">1.</span>
+<p class="text-neutral-300 text-sm">Importa el archivo zip del frontend React a Retool. El agente de Retool conecta todo automáticamente.</p>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 font-bold">2.</span>
+<p class="text-neutral-300 text-sm">Conectarte a la base de datos Neon creando un recurso Postgres en Retool con las credenciales de conexión.</p>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 font-bold">3.</span>
+<p class="text-neutral-300 text-sm">Configurar grupos de permisos para controlar quién puede aprobar/rechazar rondas del loop.</p>
+</div>
+</div>
+</div>
+<div class="space-y-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-purple-400 mb-2">¿Es necesario que exista el dashboard?</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-t6-p2">Sí, si planeas usar loops en serio. Sin visibilidad, estás operando a ciegas. Cole fue directo: construyó el dashboard porque lo necesitaba, no como ejercicio académico. La observabilidad es un requisito, no algo simplemente deseable.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-purple-400 mb-2">No tiene que ser sofisticado</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-t6-p3">El objetivo no es construir un dashboard empresarial. Es tener la visibilidad mínima: qué rondas se ejecutaron, cuánto costaron y dónde se equivocó el orchestrator. Incluso un script que consulta la base de datos y genera un informe es mejor que nada.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-purple-400 mb-2">El futuro: dashboards como "second brain"</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-3-t6-p4">Cole menciona que está integrando dashboards como parte de su "second brain" para gestionar tareas autónomas. La idea es que el dashboard no es solo para loops de código, sino para cualquier sistema en el que los agentes trabajen de forma autónoma y necesiten supervisión.</p>
+</div>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-purple-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done hidden">Leído</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">📋</span> Resumen del módulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 mt-1">✓</span>
+<div><strong class="text-white">Agent Control Plane</strong><span class="text-neutral-400"> - dashboard open source para gestionar loops con durabilidad, observabilidad y HITL</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 mt-1">✓</span>
+<div><strong class="text-white">Postgres/Neon</strong><span class="text-neutral-400"> - un state store externo que permite retomar loops después de fallas y analizar el historial</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 mt-1">✓</span>
+<div><strong class="text-white">Observabilidad</strong><span class="text-neutral-400"> - ver las decisiones del orchestrator, el progreso de los workers y el costo en tiempo real</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 mt-1">✓</span>
+<div><strong class="text-white">Seguimiento de costos</strong><span class="text-neutral-400"> - Más de 1M de tokens para una app simple; sin visibilidad, el gasto pasa desapercibido</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 mt-1">✓</span>
+<div><strong class="text-white">Human-in-the-loop</strong><span class="text-neutral-400"> - pausar + aprobar entre rondas para evitar "ejecutarlo durante un día y volver para encontrar un desastre"</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Módulo siguiente:</h3>
+<p class="text-neutral-300">3.4 - Optimización de costos: combinación de proveedores, enrutamiento de modelos, estado externo y métricas para mantener viables los ciclos</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-3-2.html">← Módulo anterior</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-4.html">Módulo siguiente →</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Ingeniería de bucles — Agentes en bucle continuo - 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') {
+      window.INEMA.init();
+    }
+  </script>
+</body>
+</html>

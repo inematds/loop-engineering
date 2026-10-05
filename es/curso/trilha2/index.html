@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="loop-engineering" name="inema-course"/>
+<title>Ruta 2 — Ventajas vs. desventajas | Loop Engineering</title>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
+  (function(){try{var h=document.documentElement,D={theme:'inema-dark',font:'inter',fontScale:100,lineWidth:68,leading:1.7,accent:'blue'};function c(o){var r={};for(var x in o)r[x]=o[x];return r}var p=c(D);try{var raw=localStorage.getItem('inema.prefs');if(raw){var j=JSON.parse(raw);if(j&&typeof j==='object')for(var k in D)if(j[k]!=null)p[k]=j[k]}else{var l=localStorage.getItem('theme');if(l==='light')p.theme='claro';else if(l==='dark')p.theme='inema-dark'}}catch(e){p=c(D)}var T={'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'}};var t=T[p.theme]||T['inema-dark'];if(t.dark===true)h.classList.add('dark');else if(t.dark===false)h.classList.remove('dark');if(t.attr)h.setAttribute('data-theme',t.attr);else h.removeAttribute('data-theme');h.style.colorScheme=t.cs?t.cs:(h.classList.contains('dark')?'dark':'light');h.setAttribute('data-font',p.font||'inter');h.setAttribute('data-accent',p.accent||'blue');var s=h.style,sc=+p.fontScale||100;s.setProperty('--inema-font-scale',(sc/100).toString());s.setProperty('font-size',sc+'%');s.setProperty('--measure',(+p.lineWidth||68)+'ch');s.setProperty('--lh-body',(+p.leading||1.7).toString());var fam=p.font==='system'?'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif':p.font==='leitura'?'"Atkinson Hyperlegible","Inter",system-ui,sans-serif':'"Inter",system-ui,sans-serif';s.setProperty('--font-body',fam);var A={emerald:[152,76,45],blue:[217,91,60],purple:[258,90,66],amber:[38,92,50],teal:[174,72,41],rose:[350,89,60]};var a=A[p.accent]||A.blue;s.setProperty('--accent-h',a[0]+'');s.setProperty('--accent-s',a[1]+'%');s.setProperty('--accent-l',a[2]+'%');s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)')}catch(err){try{document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}catch(e){}}})();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso -->
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "loop-engineering",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "O Que E Loop Engineering", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "Os Blocos Fundamentais", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Arquitetura Orchestrator-Workers", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" }
+      ]},
+      { "n": "2", "title": "Vantagens vs Desvantagens", "modules": [
+        { "id": "2-1", "title": "Vantagens Reais", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Desvantagens e Riscos", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Quando Usar e Quando Nao Usar", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" }
+      ]},
+      { "n": "3", "title": "Implementacao Tecnica", "modules": [
+        { "id": "3-1", "title": "Loop Basico com Claude Code", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Workflows Deterministicos com Archon", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Dashboard de Controle", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Otimizacao de Custos", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" }
+      ]},
+      { "n": "4", "title": "Exemplos Praticos e Prompts", "modules": [
+        { "id": "4-1", "title": "Loop Simples: Task Runner", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "Loop Intermediario: GitHub Issue Bot", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Loop Avancado: Orchestrator Multi-Agent", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Anti-Patterns e Troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha blue T2) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(37, 99, 235, 0.10); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37, 99, 235, 0.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - emerald for T1 nav */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* SVG light mode */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* SVG pulse animation */
+    @keyframes t2-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .t2-a { animation: t2-pulse 2.6s ease-in-out infinite; }
+      .t2-a:nth-child(2){animation-delay:.25s} .t2-a:nth-child(3){animation-delay:.5s}
+    }
+  </style>
+<link href="https://inematds.github.io/loop-engineering/curso/trilha2/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/en/curso/trilha2/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/es/curso/trilha2/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="./" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">♻</span>
+<span class="font-bold text-lg hidden sm:inline">Ingeniería de bucles</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Ventajas</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Técnica</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="sm:hidden">T4</span>
+<span class="hidden sm:inline">Práctica</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<nav class="flex items-center space-x-2 text-sm text-neutral-400 mb-6">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<span class="text-blue-400">Ruta 2</span>
+</nav>
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">TRILHA 2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">⚖ Ventajas vs. desventajas</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+        Análisis honesto y sin hype: qué hace bien Loop Engineering, dónde falla y cuándo tiene sentido cada enfoque en la práctica.
+      </p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">3</div>
+<div class="text-xs text-neutral-400">Módulos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">18</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">~1h30</div>
+<div class="text-xs text-neutral-400">Duración</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Básico</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- HERO SVG -->
+<section class="mb-12">
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Diagrama: equilibrio entre ventajas (autonomía, escala, composabilidad) y desventajas (costo, calidad, complejidad)" class="w-full h-auto" role="img" viewbox="0 0 1000 220">
+<defs>
+<lineargradient id="t2-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop>
+</lineargradient>
+<filter height="180%" id="t2-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="t2-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#60a5fa" opacity="0.08" r="1.3"></circle>
+</pattern>
+</defs>
+<rect fill="url(#t2-grid)" height="220" width="1000" x="0" y="0"></rect>
+<!-- Balanca central -->
+<g filter="url(#t2-glow)">
+<rect fill="#0e1826" height="60" rx="14" stroke="url(#t2-grad)" stroke-width="2" width="160" x="420" y="80"></rect>
+</g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="500" y="105">Ingeniería de bucles</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="500" y="125">análisis honesto</text>
+<!-- Seta esquerda -->
+<path d="M420,110 L280,110" fill="none" opacity="0.5" stroke="#34d399" stroke-width="1.8"></path>
+<!-- Vantagens -->
+<g font-family="Inter,sans-serif">
+<rect fill="#0e2018" height="40" rx="10" stroke="#34d399" stroke-width="1.5" width="210" x="60" y="30"></rect>
+<text fill="#34d399" font-size="13" font-weight="600" text-anchor="middle" x="165" y="55">✓ Autonomía 24/7</text>
+<rect fill="#0e2018" height="40" rx="10" stroke="#34d399" stroke-width="1.5" width="210" x="60" y="85"></rect>
+<text fill="#34d399" font-size="13" font-weight="600" text-anchor="middle" x="165" y="110">✓ Escala paralela</text>
+<rect fill="#0e2018" height="40" rx="10" stroke="#34d399" stroke-width="1.5" width="210" x="60" y="140"></rect>
+<text fill="#34d399" font-size="13" font-weight="600" text-anchor="middle" x="165" y="165">✓ Componibilidad</text>
+</g>
+<!-- Seta direita -->
+<path d="M580,110 L720,110" fill="none" opacity="0.5" stroke="#f87171" stroke-width="1.8"></path>
+<!-- Desvantagens -->
+<g font-family="Inter,sans-serif">
+<rect fill="#1a0e0e" height="40" rx="10" stroke="#f87171" stroke-width="1.5" width="210" x="730" y="30"></rect>
+<text fill="#f87171" font-size="13" font-weight="600" text-anchor="middle" x="835" y="55">✗ Costo elevado</text>
+<rect fill="#1a0e0e" height="40" rx="10" stroke="#f87171" stroke-width="1.5" width="210" x="730" y="85"></rect>
+<text fill="#f87171" font-size="13" font-weight="600" text-anchor="middle" x="835" y="110">✗ Calidad inestable</text>
+<rect fill="#1a0e0e" height="40" rx="10" stroke="#f87171" stroke-width="1.5" width="210" x="730" y="140"></rect>
+<text fill="#f87171" font-size="13" font-weight="600" text-anchor="middle" x="835" y="165">✗ Alta complejidad</text>
+</g>
+</svg>
+</div>
+</section>
+<!-- MAPA DA TRILHA -->
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Mapa de la ruta</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-1">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.1</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">✅ Ventajas reales</h3>
+<p class="text-xs text-neutral-400">Autonomía, escala, composabilidad</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.2</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">⚠ Desventajas y riesgos</h3>
+<p class="text-xs text-neutral-400">Costo, calidad, context bloat</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-3">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold text-sm">2.3</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🧭 Cuándo usarlo y cuándo no</h3>
+<p class="text-xs text-neutral-400">Marco de decisión práctico</p>
+</a>
+</div>
+</section>
+<!-- CONTEUDO DETALHADO -->
+<h2 class="text-2xl font-bold mb-6">Contenido detallado</h2>
+<!-- MODULO 2.1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="modulo-2-1" id="modulo-2-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.1</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">✅ Ventajas reales</h3>
+<p class="text-neutral-400 text-sm">Lo que Loop Engineering hace bien: autonomía, escala, composabilidad, exploración e incrementalidad.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t2-m1-topic1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🤖</span>
+<div>
+<span class="font-medium">Autonomía: agentes 24/7</span>
+<span class="text-neutral-500 text-sm ml-2">- Trabajan sin intervención humana</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m1-topic1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Con los loops configurados, los agentes siguen trabajando incluso cuando no estás presente. Las tareas se procesan de forma continua, día y noche.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">El cuello de botella de la productividad deja de ser el tiempo disponible de la persona. Las tareas de mantenimiento, revisión y corrección pueden ejecutarse en segundo plano.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Fire-and-forget con validación. Procesamiento en segundo plano. Desacoplamiento humano-agente. Notificación por checkpoint.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m1-topic2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📈</span>
+<div>
+<span class="font-medium">Escala: paralelismo con worktrees</span>
+<span class="text-neutral-500 text-sm ml-2">- Múltiples workers simultáneos</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m1-topic2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Los workers operan en worktrees aislados, lo que permite procesar múltiples tareas en paralelo sin conflictos de archivos o ramas.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">El throughput de desarrollo puede escalar horizontalmente. En lugar de resolver issues uno por uno, el orchestrator asigna 4, 8 o más workers simultáneos.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Git worktrees como sandbox. Ramas de base de datos de Neon. Aislamiento de puertos. Fan-out en paralelo.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m1-topic3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🧱</span>
+<div>
+<span class="font-medium">Componibilidad modular</span>
+<span class="text-neutral-500 text-sm ml-2">- Orchestrator + workers = sistema</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m1-topic3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La arquitectura orchestrator-workers es modular por naturaleza. Cada componente puede reemplazarse de forma independiente: cambiar el modelo del orquestador, agregar workers especializados o cambiar el almacén de estado.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Los sistemas modulares evolucionan más fácilmente. Puedes empezar de forma sencilla y agregar complejidad a medida que surja la necesidad.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Combinación de modelos por paso. Workflow como grafo de nodos. Arquitectura de plugins. Separación de responsabilidades.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m1-topic4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">💡</span>
+<div>
+<span class="font-medium">Exploración y prueba de concepto</span>
+<span class="text-neutral-500 text-sm ml-2">- Excelente para ideación rápida</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m1-topic4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Para explorar ideas y construir pruebas de concepto, los loops son poderosos: el agente puede iterar rápidamente sobre varios enfoques sin que una persona tenga que supervisar cada decisión al detalle.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Cole Medin reconoce: "for building proof of concepts and exploring ideas, I think it's really good." El costo de exploración es aceptable cuando el objetivo es validar una hipótesis, no entregar algo listo para producción.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">PoC como resultado válido. Divergencia antes de la convergencia. Costo de exploración frente al costo de producción. Prototipado rápido.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m1-topic5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🏋</span>
+<div>
+<span class="font-medium">Incrementalidad: ciclos pequeños</span>
+<span class="text-neutral-500 text-sm ml-2">- Tareas grandes divididas en rounds</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m1-topic5">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">En vez de pedirle al agente que resuelva todo de una vez, el loop divide el trabajo en ciclos pequeños y manejables. Cada round hace una parte y la valida antes de avanzar.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Cole Medin es directo: "We never want to have a coding agent try to handle too much at once, or it will get completely overwhelmed." La incrementalidad es la defensa contra el context bloat y las alucinaciones.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Una tarea por ciclo. Validación entre rounds. Checkpoint de progreso. Exit condition clara por round.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m1-topic6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🔍</span>
+<div>
+<span class="font-medium">La observabilidad como ventaja</span>
+<span class="text-neutral-500 text-sm ml-2">- Dashboards y seguimiento de costos</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m1-topic6">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Cuando el loop está bien instrumentado (con dashboard, logs y seguimiento de costos), ofrece visibilidad total sobre lo que hace el agente, cuánto cuesta y dónde falla.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">La observabilidad transforma un sistema opaco en uno transparente. Cole creó precisamente eso: "poder ver exactamente las decisiones que se están tomando aquí hace que me resulte más fácil descubrir cómo mejorar el loop".</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Decision log. Tokens por ronda. Costo acumulado. Puntos de control human-in-the-loop. Dashboard en tiempo real.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-1')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-1.html">Ver completo</a>
+</div>
+</div>
+<!-- MODULO 2.2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="modulo-2-2" id="modulo-2-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.2</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">⚠ Desventajas y riesgos</h3>
+<p class="text-neutral-400 text-sm">Los problemas reales: costos explosivos, calidad inestable, context bloat, complejidad y alucinación compuesta.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t2-m2-topic1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">💸</span>
+<div>
+<span class="font-medium">Costo: &gt;1M tokens para apps simples</span>
+<span class="text-neutral-500 text-sm ml-2">- El razonamiento del orchestrator es costoso</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m2-topic1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Cada ronda del orquestador consume tokens de razonamiento. Los workers consumen tokens de ejecución. En sistemas distribuidos, el volumen de transferencia de contexto entre componentes multiplica el costo total.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Cole demostró que una sola ejecución de una app sencilla consumió más de 1 millón de tokens. Para quienes no tienen un presupuesto ilimitado, eso es un obstáculo real.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Costo por ronda. Multiplicación de tokens en sistemas distribuidos. Límites de presupuesto. Combinación de modelos como optimización.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m2-topic2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📉</span>
+<div>
+<span class="font-medium">Calidad: "ejecuta durante un día, vuelve y encuentra basura"</span>
+<span class="text-neutral-500 text-sm ml-2">- Sin HITL, los resultados se degradan</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m2-topic2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Cuando los loops se ejecutan sin supervisión humana durante largos períodos, la calidad del resultado tiende a degradarse. Las malas decisiones se acumulan y se propagan entre rondas.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Cole comparte su experiencia personal: los loops que se ejecutan sin human-in-the-loop con frecuencia producen resultados inutilizables. La promesa de autonomía 24/7 se desmorona si el resultado no sirve.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Degradación de la calidad con el tiempo. Puntos de control con participación humana. Barreras de validación. Revisión antes del merge.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m2-topic3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">💥</span>
+<div>
+<span class="font-medium">Context bloat: sesión sobrecargada</span>
+<span class="text-neutral-500 text-sm ml-2">- Looping en la misma sesión</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m2-topic3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Usar /loop en una única sesión de Claude Code acumula todo el historial en la context window. Después de muchas iteraciones, el LLM se sobrecarga y empieza a generar respuestas de baja calidad.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Cole identifica esto como el tercer gran problema: "if you loop for a while, you're going to completely bloat your context for your LLM and overwhelm it." La solución es distribuir el trabajo entre distintas sesiones.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Ventana de contexto como recurso finito. Estado externo como alternativa. Sesiones breves y enfocadas. Compactación.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m2-topic4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🏗</span>
+<div>
+<span class="font-medium">Complejidad de ingeniería</span>
+<span class="text-neutral-500 text-sm ml-2">- No es trivial construir el harness</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m2-topic4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Construir un sistema de loop robusto exige: almacenamiento de estado, observabilidad, gestión de worktrees, seguimiento de costos, intervención humana, lógica de reintentos y limpieza de workers huérfanos. Es mucha ingeniería para algo que Cole dice que «no merece su propio buzzword».</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">La barrera de entrada es alta. Un /loop simple en Claude Code es fácil, pero un sistema de producción con orchestrator-workers es un orden de magnitud más complejo. Pocos desarrolladores individuales tienen la capacidad de construirlo y mantenerlo.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Sobrecarga de infraestructura. Ingeniería de harness. Costo de mantenimiento del sistema. Build vs buy (Archon, OpenClaw).</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m2-topic5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🌀</span>
+<div>
+<span class="font-medium">Alucinación compuesta entre rondas</span>
+<span class="text-neutral-500 text-sm ml-2">- Los errores se propagan exponencialmente</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m2-topic5">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Si el orchestrator acepta un mal resultado de un worker en la ronda 1, la ronda 2 se construye sobre ese mal resultado. En cada iteración, los errores se acumulan y se amplifican. Es un efecto de bola de nieve de alucinaciones.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">A diferencia de un error puntual que una persona corrige, una alucinación compuesta puede generar un codebase entero de código que parece correcto en la superficie, pero tiene fallas estructurales profundas.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Propagación de errores. Validación rigurosa entre rounds. Pruebas automatizadas como red de seguridad. Reversión de un round entero cuando falla la validación.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m2-topic6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">❓</span>
+<div>
+<span class="font-medium">Practicidad: ¿es para todos?</span>
+<span class="text-neutral-500 text-sm ml-2">- Boris y Peter no son usuarios típicos</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m2-topic6">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Los mayores defensores de loop engineering tienen acceso a recursos que la mayoría no tiene. Boris trabaja en Anthropic. Peter opera con un presupuesto prácticamente ilimitado. La pregunta es: ¿esto funciona para un desarrollador que trabaja solo o una startup?</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Cole cuestiona directamente: "Boris Cherny dice que hay días en que gestiona decenas de miles de agentes de IA al mismo tiempo. A ver, ¿eso es realmente práctico?" El riesgo es adoptar una práctica optimizada para quienes tienen presupuesto infinito.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Privilegio de presupuesto. Escala frente a practicidad. Contexto de quien lo promueve. Validación por parte de quienes no tienen recursos ilimitados.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-2')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-2.html">Ver completo</a>
+</div>
+</div>
+<!-- MODULO 2.3 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="modulo-2-3" id="modulo-2-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.3</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🧭 Cuándo usarlo y cuándo no usarlo</h3>
+<p class="text-neutral-400 text-sm">Marco de decisión práctico: loops para la distribución, humanos para la validación. Cuándo tiene sentido cada enfoque.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t2-m3-topic1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">✅</span>
+<div>
+<span class="font-medium">Ideal para: procesamiento batch de issues</span>
+<span class="text-neutral-500 text-sm ml-2">- GitHub issues, tareas repetitivas</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m3-topic1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Procesar varias GitHub issues en paralelo es el caso de uso más natural para los loops. Cada issue es una tarea independiente que se puede asignar a un worker aislado.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Cole lo demuestra en la práctica con Archon: 4 workflows en ejecución paralela para resolver 4 issues diferentes, cada uno en un worktree aislado, seguidos de una revisión de código automatizada.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Clasificación automatizada de issues. Paralelismo de fix + review. Creación de PR en lote. El orchestrator como dispatcher.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m3-topic2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">❌</span>
+<div>
+<span class="font-medium">Malo para: código de producción crítico</span>
+<span class="text-neutral-500 text-sm ml-2">- Sin observabilidad, no hay confianza</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m3-topic2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Para código que se ejecutará en producción con usuarios reales, los loops autónomos sin supervisión son arriesgados. La calidad debe garantizarse con personas, no con la autovalidación de los LLM.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Cole es enfático: "there is no way you're gonna convince me that loop engineering is the way to get the best results possible with AI coding assistance." Para obtener resultados de producción, el humano en el loop es insustituible.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Calidad de producción frente a prototipo. Revisión humana obligatoria. CI/CD como red de seguridad. Loops para los borradores, personas para el merge.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m3-topic3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">📊</span>
+<div>
+<span class="font-medium">Marco de decisión</span>
+<span class="text-neutral-500 text-sm ml-2">- "¿Esto realmente necesita un loop?"</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m3-topic3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Antes de armar un sistema de loops, pregúntate: ¿la tarea es repetitiva? ¿Tiene un criterio de finalización claro? ¿Se puede validar automáticamente? Si la respuesta es no a cualquiera de estas preguntas, probablemente un loop no sea el mejor enfoque.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">La tentación de automatizarlo todo con loops es real, pero no todas las tareas se benefician de ello. El framework ayuda a distinguir dónde los loops aportan valor y dónde añaden complejidad innecesaria.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Lista de verificación de viabilidad. ROI de automatización. Costo de configuración frente al costo de ejecución manual. Umbral de repetición.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m3-topic4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">⚖</span>
+<div>
+<span class="font-medium">Regla de oro</span>
+<span class="text-neutral-500 text-sm ml-2">- Loops para distribución, personas para validación</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m3-topic4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Usa loops para distribuir y paralelizar el trabajo. Usa personas para validar y aprobar el resultado. Esa separación de responsabilidades es el equilibrio práctico que defiende Cole Medin.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Es la síntesis práctica de todo el análisis: los loops son buenos para el throughput, las personas son buenas para la calidad. Combinar ambos es el enfoque más sólido.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Distribución automática. Validación humana. Approval gates. Patrón de revisión y luego merge.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m3-topic5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🔧</span>
+<div>
+<span class="font-medium">Determinismo frente a autonomía en la práctica</span>
+<span class="text-neutral-500 text-sm ml-2">- Cole vs. Boris: enfoques opuestos</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m3-topic5">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Cole prefiere los workflows deterministas (Archon): el humano define los steps y el agente los ejecuta. Boris prefiere los loops autónomos: el agente decide los steps. Ambos funcionan, pero en contextos diferentes.</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">Cole es claro: "we want to actually take the decision away from the coding agent as much as we can." Cuanto más determinista sea el proceso, más predecible y barato será el resultado.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">El archivo de workflow funciona como contrato. Pasos predefinidos frente a dinámicos. Control humano sobre el proceso. LLM para ejecutar, no para decidir.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-m3-topic6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📝</span>
+<div>
+<span class="font-medium">Conclusión de Cole: harness &gt; loop</span>
+<span class="text-neutral-500 text-sm ml-2">- "Intégralo en la ingeniería de harness"</span>
+</div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-m3-topic6">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Cole cierra su análisis proponiendo que el loop engineering no debería tratarse como una categoría propia: "I would just fold loop engineering into harness engineering. It doesn't quite deserve its own buzzword."</p></div>
+<div><span class="text-blue-400 font-semibold">Por qué importa:</span><p class="text-neutral-300 text-sm">La conclusión no es que los loops sean malos. Es que son una herramienta dentro de un sistema más amplio (harness). El harness incluye loops, pero también observabilidad, validación humana, seguimiento de costos y workflows deterministas.</p></div>
+<div><span class="text-blue-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Harness como concepto general. Loop como ingrediente. Sistema completo frente a función aislada. Pragmatismo por encima del hype.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-3')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-3.html">Ver completo</a>
+</div>
+</div>
+<!-- NAVEGACAO -->
+<section class="mb-12">
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha1/index.html">
+          ← Ruta 1: Fundamentos
+        </a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="../trilha3/index.html">
+          Siguiente: Ruta 3 →
+        </a>
+</div>
+</section>
+</main>
+<!-- MODALS -->
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-1" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.1</span><span class="font-semibold">Ventajas reales</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-1.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-2" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.2</span><span class="font-semibold">Desventajas y riesgos</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-2.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-2-3" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.3</span><span class="font-semibold">Cuándo usar y cuándo no usar</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-3.html"></iframe>
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Ingeniería de bucles -- Agentes en bucle continuo - 2026</p>
+<p class="mt-1"><a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(function(exp) {
+        if (exp !== explanation) { exp.classList.remove('active'); exp.previousElementSibling && exp.previousElementSibling.querySelector('button') && exp.previousElementSibling.querySelector('button').setAttribute('aria-expanded','false'); }
+      });
+      var isActive = explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+    }
+
+    function openModal(modalId) {
+      var modal = document.getElementById(modalId);
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(function(m) { m.classList.add('hidden'); });
+      document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+    // Theme toggle
+    var themeToggle = document.getElementById('theme-toggle');
+    var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    var html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }</script>
+</body>
+</html>

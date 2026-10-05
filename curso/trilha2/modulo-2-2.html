@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="loop-engineering">
-  <title>Modulo 2.2 — Desvantagens e Riscos | Loop Engineering</title>
 
-  <!-- ANTI-FOUC: script bloqueante ANTES de tudo -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="loop-engineering" name="inema-course"/>
+<title>Modulo 2.2 — Desvantagens e Riscos | Loop Engineering</title>
+<!-- ANTI-FOUC: script bloqueante ANTES de tudo -->
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -61,9 +61,8 @@
     }
   })();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -76,11 +75,10 @@
       }
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <!-- Manifesto do curso -->
-  <script type="application/json" data-inema-manifest>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso -->
+<script data-inema-manifest="" type="application/json">
   {
     "course": "loop-engineering",
     "tracks": [
@@ -109,8 +107,7 @@
     ]
   }
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
     .topic-explanation { display: none; }
@@ -161,460 +158,419 @@
     /* Scroll margin for sticky nav */
     [id^="topico-"] { scroll-margin-top: 4rem; }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-
-  <!-- NAVIGATION -->
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-4">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">&#x267B;</span>
-            <span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
-          </a>
-          <span class="text-neutral-600">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-        </div>
-        <div class="flex items-center space-x-1 sm:space-x-2">
-          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
-            <span class="sm:hidden">T1</span>
-            <span class="hidden sm:inline">Fundamentos</span>
-          </a>
-          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10">
-            <span class="sm:hidden">T2</span>
-            <span class="hidden sm:inline">Vantagens</span>
-          </a>
-          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
-            <span class="sm:hidden">T3</span>
-            <span class="hidden sm:inline">Tecnica</span>
-          </a>
-          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
-            <span class="sm:hidden">T4</span>
-            <span class="hidden sm:inline">Pratica</span>
-          </a>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-            </svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- BREADCRUMB -->
-  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <div class="flex items-center space-x-2 text-sm text-neutral-400">
-      <a href="../../index.html" class="hover:text-blue-400">Inicio</a>
-      <span>/</span>
-      <a href="index.html" class="hover:text-blue-400">Trilha 2 — Vantagens vs Desvantagens</a>
-      <span>/</span>
-      <span class="text-blue-400">Modulo 2.2</span>
-    </div>
-  </nav>
-
-  <!-- HEADER -->
-  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULO 2.2</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">&#x26A0; Desvantagens e Riscos</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">Os problemas reais de loop engineering: custo explosivo, qualidade que degrada, context bloat, complexidade pesada e alucinacao composta.</p>
-      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-blue-400">6</div>
-          <div class="text-xs text-neutral-400">Topicos</div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-blue-400">30</div>
-          <div class="text-xs text-neutral-400">Minutos</div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-blue-400">Basico</div>
-          <div class="text-xs text-neutral-400">Nivel</div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-blue-400">Analise</div>
-          <div class="text-xs text-neutral-400">Tipo</div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="2-2" data-inema-track="2">
-
-    <!-- TOPICO 1 -->
-    <section id="topico-1" data-inema-topic="modulo-2-2#topico-1" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
-        <h2 class="text-2xl font-bold">&#x1F4B8; Custo: Mais de 1 Milhao de Tokens</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t1-p1">
+<link href="https://inematds.github.io/loop-engineering/curso/trilha2/modulo-2-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/en/curso/trilha2/modulo-2-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/es/curso/trilha2/modulo-2-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-2-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha2/modulo-2-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha2/modulo-2-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">♻</span>
+<span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Vantagens</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Tecnica</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="sm:hidden">T4</span>
+<span class="hidden sm:inline">Pratica</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Trilha 2 — Vantagens vs Desvantagens</a>
+<span>/</span>
+<span class="text-blue-400">Modulo 2.2</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULO 2.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">⚠ Desvantagens e Riscos</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Os problemas reais de loop engineering: custo explosivo, qualidade que degrada, context bloat, complexidade pesada e alucinacao composta.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">6</div>
+<div class="text-xs text-neutral-400">Topicos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">30</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Basico</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-blue-400">Analise</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="2-2" data-inema-track="2" id="conteudo">
+<!-- TOPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">💸 Custo: Mais de 1 Milhao de Tokens</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t1-p1">
         O problema mais tangivel do loop engineering e o <strong class="text-blue-400">custo</strong>. Cada round do orchestrator consome tokens de reasoning para planejar, cada worker consome tokens para executar, e o context passing entre componentes multiplica tudo. Cole Medin demonstrou isso com numeros reais no seu dashboard.
       </p>
-
-      <blockquote class="border-l-4 border-blue-500/50 pl-4 mb-6 italic text-neutral-300">
+<blockquote class="border-l-4 border-blue-500/50 pl-4 mb-6 italic text-neutral-300">
         "For a single run, like here are all the loops that the orchestrator went through, it costed me over a million tokens just to build a relatively simple application."
         <footer class="text-blue-400 text-sm mt-1 not-italic">— Cole Medin</footer>
-      </blockquote>
-
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-red-400 mb-4">&#x1F4CA; Por Que E Tao Caro</h3>
-        <div class="space-y-4">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
-              <span class="text-red-400 font-bold text-sm">1</span>
-            </div>
-            <div>
-              <h4 class="font-semibold text-white">Orchestrator reasoning</h4>
-              <p class="text-neutral-300 text-sm">O orchestrator precisa ler a spec inteira, planejar o round, criar prompts para cada worker, e depois avaliar os resultados. Cada uma dessas operacoes consome tokens de input e output.</p>
-            </div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
-              <span class="text-red-400 font-bold text-sm">2</span>
-            </div>
-            <div>
-              <h4 class="font-semibold text-white">Context passing distribuido</h4>
-              <p class="text-neutral-300 text-sm">Os resultados dos workers precisam voltar ao orchestrator. O state store precisa ser lido a cada round. Informacao flui em todas as direcoes, e cada fluxo custa tokens.</p>
-            </div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
-              <span class="text-red-400 font-bold text-sm">3</span>
-            </div>
-            <div>
-              <h4 class="font-semibold text-white">Modelo unico para tudo</h4>
-              <p class="text-neutral-300 text-sm">Quando se usa apenas /loop no Claude Code, o mesmo modelo caro (Opus/Sonnet) e usado para tudo: triagem, planejamento, execucao, validacao. Sem mix de modelos, o custo por token e o mais alto possivel em cada etapa.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <blockquote class="border-l-4 border-blue-500/50 pl-4 mb-6 italic text-neutral-300">
+</blockquote>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-4">📊 Por Que E Tao Caro</h3>
+<div class="space-y-4">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
+<span class="text-red-400 font-bold text-sm">1</span>
+</div>
+<div>
+<h4 class="font-semibold text-white">Orchestrator reasoning</h4>
+<p class="text-neutral-300 text-sm">O orchestrator precisa ler a spec inteira, planejar o round, criar prompts para cada worker, e depois avaliar os resultados. Cada uma dessas operacoes consome tokens de input e output.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
+<span class="text-red-400 font-bold text-sm">2</span>
+</div>
+<div>
+<h4 class="font-semibold text-white">Context passing distribuido</h4>
+<p class="text-neutral-300 text-sm">Os resultados dos workers precisam voltar ao orchestrator. O state store precisa ser lido a cada round. Informacao flui em todas as direcoes, e cada fluxo custa tokens.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
+<span class="text-red-400 font-bold text-sm">3</span>
+</div>
+<div>
+<h4 class="font-semibold text-white">Modelo unico para tudo</h4>
+<p class="text-neutral-300 text-sm">Quando se usa apenas /loop no Claude Code, o mesmo modelo caro (Opus/Sonnet) e usado para tudo: triagem, planejamento, execucao, validacao. Sem mix de modelos, o custo por token e o mais alto possivel em cada etapa.</p>
+</div>
+</div>
+</div>
+</div>
+<blockquote class="border-l-4 border-blue-500/50 pl-4 mb-6 italic text-neutral-300">
         "One of the other big issues I see with using slash goal or routines or loops in Claude Code is you're just using one model for pretty much everything. That's part of the problem of why it's so expensive."
         <footer class="text-blue-400 text-sm mt-1 not-italic">— Cole Medin</footer>
-      </blockquote>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 2 -->
-    <section id="topico-2" data-inema-topic="modulo-2-2#topico-2" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
-        <h2 class="text-2xl font-bold">&#x1F4C9; Qualidade: "Run for a Day, Come Back to Crap"</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t2-p1">
+</blockquote>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📉 Qualidade: "Run for a Day, Come Back to Crap"</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t2-p1">
         O segundo grande problema e a <strong class="text-blue-400">degradacao de qualidade</strong> em loops longos sem supervisao humana. Cole Medin experimentou isso pessoalmente e descreve a situacao de forma direta: voce configura o loop, vai embora, e ao voltar descobre que o output e inutilizavel.
       </p>
-
-      <blockquote class="border-l-4 border-blue-500/50 pl-4 mb-6 italic text-neutral-300">
+<blockquote class="border-l-4 border-blue-500/50 pl-4 mb-6 italic text-neutral-300">
         "A lot of times people set up these systems to just go, go, go, go. And then you have a run for a day. And by the time it comes back, you just have crap. Like I've had that myself as I've tested a lot of things within Claude Code, like routines and slash loop."
         <footer class="text-blue-400 text-sm mt-1 not-italic">— Cole Medin</footer>
-      </blockquote>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-blue-400 mb-4">&#x1F575; Por Que a Qualidade Degrada</h3>
-        <ul class="space-y-3 text-neutral-300">
-          <li class="flex items-start space-x-2"><span class="text-red-400">&#x2717;</span><span><strong class="text-white">Sem validacao humana</strong>: o agente valida a si mesmo, mas LLMs podem aceitar resultados mediocres como "corretos"</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">&#x2717;</span><span><strong class="text-white">Acumulo de decisoes ruins</strong>: cada round constroi sobre o anterior; se o round 3 aceita um bug, os rounds 4-10 trabalham em cima desse bug</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">&#x2717;</span><span><strong class="text-white">Fadiga de contexto</strong>: mesmo com state externo, o agente pode perder o panorama geral do que deveria construir</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">&#x2717;</span><span><strong class="text-white">Otimizacao local</strong>: cada round otimiza para sua tarefa, mas pode prejudicar a coerencia do sistema como um todo</span></li>
-        </ul>
-      </div>
-
-      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center">
-          <span class="mr-2">&#x1F6E1;</span> A Defesa: Human-in-the-Loop
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4">🕵 Por Que a Qualidade Degrada</h3>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong class="text-white">Sem validacao humana</strong>: o agente valida a si mesmo, mas LLMs podem aceitar resultados mediocres como "corretos"</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong class="text-white">Acumulo de decisoes ruins</strong>: cada round constroi sobre o anterior; se o round 3 aceita um bug, os rounds 4-10 trabalham em cima desse bug</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong class="text-white">Fadiga de contexto</strong>: mesmo com state externo, o agente pode perder o panorama geral do que deveria construir</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong class="text-white">Otimizacao local</strong>: cada round otimiza para sua tarefa, mas pode prejudicar a coerencia do sistema como um todo</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center">
+<span class="mr-2">🛡</span> A Defesa: Human-in-the-Loop
         </h3>
-        <p class="text-neutral-300" data-inema-block="m2-2-t2-p2">Cole enfatiza que a solucao nao e abandonar loops, mas sim inserir checkpoints onde o humano valida antes do proximo round: "We can always have it pause for us to validate something before it continues, which is one of the biggest problems with loop engineering right now in general." A regra e clara: o agente faz o trabalho pesado, o humano garante a qualidade.</p>
-      </div>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 3 -->
-    <section id="topico-3" data-inema-topic="modulo-2-2#topico-3" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
-        <h2 class="text-2xl font-bold">&#x1F4A5; Context Bloat: A Sessao Sobrecarregada</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t3-p1">
+<p class="text-neutral-300" data-inema-block="m2-2-t2-p2">Cole enfatiza que a solucao nao e abandonar loops, mas sim inserir checkpoints onde o humano valida antes do proximo round: "We can always have it pause for us to validate something before it continues, which is one of the biggest problems with loop engineering right now in general." A regra e clara: o agente faz o trabalho pesado, o humano garante a qualidade.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">💥 Context Bloat: A Sessao Sobrecarregada</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t3-p1">
         O terceiro problema que Cole identifica e especifico do uso basico de /loop no Claude Code: <strong class="text-blue-400">context bloat</strong>. Quando o loop roda na mesma sessao de agente, cada iteracao adiciona mais historico ao context window. Apos muitas iteracoes, o LLM fica literalmente sobrecarregado.
       </p>
-
-      <blockquote class="border-l-4 border-blue-500/50 pl-4 mb-6 italic text-neutral-300">
+<blockquote class="border-l-4 border-blue-500/50 pl-4 mb-6 italic text-neutral-300">
         "At least for a lot of setups, you're not really working between different coding agent sessions. Like when you're just using slash loop in Claude Code, it's really just continuing in the same coding agent session. So if you loop for a while, you're going to completely bloat your context for your LLM and overwhelm it."
         <footer class="text-blue-400 text-sm mt-1 not-italic">— Cole Medin</footer>
-      </blockquote>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-blue-400 mb-4">&#x1F9E0; O que Acontece com o Context Window</h3>
-        <div class="space-y-3">
-          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="font-semibold text-white">Iteracao 1-5</h4>
-              <span class="text-xs text-emerald-400 bg-emerald-500/20 px-2 py-1 rounded">Saudavel</span>
-            </div>
-            <p class="text-neutral-300 text-sm">Context window tem espaco de sobra. O agente tem acesso a instrucoes originais, spec, e historico recente. Qualidade alta.</p>
-          </div>
-          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="font-semibold text-white">Iteracao 10-20</h4>
-              <span class="text-xs text-yellow-400 bg-yellow-500/20 px-2 py-1 rounded">Pressionado</span>
-            </div>
-            <p class="text-neutral-300 text-sm">Context window comeca a ficar cheio. Instrucoes iniciais sao empurradas para fora da janela de atencao. O agente comeca a "esquecer" detalhes.</p>
-          </div>
-          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="font-semibold text-white">Iteracao 30+</h4>
-              <span class="text-xs text-red-400 bg-red-500/20 px-2 py-1 rounded">Sobrecarregado</span>
-            </div>
-            <p class="text-neutral-300 text-sm">Context window estourado. O agente gera codigo repetido, ignora constraints, e perde coerencia. Resultado: lixo caro. E aqui que "run for a day, come back to crap" acontece.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center">
-          <span class="mr-2">&#x1F527;</span> A Solucao: Distribuir entre Sessoes
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4">🧠 O que Acontece com o Context Window</h3>
+<div class="space-y-3">
+<div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<h4 class="font-semibold text-white">Iteracao 1-5</h4>
+<span class="text-xs text-emerald-400 bg-emerald-500/20 px-2 py-1 rounded">Saudavel</span>
+</div>
+<p class="text-neutral-300 text-sm">Context window tem espaco de sobra. O agente tem acesso a instrucoes originais, spec, e historico recente. Qualidade alta.</p>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<h4 class="font-semibold text-white">Iteracao 10-20</h4>
+<span class="text-xs text-yellow-400 bg-yellow-500/20 px-2 py-1 rounded">Pressionado</span>
+</div>
+<p class="text-neutral-300 text-sm">Context window comeca a ficar cheio. Instrucoes iniciais sao empurradas para fora da janela de atencao. O agente comeca a "esquecer" detalhes.</p>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<h4 class="font-semibold text-white">Iteracao 30+</h4>
+<span class="text-xs text-red-400 bg-red-500/20 px-2 py-1 rounded">Sobrecarregado</span>
+</div>
+<p class="text-neutral-300 text-sm">Context window estourado. O agente gera codigo repetido, ignora constraints, e perde coerencia. Resultado: lixo caro. E aqui que "run for a day, come back to crap" acontece.</p>
+</div>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center">
+<span class="mr-2">🔧</span> A Solucao: Distribuir entre Sessoes
         </h3>
-        <p class="text-neutral-300" data-inema-block="m2-2-t3-p2">Cole propoe a solucao: "We need a system where we can distribute the work actually between different coding agent sessions and make it so they can all communicate to each other." Em vez de uma sessao longa, usar multiplas sessoes curtas e focadas, coordenadas por state externo. Cada sessao tem contexto fresco e foco na tarefa do momento.</p>
-      </div>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 4 -->
-    <section id="topico-4" data-inema-topic="modulo-2-2#topico-4" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
-        <h2 class="text-2xl font-bold">&#x1F3D7; Complexidade: Engenharia Pesada</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t4-p1">
+<p class="text-neutral-300" data-inema-block="m2-2-t3-p2">Cole propoe a solucao: "We need a system where we can distribute the work actually between different coding agent sessions and make it so they can all communicate to each other." Em vez de uma sessao longa, usar multiplas sessoes curtas e focadas, coordenadas por state externo. Cada sessao tem contexto fresco e foco na tarefa do momento.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🏗 Complexidade: Engenharia Pesada</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t4-p1">
         Montar um sistema de loop engineering robusto nao e trivial. <strong class="text-blue-400">Exige engenharia significativa</strong>: state store, worktree management, cost tracking, observabilidade, human-in-the-loop, retry logic, cleanup de workers orfaos, resolucao de conflitos de porta, database branching. E muita infraestrutura para suportar o que Cole chama de algo que "nao merece seu proprio buzzword."
       </p>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-blue-400 mb-4">&#x1F9F0; O Que Voce Precisa Construir</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
-            <h4 class="font-semibold text-white mb-1">State Store</h4>
-            <p class="text-sm text-neutral-400">Postgres/Neon para persistir estado entre rounds. Schema para runs, events, tasks, cost.</p>
-          </div>
-          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
-            <h4 class="font-semibold text-white mb-1">Observabilidade</h4>
-            <p class="text-sm text-neutral-400">Dashboard para ver decisoes do orchestrator, progresso dos workers, custo acumulado em tempo real.</p>
-          </div>
-          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
-            <h4 class="font-semibold text-white mb-1">Worker Isolation</h4>
-            <p class="text-sm text-neutral-400">Gerenciamento de worktrees, database branches, resolucao de conflitos de porta para workers paralelos.</p>
-          </div>
-          <div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
-            <h4 class="font-semibold text-white mb-1">Control Plane</h4>
-            <p class="text-sm text-neutral-400">Mecanismos de pause, resume, cancel. Human-in-the-loop checkpoints. Budget limits automaticos.</p>
-          </div>
-        </div>
-      </div>
-
-      <blockquote class="border-l-4 border-blue-500/50 pl-4 mb-6 italic text-neutral-300">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4">🧰 O Que Voce Precisa Construir</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">State Store</h4>
+<p class="text-sm text-neutral-400">Postgres/Neon para persistir estado entre rounds. Schema para runs, events, tasks, cost.</p>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Observabilidade</h4>
+<p class="text-sm text-neutral-400">Dashboard para ver decisoes do orchestrator, progresso dos workers, custo acumulado em tempo real.</p>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Worker Isolation</h4>
+<p class="text-sm text-neutral-400">Gerenciamento de worktrees, database branches, resolucao de conflitos de porta para workers paralelos.</p>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Control Plane</h4>
+<p class="text-sm text-neutral-400">Mecanismos de pause, resume, cancel. Human-in-the-loop checkpoints. Budget limits automaticos.</p>
+</div>
+</div>
+</div>
+<blockquote class="border-l-4 border-blue-500/50 pl-4 mb-6 italic text-neutral-300">
         "There's a lot of engineering that goes on behind the scenes here."
         <footer class="text-blue-400 text-sm mt-1 not-italic">— Cole Medin, sobre o setup do Archon + workers paralelos</footer>
-      </blockquote>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 5 -->
-    <section id="topico-5" data-inema-topic="modulo-2-2#topico-5" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
-        <h2 class="text-2xl font-bold">&#x1F300; Alucinacao Composta Entre Rounds</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t5-p1">
+</blockquote>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🌀 Alucinacao Composta Entre Rounds</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t5-p1">
         Talvez o risco mais insidioso do loop engineering seja a <strong class="text-blue-400">alucinacao composta</strong>: quando um erro do LLM num round nao e detectado e se propaga para os rounds seguintes, cada iteracao amplificando o problema. E diferente de um erro pontual porque constroi camadas de codigo incorreto que parecem corretas na superficie.
       </p>
-
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-red-400 mb-4">&#x26A0; O Efeito Snowball</h3>
-        <div class="space-y-3">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
-              <span class="text-red-400 font-bold text-sm">R1</span>
-            </div>
-            <div>
-              <p class="text-neutral-300 text-sm"><strong class="text-white">Round 1:</strong> Worker implementa uma funcao com um bug sutil no tratamento de edge case. O orchestrator valida e aceita (o LLM nao detecta o bug).</p>
-            </div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
-              <span class="text-red-400 font-bold text-sm">R3</span>
-            </div>
-            <div>
-              <p class="text-neutral-300 text-sm"><strong class="text-white">Round 3:</strong> Outro worker constroi feature que depende da funcao bugada. O codigo "funciona" nos happy paths, mas herda o bug.</p>
-            </div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
-              <span class="text-red-400 font-bold text-sm">R7</span>
-            </div>
-            <div>
-              <p class="text-neutral-300 text-sm"><strong class="text-white">Round 7:</strong> O codebase inteiro e construido assumindo que a funcao do round 1 esta correta. Corrigir agora exige refatorar tudo. O custo de correcao excede o custo de ter feito manualmente.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-blue-400 mb-4">&#x1F6E1; Defesas contra Alucinacao Composta</h3>
-        <ul class="space-y-3 text-neutral-300">
-          <li class="flex items-start space-x-2"><span class="text-blue-400">&#x2713;</span><span><strong class="text-white">Testes automatizados</strong> como validation gate entre rounds: se os testes falham, o round e re-executado</span></li>
-          <li class="flex items-start space-x-2"><span class="text-blue-400">&#x2713;</span><span><strong class="text-white">Human-in-the-loop</strong> em pontos criticos: review humano antes de rounds que constroem em cima de work anterior</span></li>
-          <li class="flex items-start space-x-2"><span class="text-blue-400">&#x2713;</span><span><strong class="text-white">Rollback de round</strong>: capacidade de desfazer um round inteiro quando a validacao falha</span></li>
-          <li class="flex items-start space-x-2"><span class="text-blue-400">&#x2713;</span><span><strong class="text-white">Validacao cruzada</strong>: usar um modelo diferente para validar o output do worker principal</span></li>
-        </ul>
-      </div>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 6 -->
-    <section id="topico-6" data-inema-topic="modulo-2-2#topico-6" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold">&#x2753; Questionamentos</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t6-p1">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-4">⚠ O Efeito Snowball</h3>
+<div class="space-y-3">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
+<span class="text-red-400 font-bold text-sm">R1</span>
+</div>
+<div>
+<p class="text-neutral-300 text-sm"><strong class="text-white">Round 1:</strong> Worker implementa uma funcao com um bug sutil no tratamento de edge case. O orchestrator valida e aceita (o LLM nao detecta o bug).</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
+<span class="text-red-400 font-bold text-sm">R3</span>
+</div>
+<div>
+<p class="text-neutral-300 text-sm"><strong class="text-white">Round 3:</strong> Outro worker constroi feature que depende da funcao bugada. O codigo "funciona" nos happy paths, mas herda o bug.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
+<span class="text-red-400 font-bold text-sm">R7</span>
+</div>
+<div>
+<p class="text-neutral-300 text-sm"><strong class="text-white">Round 7:</strong> O codebase inteiro e construido assumindo que a funcao do round 1 esta correta. Corrigir agora exige refatorar tudo. O custo de correcao excede o custo de ter feito manualmente.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4">🛡 Defesas contra Alucinacao Composta</h3>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span><strong class="text-white">Testes automatizados</strong> como validation gate entre rounds: se os testes falham, o round e re-executado</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span><strong class="text-white">Human-in-the-loop</strong> em pontos criticos: review humano antes de rounds que constroem em cima de work anterior</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span><strong class="text-white">Rollback de round</strong>: capacidade de desfazer um round inteiro quando a validacao falha</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span><strong class="text-white">Validacao cruzada</strong>: usar um modelo diferente para validar o output do worker principal</span></li>
+</ul>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">❓ Questionamentos</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t6-p1">
         As desvantagens nao sao razao para descartar loop engineering, mas sao razao para ceticismo saudavel. Cole Medin levanta as questoes mais diretas.
       </p>
-
-      <div class="space-y-4 mb-6">
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-blue-400 mb-2">Loop engineering e realmente a melhor abordagem?</h4>
-          <p class="text-neutral-300 text-sm" data-inema-block="m2-2-t6-p2">Cole e direto: "There is no way you're gonna convince me that loop engineering is the way to get the best results possible with AI coding assistance." A afirmacao e forte e intencional. Loops otimizam para throughput, nao para qualidade. Para resultado otimo, o humano no loop e insubstituivel.</p>
-        </div>
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-blue-400 mb-2">Boris gerencia dezenas de milhares de agentes por dia. Faz sentido?</h4>
-          <p class="text-neutral-300 text-sm" data-inema-block="m2-2-t6-p3">Cole questiona diretamente a praticidade: "Boris Cherny says that there are days he manages tens of thousands of AI agents at once. Like really, is that actually practical? Is that going to scale?" E depois provoca com humor: "I mean, maybe that does explain some of the bugs we have in Claude Code."</p>
-        </div>
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-blue-400 mb-2">O privilegio de budget distorce a perspectiva?</h4>
-          <p class="text-neutral-300 text-sm" data-inema-block="m2-2-t6-p4">Os maiores defensores de loops operam com recursos que a maioria nao tem. Boris tem a Anthropic. Peter tem "pretty much an infinite budget." Quando quem promove uma pratica nao sente o custo, e facil ser entusiasta. A questao e se isso funciona para quem conta cada dolar de token.</p>
-        </div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
-          <span class="mr-2">&#x1F914;</span> Ponto de Reflexao
+<div class="space-y-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-blue-400 mb-2">Loop engineering e realmente a melhor abordagem?</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m2-2-t6-p2">Cole e direto: "There is no way you're gonna convince me that loop engineering is the way to get the best results possible with AI coding assistance." A afirmacao e forte e intencional. Loops otimizam para throughput, nao para qualidade. Para resultado otimo, o humano no loop e insubstituivel.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-blue-400 mb-2">Boris gerencia dezenas de milhares de agentes por dia. Faz sentido?</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m2-2-t6-p3">Cole questiona diretamente a praticidade: "Boris Cherny says that there are days he manages tens of thousands of AI agents at once. Like really, is that actually practical? Is that going to scale?" E depois provoca com humor: "I mean, maybe that does explain some of the bugs we have in Claude Code."</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-blue-400 mb-2">O privilegio de budget distorce a perspectiva?</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m2-2-t6-p4">Os maiores defensores de loops operam com recursos que a maioria nao tem. Boris tem a Anthropic. Peter tem "pretty much an infinite budget." Quando quem promove uma pratica nao sente o custo, e facil ser entusiasta. A questao e se isso funciona para quem conta cada dolar de token.</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">🤔</span> Ponto de Reflexao
         </h3>
-        <p class="text-neutral-300" data-inema-block="m2-2-t6-p5">Cole encerra sua analise de desvantagens com uma proposta construtiva: nao descartar loops, mas embrulha-los num harness que resolve os problemas. "I like the concept of it, and I want to drive how autonomous my coding agents can be, but you got to have the right system." O proximo modulo (2.3) vai cobrir exatamente quando usar e quando nao usar loops.</p>
-      </div>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- RESUMO -->
-    <section class="mb-12">
-      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
-        <h2 class="text-2xl font-bold mb-6 flex items-center">
-          <span class="mr-3">&#x1F4CB;</span> Resumo do Modulo
+<p class="text-neutral-300" data-inema-block="m2-2-t6-p5">Cole encerra sua analise de desvantagens com uma proposta construtiva: nao descartar loops, mas embrulha-los num harness que resolve os problemas. "I like the concept of it, and I want to drive how autonomous my coding agents can be, but you got to have the right system." O proximo modulo (2.3) vai cobrir exatamente quando usar e quando nao usar loops.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-blue-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">📋</span> Resumo do Modulo
         </h2>
-        <div class="space-y-4 mb-8">
-          <div class="flex items-start space-x-3">
-            <span class="text-red-400 mt-1">&#x2717;</span>
-            <div><strong class="text-white">Custo</strong><span class="text-neutral-400"> — >1M tokens para apps simples; orchestrator reasoning e context passing multiplicam o custo</span></div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-red-400 mt-1">&#x2717;</span>
-            <div><strong class="text-white">Qualidade</strong><span class="text-neutral-400"> — "run for a day, come back to crap"; sem HITL, resultados degradam progressivamente</span></div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-red-400 mt-1">&#x2717;</span>
-            <div><strong class="text-white">Context bloat</strong><span class="text-neutral-400"> — looping na mesma sessao sobrecarrega o LLM; solucao: distribuir entre sessoes</span></div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-red-400 mt-1">&#x2717;</span>
-            <div><strong class="text-white">Complexidade</strong><span class="text-neutral-400"> — construir o harness exige state store, observabilidade, isolation, control plane</span></div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-red-400 mt-1">&#x2717;</span>
-            <div><strong class="text-white">Alucinacao composta</strong><span class="text-neutral-400"> — erros se propagam entre rounds; testes e HITL sao defesas essenciais</span></div>
-          </div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
-          <h3 class="font-semibold text-blue-400 mb-2">Proximo Modulo:</h3>
-          <p class="text-neutral-300">2.3 — Quando Usar e Quando Nao Usar</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="modulo-2-1.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">&#x2190; Modulo Anterior</a>
-          <a href="modulo-2-3.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Proximo Modulo &#x2192;</a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>Loop Engineering — Agentes em Loop Continuo | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> | 2026</p>
-    </div>
-  </footer>
-
-  <!-- SCRIPTS -->
-  <script>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-red-400 mt-1">✗</span>
+<div><strong class="text-white">Custo</strong><span class="text-neutral-400"> — &gt;1M tokens para apps simples; orchestrator reasoning e context passing multiplicam o custo</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-red-400 mt-1">✗</span>
+<div><strong class="text-white">Qualidade</strong><span class="text-neutral-400"> — "run for a day, come back to crap"; sem HITL, resultados degradam progressivamente</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-red-400 mt-1">✗</span>
+<div><strong class="text-white">Context bloat</strong><span class="text-neutral-400"> — looping na mesma sessao sobrecarrega o LLM; solucao: distribuir entre sessoes</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-red-400 mt-1">✗</span>
+<div><strong class="text-white">Complexidade</strong><span class="text-neutral-400"> — construir o harness exige state store, observabilidade, isolation, control plane</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-red-400 mt-1">✗</span>
+<div><strong class="text-white">Alucinacao composta</strong><span class="text-neutral-400"> — erros se propagam entre rounds; testes e HITL sao defesas essenciais</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Proximo Modulo:</h3>
+<p class="text-neutral-300">2.3 — Quando Usar e Quando Nao Usar</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-2-1.html">← Modulo Anterior</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-3.html">Proximo Modulo →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Loop Engineering — Agentes em Loop Continuo | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> | 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
     function toggleTopic(button) {
       const topicItem = button.closest('.topic-item');
       const explanation = topicItem.querySelector('.topic-explanation');
@@ -654,9 +610,8 @@
     }
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
   </script>
-
-  <script src="../../assets/learn.js"></script>
-  <script>
+<script src="../../assets/learn.js"></script>
+<script>
     if (window.INEMA && typeof window.INEMA.init === 'function') {
       window.INEMA.init();
     }

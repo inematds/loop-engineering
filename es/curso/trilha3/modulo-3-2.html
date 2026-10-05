@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="loop-engineering" name="inema-course"/>
+<title>Módulo 3.2 — Workflows deterministas con Archon | Loop Engineering</title>
+<!-- Anti-FOUC (PRIMEIRO no head, antes de tudo) -->
+<script>
+  (function(){try{var h=document.documentElement,D={theme:'inema-dark',font:'inter',fontScale:100,lineWidth:68,leading:1.7,accent:'emerald'};function c(o){var r={};for(var x in o)r[x]=o[x];return r}var p=c(D);try{var raw=localStorage.getItem('inema.prefs');if(raw){var j=JSON.parse(raw);if(j&&typeof j==='object')for(var k in D)if(j[k]!=null)p[k]=j[k]}else{var l=localStorage.getItem('theme');if(l==='light')p.theme='claro';else if(l==='dark')p.theme='inema-dark'}}catch(e){p=c(D)}var T={'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'}};var t=T[p.theme]||T['inema-dark'];if(t.dark===true)h.classList.add('dark');else if(t.dark===false)h.classList.remove('dark');if(t.attr)h.setAttribute('data-theme',t.attr);else h.removeAttribute('data-theme');h.style.colorScheme=t.cs?t.cs:(h.classList.contains('dark')?'dark':'light');h.setAttribute('data-font',p.font||'inter');h.setAttribute('data-accent',p.accent||'emerald');var s=h.style,sc=+p.fontScale||100;s.setProperty('--inema-font-scale',(sc/100).toString());s.setProperty('font-size',sc+'%');s.setProperty('--measure',(+p.lineWidth||68)+'ch');s.setProperty('--lh-body',(+p.leading||1.7).toString());var fam=p.font==='system'?'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif':p.font==='leitura'?'"Atkinson Hyperlegible","Inter",system-ui,sans-serif':'"Inter",system-ui,sans-serif';s.setProperty('--font-body',fam);var A={emerald:[152,76,45],blue:[217,91,60],purple:[258,90,66],amber:[38,92,50],teal:[174,72,41],rose:[350,89,60]};var a=A[p.accent]||A.emerald;s.setProperty('--accent-h',a[0]+'');s.setProperty('--accent-s',a[1]+'%');s.setProperty('--accent-l',a[2]+'%');s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)')}catch(err){try{document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}catch(e){}}})();
+  </script>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Manifesto do curso (OBRIGATORIO em toda pagina) -->
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "loop-engineering",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "O Que E Loop Engineering", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "Os Blocos Fundamentais", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Arquitetura Orchestrator-Workers", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" }
+      ]},
+      { "n": "2", "title": "Vantagens vs Desvantagens", "modules": [
+        { "id": "2-1", "title": "Vantagens Reais", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Desvantagens e Riscos", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Quando Usar e Quando Nao Usar", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" }
+      ]},
+      { "n": "3", "title": "Implementacao Tecnica", "modules": [
+        { "id": "3-1", "title": "Loop Basico com Claude Code", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Workflows Deterministicos com Archon", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Dashboard de Controle", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Otimizacao de Custos", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" }
+      ]},
+      { "n": "4", "title": "Exemplos Praticos e Prompts", "modules": [
+        { "id": "4-1", "title": "Loop Simples: Task Runner", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "Loop Intermediario: GitHub Issue Bot", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Loop Avancado: Orchestrator Multi-Agent", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Anti-Patterns e Troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha purple T3) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(124, 58, 237, 0.10); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124, 58, 237, 0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+
+    /* Light mode - remove gradientes */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+
+    /* Light mode - cores especiais */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Dark mode - bordas suavizadas */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* SVG light mode */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* SVG pulse animation */
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s}
+    }
+
+    /* Scroll margin for sticky nav */
+    [id^="topico-"] { scroll-margin-top: 4rem; }
+  </style>
+<link href="https://inematds.github.io/loop-engineering/curso/trilha3/modulo-3-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/en/curso/trilha3/modulo-3-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/es/curso/trilha3/modulo-3-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔁</span>
+<span class="font-bold text-lg hidden sm:inline">Ingeniería de bucles</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span><span class="hidden sm:inline">Trade-offs</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html">
+<span class="sm:hidden">T3</span><span class="hidden sm:inline">Implementación</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="sm:hidden">T4</span><span class="hidden sm:inline">Práctica</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a>
+<span>/</span>
+<span class="text-purple-400">Módulo 3.2</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🏗️ Workflows deterministas con Archon</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Más allá del loop puro: cómo usar Archon para crear workflows controlados paso a paso, con una combinación de modelos, persistencia mediante Postgres y una separación real entre sesiones del agente de programación.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">6</div>
+<div class="text-xs text-neutral-400">Temas</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">40</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Avanzado</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-purple-400">Práctica</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="3-2" data-inema-track="3" id="conteudo">
+<!-- SVG FUTURISTA: Workflow pipeline -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Workflow Archon: la entrada pasa al pipeline determinista con los pasos Extract, Classify, Research, Implement y Validate, cada uno con un modelo diferente" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m32-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop>
+</lineargradient>
+<filter height="180%" id="m32-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m32-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle>
+</pattern>
+<marker id="m32-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+</defs>
+<rect fill="url(#m32-grid)" height="300" width="1000" x="0" y="0"></rect>
+<!-- Input -->
+<rect fill="#1a1230" height="70" rx="12" stroke="url(#m32-grad)" stroke-width="2.5" width="120" x="20" y="110"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="80" y="140">GitHub</text>
+<text fill="#d4b8ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="80" y="158">Entrada de Issue</text>
+<path d="M140,145 L175,145" fill="none" marker-end="url(#m32-ah)" opacity="0.65" stroke="#c084fc" stroke-width="2"></path>
+<!-- Extract -->
+<rect fill="#0e1b26" height="80" rx="12" stroke="#38bdf8" stroke-width="2" width="110" x="185" y="105"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="240" y="132">Extract</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="240" y="150">deterministic</text>
+<text fill="#6ee7b7" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="240" y="168">regex/API</text>
+<path d="M295,145 L325,145" fill="none" marker-end="url(#m32-ah)" opacity="0.65" stroke="#c084fc" stroke-width="2"></path>
+<!-- Classify -->
+<rect fill="#0e1b26" height="80" rx="12" stroke="#fbbf24" stroke-width="2" width="110" x="335" y="105"></rect>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="390" y="132">Clasificar</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="390" y="150">LLM (barato)</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="390" y="168">Haiku / Kimi</text>
+<path d="M445,145 L475,145" fill="none" marker-end="url(#m32-ah)" opacity="0.65" stroke="#c084fc" stroke-width="2"></path>
+<!-- Implement -->
+<rect fill="#0e1b26" height="80" rx="12" stroke="#a855f7" stroke-width="2" width="120" x="485" y="105"></rect>
+<text fill="#a855f7" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="545" y="132">Implement</text>
+<text fill="#d4b8ff" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="545" y="150">LLM (potente)</text>
+<text fill="#d4b8ff" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="545" y="168">Claude Code</text>
+<path d="M605,145 L635,145" fill="none" marker-end="url(#m32-ah)" opacity="0.65" stroke="#c084fc" stroke-width="2"></path>
+<!-- Validate -->
+<rect fill="#0e1b26" height="80" rx="12" stroke="#34d399" stroke-width="2" width="110" x="645" y="105"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="700" y="132">Validate</text>
+<text fill="#6ee7b7" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="700" y="150">tests + lint</text>
+<text fill="#6ee7b7" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="700" y="168">deterministic</text>
+<path d="M755,145 L785,145" fill="none" marker-end="url(#m32-ah)" opacity="0.65" stroke="#c084fc" stroke-width="2"></path>
+<!-- PR -->
+<rect fill="#1a1230" height="70" rx="12" stroke="url(#m32-grad)" stroke-width="2.5" width="120" x="795" y="110"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="855" y="140">Pull Request</text>
+<text fill="#d4b8ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="855" y="158">output</text>
+<!-- Labels -->
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="600" opacity="0.8" text-anchor="middle" x="500" y="40">Pipeline determinista de Archon</text>
+<text fill="#d4b8ff" font-family="Inter,sans-serif" font-size="11" opacity="0.6" text-anchor="middle" x="500" y="58">la persona define los steps; el agente ejecuta dentro de cada uno</text>
+<!-- Human control line -->
+<line opacity="0.3" stroke="#c084fc" stroke-dasharray="6 4" stroke-width="1" x1="80" x2="855" y1="250" y2="250"></line>
+<text fill="#d4b8ff" font-family="Inter,sans-serif" font-size="11" opacity="0.5" text-anchor="middle" x="500" y="272">control humano: tú defines la secuencia; el agente solo ejecuta dentro de cada paso</text>
+</svg>
+</div>
+<!-- TOPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🎯 Qué es Archon y por qué existe</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t1-p1">
+        Archon es el «harness builder» creado por Cole Medin. Permite crear workflows que orquestan múltiples sesiones de coding agent para tareas más grandes. La diferencia fundamental con el loop puro: <strong class="text-purple-400">tú defines el proceso, no el agente.</strong> En el loop puro, el agente decide cómo avanzar. En Archon, tú determinas los steps y el agente ejecuta cada uno.
+      </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center">
+<span class="mr-2">🧱</span> Loop puro vs. workflow determinista
+        </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-semibold text-red-400 mb-2">Loop puro (/loop)</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>El agente decide los siguientes pasos</li>
+<li>Una sesión para todo</li>
+<li>Un modelo para todo</li>
+<li>Context bloat inevitable</li>
+<li>Sin observabilidad nativa</li>
+</ul>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-semibold text-emerald-400 mb-2">Workflow Archon</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>El humano define la secuencia de pasos</li>
+<li>Sesión separada por step</li>
+<li>Un modelo diferente por paso</li>
+<li>Contexto nuevo en cada paso</li>
+<li>Registros y dashboard integrados</li>
+</ul>
+</div>
+</div>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t1-p2">
+        Cole Medin explica la motivación directa: <strong class="text-purple-400">"Archon es mi creador de harnesses; nos permite crear flujos de trabajo que coordinan muchas sesiones de agentes de programación para encargarse de tareas más grandes."</strong> La idea es que un workflow como "fix GitHub issue" no necesita un agente que decida cómo resolverlo. El proceso es conocido: extraer contexto, clasificar, investigar, implementar, validar, crear un PR.
+      </p>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span>
+<span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🔧 Anatomía del workflow "Corregir issue de GitHub"</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t2-p1">
+        El workflow más clásico de Archon es "Fix GitHub Issue". Cole Medin lo usa en su día a día: <strong class="text-purple-400">"La mayor parte de lo que necesito para mi trabajo diario son issues de un repo. Puedo crearlas yo o puede crearlas otra persona."</strong> El workflow sigue una secuencia fija de steps, cada uno con un papel específico.
+      </p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+<span class="mr-2">📋</span> Pasos del workflow
+        </h3>
+<div class="space-y-4">
+<div class="bg-dark-900 rounded-lg p-4 border-l-4 border-blue-400">
+<h4 class="font-semibold text-blue-400 mb-1">Paso 1: Extraer el número del issue</h4>
+<p class="text-neutral-300 text-sm">Determinista. Extrae el número de la issue mediante regex o la API de GitHub. Sin LLM.</p>
+<span class="text-xs text-neutral-500">Tipo: determinista | Modelo: ninguno</span>
+</div>
+<div class="bg-dark-900 rounded-lg p-4 border-l-4 border-blue-400">
+<h4 class="font-semibold text-blue-400 mb-1">Paso 2: Obtener el contexto del issue</h4>
+<p class="text-neutral-300 text-sm">Determinista. Busca el título, la descripción, las labels y los comentarios de la issue mediante la API de GitHub.</p>
+<span class="text-xs text-neutral-500">Tipo: determinista | Modelo: ninguno</span>
+</div>
+<div class="bg-dark-900 rounded-lg p-4 border-l-4 border-yellow-400">
+<h4 class="font-semibold text-yellow-400 mb-1">Paso 3: Clasificar</h4>
+<p class="text-neutral-300 text-sm">El LLM decide: ¿es un bug o una feature? El resto del flujo de trabajo cambia según esa decisión.</p>
+<span class="text-xs text-neutral-500">Tipo: LLM | Modelo: Haiku / Kimi K2.7 (económico)</span>
+</div>
+<div class="bg-dark-900 rounded-lg p-4 border-l-4 border-purple-400">
+<h4 class="font-semibold text-purple-400 mb-1">Paso 4: Investigar y analizar</h4>
+<p class="text-neutral-300 text-sm">Explora el codebase, identifica los archivos relevantes y entiende el contexto del problema.</p>
+<span class="text-xs text-neutral-500">Tipo: LLM | Modelo: Kimi K2.7 (exploración)</span>
+</div>
+<div class="bg-dark-900 rounded-lg p-4 border-l-4 border-purple-400">
+<h4 class="font-semibold text-purple-400 mb-1">Paso 5: Implementar</h4>
+<p class="text-neutral-300 text-sm">Escribe el código real. Aquí sí necesitas un modelo potente.</p>
+<span class="text-xs text-neutral-500">Tipo: LLM | Modelo: Claude Code (potente)</span>
+</div>
+<div class="bg-dark-900 rounded-lg p-4 border-l-4 border-emerald-400">
+<h4 class="font-semibold text-emerald-400 mb-1">Paso 6: Validar</h4>
+<p class="text-neutral-300 text-sm">Ejecuta pruebas, linting y verifica si se resolvió el issue. Puede ser determinista o usar un LLM para la revisión.</p>
+<span class="text-xs text-neutral-500">Tipo: mixto | Modelo: Codex para review</span>
+</div>
+<div class="bg-dark-900 rounded-lg p-4 border-l-4 border-emerald-400">
+<h4 class="font-semibold text-emerald-400 mb-1">Paso 7: Crear el PR</h4>
+<p class="text-neutral-300 text-sm">Crea la pull request con una descripción basada en el contexto acumulado de los pasos anteriores.</p>
+<span class="text-xs text-neutral-500">Tipo: determinista + LLM | Modelo: Claude</span>
+</div>
+</div>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t2-p2">
+        El punto clave: <strong class="text-purple-400">"No dejamos que el agente dirija todo el proceso. Es más determinista porque configuramos el proceso en este archivo de workflow."</strong> Tú defines los steps, Archon garantiza que se ejecuten en el orden correcto y cada step se ejecuta en una sesión aislada con el modelo ideal para esa tarea.
+      </p>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span>
+<span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🧩 La filosofía: quitarle decisiones al agente</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t3-p1">
+        El principio fundamental de Archon es contraintuitivo: <strong class="text-purple-400">cuanto menos decida el agente, mejor será el resultado.</strong> Cole Medin lo deja explícito: <strong class="text-purple-400">"Queremos quitarle al agente de programación la mayor cantidad posible de decisiones y aplicar el razonamiento del LLM solo cuando necesitemos que escriba código."</strong>
+</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4">Dónde usar LLM y dónde no</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-semibold text-emerald-400 mb-3">Necesita un LLM</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">*</span><span>Clasificar el tipo de issue (error o funcionalidad)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">*</span><span>Investigar el codebase y entender el contexto</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">*</span><span>Escribir código de implementación</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">*</span><span>Revisión semántica del código</span></li>
+</ul>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 border border-dark-600">
+<h4 class="font-semibold text-red-400 mb-3">No necesitas un LLM</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">*</span><span>Extraer número de la issue (regex)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">*</span><span>Buscar datos del issue (llamada a la API)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">*</span><span>Ejecutar pruebas (npm test)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">*</span><span>Crear PR (gh pr create)</span></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+<span class="mr-2">💻</span> Ejemplo: paso determinista en TypeScript
+        </h3>
+<pre class="bg-dark-900 rounded-lg p-4 text-sm font-mono text-neutral-300 overflow-x-auto"><code>// Step deterministico: nao precisa de LLM
+async function extractIssueNumber(input: string): Promise&lt;number&gt; {
+  const match = input.match(/issues\/(\d+)/);
+  if (!match) throw new Error("Invalid issue URL");
+  return parseInt(match[1], 10);
+}
+
+// Step deterministico: API call pura
+async function fetchIssueContext(owner: string, repo: string, num: number) {
+  const res = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/issues/${num}`,
+    { headers: { Authorization: `token ${process.env.GITHUB_TOKEN}` } }
+  );
+  return res.json();
+}
+
+// Step LLM: aqui sim o agente precisa raciocinar
+async function classifyIssue(context: IssueContext): Promise&lt;"bug" | "feature"&gt; {
+  // Roda num modelo barato (Haiku, Kimi K2.7)
+  const response = await llm.complete({
+    model: "haiku",
+    prompt: `Classify this GitHub issue as "bug" or "feature":\n${context.title}\n${context.body}`
+  });
+  return response.trim() as "bug" | "feature";
+}</code></pre>
+</div>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">🤔 Punto de reflexión</h3>
+<p class="text-neutral-300" data-inema-block="m3-2-t3-p2">Esta filosofía es lo que Cole Medin llama "layering on top of loop engineering". No abandonas los loops por completo. Tomas las partes buenas (automatización, ciclos) y agregas una capa de control humano. El resultado: menos desperdicio de tokens, más previsibilidad y mayor facilidad para depurar.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span>
+<span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔀 Combinación de modelos: el modelo adecuado para cada step</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t4-p1">
+        Uno de los mayores problemas del loop puro con /loop o /routines: <strong class="text-purple-400">"Usas un solo modelo para prácticamente todo. Eso es parte del motivo por el que resulta tan caro."</strong> En Archon, cada node del workflow puede usar un modelo diferente, optimizando el costo sin perder calidad.
+      </p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+<span class="mr-2">🎛️</span> Mapa de modelos por step
+        </h3>
+<div class="overflow-x-auto">
+<table class="w-full text-sm">
+<thead>
+<tr class="border-b border-dark-600">
+<th class="text-left py-3 px-4 text-purple-400 font-semibold">Paso</th>
+<th class="text-left py-3 px-4 text-purple-400 font-semibold">Modelo sugerido</th>
+<th class="text-left py-3 px-4 text-purple-400 font-semibold">Justificación</th>
+<th class="text-left py-3 px-4 text-purple-400 font-semibold">Costo relativo</th>
+</tr>
+</thead>
+<tbody class="text-neutral-300">
+<tr class="border-b border-dark-700">
+<td class="py-3 px-4">Extract / Fetch</td>
+<td class="py-3 px-4 text-emerald-400">Ninguno (API)</td>
+<td class="py-3 px-4">Determinista, sin razonamiento</td>
+<td class="py-3 px-4">$0</td>
+</tr>
+<tr class="border-b border-dark-700">
+<td class="py-3 px-4">Clasificar</td>
+<td class="py-3 px-4 text-yellow-400">Haiku / Kimi K2.7</td>
+<td class="py-3 px-4">Decisión sencilla, no hace falta un modelo caro</td>
+<td class="py-3 px-4">$</td>
+</tr>
+<tr class="border-b border-dark-700">
+<td class="py-3 px-4">Research</td>
+<td class="py-3 px-4 text-yellow-400">Kimi K2.7</td>
+<td class="py-3 px-4">Exploración de codebase, carga de contexto</td>
+<td class="py-3 px-4">$$</td>
+</tr>
+<tr class="border-b border-dark-700">
+<td class="py-3 px-4">Implement</td>
+<td class="py-3 px-4 text-purple-400">Claude Code</td>
+<td class="py-3 px-4">Escritura de código real, se necesita calidad</td>
+<td class="py-3 px-4">$$$</td>
+</tr>
+<tr class="border-b border-dark-700">
+<td class="py-3 px-4">Validate</td>
+<td class="py-3 px-4 text-emerald-400">Pruebas + Codex</td>
+<td class="py-3 px-4">Las pruebas son deterministas, la revisión es de LLM</td>
+<td class="py-3 px-4">$$</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t4-p2">
+        Cole Medin lo demuestra en la práctica: <strong class="text-purple-400">"Podemos usar Cloud Code para la implementación y Codex para la revisión. Luego, para cargar todo el contexto y explorar al principio, podemos usar un modelo más pequeño como Kimi K 2.7."</strong> Esto es el enrutamiento de modelos aplicado a flujos de trabajo de agentes.
+      </p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">💡</span> Consejo práctico
+        </h3>
+<p class="text-neutral-300" data-inema-block="m3-2-t4-p3">La regla general: usa modelos baratos para tomar decisiones y modelos potentes para crear. Clasificar un issue como bug o feature no requiere Opus. Escribir la solución sí. La diferencia de costo puede ser de 10x o más por paso.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span>
+<span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">💾 Durabilidad: estado en Postgres/Neon</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t5-p1">
+        Una de las mayores debilidades del loop básico: si la terminal se cierra, lo pierdes todo. Archon lo resuelve guardando todo el estado en una base de datos externa. <strong class="text-purple-400">"Estoy guardando aquí todos los loops que ejecutamos, los distintos eventos y los registros para que siempre podamos reanudar un flujo de trabajo más adelante."</strong>
+</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+<span class="mr-2">💻</span> Esquema simplificado: durabilidad con Neon
+        </h3>
+<pre class="bg-dark-900 rounded-lg p-4 text-sm font-mono text-neutral-300 overflow-x-auto"><code>-- Cada run tem um ID e estado persistente
+CREATE TABLE workflow_runs (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  workflow_id TEXT NOT NULL,
+  status      TEXT DEFAULT 'running', -- running | paused | completed | failed
+  input       JSONB NOT NULL,
+  state       JSONB DEFAULT '{}',
+  created_at  TIMESTAMPTZ DEFAULT now(),
+  updated_at  TIMESTAMPTZ DEFAULT now()
+);
+
+-- Cada step registra sua execucao
+CREATE TABLE step_executions (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  run_id      UUID REFERENCES workflow_runs(id),
+  step_name   TEXT NOT NULL,
+  status      TEXT DEFAULT 'pending', -- pending | running | completed | failed
+  input       JSONB,
+  output      JSONB,
+  model_used  TEXT,
+  tokens_used INTEGER DEFAULT 0,
+  started_at  TIMESTAMPTZ,
+  finished_at TIMESTAMPTZ
+);
+
+-- Logs de conversacao para replay
+CREATE TABLE conversation_logs (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  run_id      UUID REFERENCES workflow_runs(id),
+  step_name   TEXT NOT NULL,
+  role        TEXT NOT NULL, -- system | user | assistant
+  content     TEXT NOT NULL,
+  created_at  TIMESTAMPTZ DEFAULT now()
+);</code></pre>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t5-p2">
+        Cole Medin enfatiza: <strong class="text-purple-400">"Tengo todas mis conversaciones y las bases de código en las que trabajo con Archon; todo es persistente y es muy fácil reanudar cualquier trabajo que esté haciendo."</strong> Con el estado en una base de datos Postgres (Neon), puedes reanudar workflows después de una caída, ver el historial completo de cada ejecución y auditar las decisiones del agente.
+      </p>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">🤔 Punto de reflexión</h3>
+<p class="text-neutral-300" data-inema-block="m3-2-t5-p3">La durabilidad no es algo «nice to have» para loops serios. Es un requisito. Si ejecutas un loop de 2 horas y la máquina se reinicia en el minuto 90, sin un state externo lo pierdes todo. Con Neon/Postgres, retomas exactamente desde el paso en el que te quedaste. El costo de configuración (una hora) se compensa con la primera falla en la que NO pierdes el trabajo.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span>
+<span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">❓ Preguntas: Archon vs. loop puro</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t6-p1">
+        Archon resuelve muchos problemas del loop puro, pero introduce su propia complejidad. Vale la pena ser honesto sobre las ventajas y desventajas.
+      </p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-white mb-4">Preguntas abiertas</h3>
+<div class="space-y-4">
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-purple-400 font-semibold mb-2">¿Cuándo limita demasiado el workflow determinista?</p>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-2-t6-p2">Si defines todos los pasos de forma rígida, pierdes la capacidad del agente para improvisar. Para tareas exploratorias (pruebas de concepto, ideación), el loop puro puede ser más adecuado porque el agente necesita libertad para descubrir caminos inesperados.</p>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-purple-400 font-semibold mb-2">¿La sobrecarga de ingeniería compensa?</p>
+<p class="text-neutral-300 text-sm">Configurar Archon, definir workflows y mantener Postgres: es trabajo de ingeniería real. Para una sola tarea, probablemente no compensa. Para tareas repetitivas (procesar issues todos los días), compensa muy rápido. Cole Medin usa Archon a diario para los issues.</p>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-purple-400 font-semibold mb-2">¿Harness engineering frente a loop engineering?</p>
+<p class="text-neutral-300 text-sm" data-inema-block="m3-2-t6-p3">Cole Medin propone: <em>"Yo incluiría la ingeniería de loops dentro de la ingeniería de harnesses. No creo que merezca su propio término de moda."</em> La idea es que los loops son una herramienta dentro de un harness más amplio, no un paradigma aparte. El harness define el proceso y los loops ejecutan partes de este.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">🎯</span> Resumen de la elección
+        </h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-primary mt-1">*</span><span><strong>Loop puro:</strong> ideal para exploración, PoCs, tareas simples y únicas</span></li>
+<li class="flex items-start space-x-2"><span class="text-primary mt-1">*</span><span><strong>Archon/Workflow:</strong> ideal para tareas repetitivas, de varios pasos y con costos controlados</span></li>
+<li class="flex items-start space-x-2"><span class="text-primary mt-1">*</span><span><strong>Híbrido:</strong> workflow determinista con loops internos en los steps que necesitan iteración</span></li>
+</ul>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span>
+<span class="inema-read-label">Marcar como leído</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">📝</span> Resumen del módulo
+        </h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 mt-1">✓</span>
+<div><strong class="text-white">Archon</strong><span class="text-neutral-400"> - harness builder que orquesta múltiples sesiones de coding agent en workflows deterministas</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 mt-1">✓</span>
+<div><strong class="text-white">Pasos deterministas</strong><span class="text-neutral-400"> - el humano define el proceso, el agente ejecuta cada step con contexto nuevo</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 mt-1">✓</span>
+<div><strong class="text-white">Combinación de modelos</strong><span class="text-neutral-400"> - modelo económico para clasificación, modelo potente para implementación, cero LLM para steps deterministas</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 mt-1">✓</span>
+<div><strong class="text-white">Durabilidad</strong><span class="text-neutral-400"> - el state en Postgres/Neon permite retomar workflows después de un crash sin perder el progreso</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-purple-400 mt-1">✓</span>
+<div><strong class="text-white">Harness &gt; Loop</strong><span class="text-neutral-400"> - los loops son una herramienta dentro de un harness más amplio, no un paradigma aislado</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Módulo siguiente:</h3>
+<p class="text-neutral-300">3.3 - Panel de control (Agent Control Plane): cómo observar las decisiones del orquestador en tiempo real y agregar human-in-the-loop</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-3-1.html">← Módulo anterior</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-3.html">Módulo siguiente →</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Ingeniería de bucles — Agentes en bucle continuo - 2026 | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') {
+      window.INEMA.init();
+    }
+  </script>
+</body>
+</html>

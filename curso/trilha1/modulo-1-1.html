@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="loop-engineering">
-  <title>Módulo 1.1 — O Que É Loop Engineering | Loop Engineering</title>
 
-  <!-- ANTI-FOUC: script bloqueante ANTES de tudo -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="loop-engineering" name="inema-course"/>
+<title>Módulo 1.1 — O Que É Loop Engineering | Loop Engineering</title>
+<!-- ANTI-FOUC: script bloqueante ANTES de tudo -->
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -61,9 +61,8 @@
     }
   })();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -76,11 +75,10 @@
       }
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <!-- Manifesto do curso -->
-  <script type="application/json" data-inema-manifest>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso -->
+<script data-inema-manifest="" type="application/json">
   {
     "course": "loop-engineering",
     "tracks": [
@@ -97,8 +95,7 @@
     ]
   }
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
     .topic-explanation { display: none; }
@@ -157,512 +154,464 @@
     /* Scroll margin for sticky nav */
     [id^="topico-"] { scroll-margin-top: 4rem; }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-
-  <!-- NAVIGATION -->
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-4">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">🔄</span>
-            <span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
-          </a>
-          <span class="text-neutral-600">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-        </div>
-        <div class="flex items-center space-x-1 sm:space-x-2">
-          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
-            <span class="sm:hidden">T1</span>
-            <span class="hidden sm:inline">Fundamentos</span>
-          </a>
-          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
-            <span class="sm:hidden">T2</span>
-            <span class="hidden sm:inline">Vantagens vs Desvantagens</span>
-          </a>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-            </svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- BREADCRUMB -->
-  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <div class="flex items-center space-x-2 text-sm text-neutral-400">
-      <a href="../../index.html" class="hover:text-emerald-400">Inicio</a>
-      <span>/</span>
-      <a href="index.html" class="hover:text-emerald-400">Trilha 1 — Fundamentos</a>
-      <span>/</span>
-      <span class="text-emerald-400">Modulo 1.1</span>
-    </div>
-  </nav>
-
-  <!-- HEADER -->
-  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULO 1.1</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔄 O Que É Loop Engineering</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">De onde veio o conceito, por que virou buzzword, e o que realmente significa "loops que fazem o prompting por você".</p>
-      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-emerald-400">6</div>
-          <div class="text-xs text-neutral-400">Topicos</div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-emerald-400">25</div>
-          <div class="text-xs text-neutral-400">Minutos</div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-emerald-400">Basico</div>
-          <div class="text-xs text-neutral-400">Nivel</div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-emerald-400">Teoria</div>
-          <div class="text-xs text-neutral-400">Tipo</div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="1-1" data-inema-track="1">
-
-    <!-- TOPICO 1 -->
-    <section id="topico-1" data-inema-topic="modulo-1-1#topico-1" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
-        <h2 class="text-2xl font-bold">🧠 A Origem do Termo</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t1-p1">
+<link href="https://inematds.github.io/loop-engineering/curso/trilha1/modulo-1-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/en/curso/trilha1/modulo-1-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/es/curso/trilha1/modulo-1-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-1-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha1/modulo-1-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha1/modulo-1-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🔄</span>
+<span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Vantagens vs Desvantagens</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Trilha 1 — Fundamentos</a>
+<span>/</span>
+<span class="text-emerald-400">Modulo 1.1</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULO 1.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔄 O Que É Loop Engineering</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">De onde veio o conceito, por que virou buzzword, e o que realmente significa "loops que fazem o prompting por você".</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">6</div>
+<div class="text-xs text-neutral-400">Topicos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">25</div>
+<div class="text-xs text-neutral-400">Minutos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Basico</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-emerald-400">Teoria</div>
+<div class="text-xs text-neutral-400">Tipo</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="1-1" data-inema-track="1" id="conteudo">
+<!-- TOPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🧠 A Origem do Termo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t1-p1">
         Loop Engineering surgiu como uma forma de descrever algo que profissionais de ponta já estavam fazendo: <strong class="text-emerald-400">programar loops automatizados que fazem o prompting dos agentes de IA</strong>, em vez do humano digitar cada instrução manualmente. O termo ganhou tração quando figuras como Boris Cherny (Head do Claude Code na Anthropic) e Peter Steinberger (criador do OpenClaw) começaram a falar publicamente sobre seus workflows.
       </p>
-
-      <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
-          <span class="mr-2">💬</span> As Vozes que Iniciaram o Movimento
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center">
+<span class="mr-2">💬</span> As Vozes que Iniciaram o Movimento
         </h3>
-        <p class="text-neutral-300 mb-4" data-inema-block="m1-1-t1-p2">Duas declarações viralizaram e deram corpo ao termo:</p>
-        <blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-4 italic text-neutral-300">
+<p class="text-neutral-300 mb-4" data-inema-block="m1-1-t1-p2">Duas declarações viralizaram e deram corpo ao termo:</p>
+<blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-4 italic text-neutral-300">
           "I don't prompt Claude anymore. I write loops and the loops do the work. My job is to write loops."
           <footer class="text-emerald-400 text-sm mt-1 not-italic">— Boris Cherny, Head do Claude Code, Anthropic</footer>
-        </blockquote>
-        <p class="text-neutral-300 text-sm" data-inema-block="m1-1-t1-p3">Peter Steinberger, do OpenClaw, expressou a mesma ideia: ele não prompta agentes diretamente, mas projeta os loops que fazem isso por ele. Cole Medin, analisando essas declarações, observou que "loop engineering is kind of a buzzword, but also there are some really good takeaways when you dive into this".</p>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
-          <span class="mr-2">🎯</span> Ponto de Reflexão
+</blockquote>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-1-t1-p3">Peter Steinberger, do OpenClaw, expressou a mesma ideia: ele não prompta agentes diretamente, mas projeta os loops que fazem isso por ele. Cole Medin, analisando essas declarações, observou que "loop engineering is kind of a buzzword, but also there are some really good takeaways when you dive into this".</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">🎯</span> Ponto de Reflexão
         </h3>
-        <p class="text-neutral-300" data-inema-block="m1-1-t1-p4">Cole Medin questiona abertamente: "I don't even know if it deserves its own term." Loop Engineering não é uma tecnologia nova. É um rearranjo de conceitos existentes (cron jobs, automação, orquestração) aplicados a agentes de IA. O mérito real é a conversa sobre como e quando deixar agentes trabalharem autonomamente.</p>
-      </div>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
-          <span class="inema-ico-todo" aria-hidden="true">☐</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 2 -->
-    <section id="topico-2" data-inema-topic="modulo-1-1#topico-2" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
-        <h2 class="text-2xl font-bold">⚙️ Definição Prática</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t2-p1">
+<p class="text-neutral-300" data-inema-block="m1-1-t1-p4">Cole Medin questiona abertamente: "I don't even know if it deserves its own term." Loop Engineering não é uma tecnologia nova. É um rearranjo de conceitos existentes (cron jobs, automação, orquestração) aplicados a agentes de IA. O mérito real é a conversa sobre como e quando deixar agentes trabalharem autonomamente.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">⚙️ Definição Prática</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t2-p1">
         Na prática, Loop Engineering é <strong class="text-emerald-400">projetar um sistema onde loops automatizados fazem o prompting dos agentes de IA</strong>, liberando o humano de ficar na frente do terminal digitando cada instrução. O humano define a estratégia e os critérios; o loop executa, valida, e itera.
       </p>
-
-      <!-- SVG DIAGRAM: prompting manual vs loop-driven -->
-      <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
-        <svg viewBox="0 0 900 280" class="w-full h-auto" role="img" aria-label="Comparação entre prompting manual (humano repete instruções) e loop engineering (loops automatizados fazem o prompting)">
-          <defs>
-            <linearGradient id="m11-grad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/>
-            </linearGradient>
-            <filter id="m11-glow" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <pattern id="m11-grid" width="32" height="32" patternUnits="userSpaceOnUse">
-              <circle cx="1.3" cy="1.3" r="1.3" fill="#34d399" opacity="0.10"/>
-            </pattern>
-            <marker id="m11-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"/></marker>
-            <marker id="m11-ahc" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"/></marker>
-          </defs>
-          <rect x="0" y="0" width="900" height="280" fill="url(#m11-grid)"/>
-
-          <!-- Lado esquerdo: Prompting Manual -->
-          <text x="210" y="24" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="13" font-weight="600">PROMPTING MANUAL</text>
-          <rect x="140" y="40" width="140" height="44" rx="10" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
-          <text x="210" y="67" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600">Humano</text>
-          <path d="M210,84 L210,110" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.5" marker-end="url(#m11-ah)"/>
-          <rect x="152" y="115" width="116" height="34" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/>
-          <text x="210" y="137" text-anchor="middle" fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600">Agente IA</text>
-          <path d="M210,149 L210,170" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.5" marker-end="url(#m11-ah)"/>
-          <rect x="140" y="175" width="140" height="44" rx="10" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
-          <text x="210" y="202" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600">Humano</text>
-          <path d="M210,219 L210,240" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.5" marker-end="url(#m11-ah)"/>
-          <rect x="152" y="245" width="116" height="28" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="2" opacity="0.5"/>
-          <text x="210" y="264" text-anchor="middle" fill="#bfe6ff" font-family="Inter,sans-serif" font-size="11" opacity="0.6">repete...</text>
-
-          <!-- Divisor -->
-          <line x1="450" y1="20" x2="450" y2="270" stroke="#374151" stroke-width="1" stroke-dasharray="6 6"/>
-
-          <!-- Lado direito: Loop Engineering -->
-          <text x="680" y="24" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="13" font-weight="600">LOOP ENGINEERING</text>
-          <g filter="url(#m11-glow)">
-            <rect x="610" y="40" width="140" height="44" rx="10" fill="#0e2018" stroke="url(#m11-grad)" stroke-width="2.5"/>
-          </g>
-          <text x="680" y="60" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="600">Humano</text>
-          <text x="680" y="74" text-anchor="middle" fill="#a7f3d0" font-family="Inter,sans-serif" font-size="10">(define estrategia)</text>
-          <path d="M680,84 L680,110" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.5" marker-end="url(#m11-ah)"/>
-
-          <rect x="615" y="115" width="130" height="34" rx="8" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
-          <text x="680" y="137" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="600">Loop</text>
-
-          <path d="M745,132 C790,132 790,175 745,175" fill="none" stroke="#38bdf8" stroke-width="1.8" opacity="0.55" marker-end="url(#m11-ahc)"/>
-          <text x="805" y="157" text-anchor="middle" fill="#38bdf8" font-family="Inter,sans-serif" font-size="10" opacity="0.7">repete</text>
-
-          <path d="M680,149 L680,170" fill="none" stroke="#38bdf8" stroke-width="1.8" opacity="0.5" marker-end="url(#m11-ahc)"/>
-          <g class="wf-a"><rect x="620" y="175" width="120" height="32" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/><text x="680" y="196" text-anchor="middle" fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600">Agente IA</text></g>
-          <path d="M680,207 L680,228" fill="none" stroke="#38bdf8" stroke-width="1.8" opacity="0.5" marker-end="url(#m11-ahc)"/>
-          <g class="wf-a"><rect x="620" y="233" width="120" height="32" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/><text x="680" y="254" text-anchor="middle" fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600">Agente IA</text></g>
-        </svg>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
-          <h4 class="font-bold text-emerald-400 mb-4">✓ Loop Engineering</h4>
-          <ul class="space-y-3 text-neutral-300">
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Humano define o plano e os critérios uma vez</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Loop acorda o agente periodicamente</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Agente trabalha, valida, reporta</span></li>
-            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Escalável para múltiplas tarefas</span></li>
-          </ul>
-        </div>
-        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-          <h4 class="font-bold text-red-400 mb-4">✗ Prompting Manual</h4>
-          <ul class="space-y-3 text-neutral-300">
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Humano fica no terminal a cada instrução</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Não escala para múltiplas tarefas</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Interrupção constante do fluxo de trabalho</span></li>
-            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Depende de disponibilidade do humano</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
-          <span class="inema-ico-todo" aria-hidden="true">☐</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 3 -->
-    <section id="topico-3" data-inema-topic="modulo-1-1#topico-3" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
-        <h2 class="text-2xl font-bold">🔗 A Analogia com Cron Jobs</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t3-p1">
+<!-- SVG DIAGRAM: prompting manual vs loop-driven -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Comparação entre prompting manual (humano repete instruções) e loop engineering (loops automatizados fazem o prompting)" class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<defs>
+<lineargradient id="m11-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop>
+</lineargradient>
+<filter height="180%" id="m11-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m11-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle>
+</pattern>
+<marker id="m11-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m11-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m11-grid)" height="280" width="900" x="0" y="0"></rect>
+<!-- Lado esquerdo: Prompting Manual -->
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="210" y="24">PROMPTING MANUAL</text>
+<rect fill="#0e2018" height="44" rx="10" stroke="#34d399" stroke-width="2" width="140" x="140" y="40"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="210" y="67">Humano</text>
+<path d="M210,84 L210,110" fill="none" marker-end="url(#m11-ah)" opacity="0.5" stroke="#34d399" stroke-width="1.8"></path>
+<rect fill="#0e1b26" height="34" rx="8" stroke="#38bdf8" stroke-width="2" width="116" x="152" y="115"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="210" y="137">Agente IA</text>
+<path d="M210,149 L210,170" fill="none" marker-end="url(#m11-ah)" opacity="0.5" stroke="#34d399" stroke-width="1.8"></path>
+<rect fill="#0e2018" height="44" rx="10" stroke="#34d399" stroke-width="2" width="140" x="140" y="175"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="210" y="202">Humano</text>
+<path d="M210,219 L210,240" fill="none" marker-end="url(#m11-ah)" opacity="0.5" stroke="#34d399" stroke-width="1.8"></path>
+<rect fill="#0e1b26" height="28" opacity="0.5" rx="8" stroke="#38bdf8" stroke-width="2" width="116" x="152" y="245"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="11" opacity="0.6" text-anchor="middle" x="210" y="264">repete...</text>
+<!-- Divisor -->
+<line stroke="#374151" stroke-dasharray="6 6" stroke-width="1" x1="450" x2="450" y1="20" y2="270"></line>
+<!-- Lado direito: Loop Engineering -->
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="680" y="24">LOOP ENGINEERING</text>
+<g filter="url(#m11-glow)">
+<rect fill="#0e2018" height="44" rx="10" stroke="url(#m11-grad)" stroke-width="2.5" width="140" x="610" y="40"></rect>
+</g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="680" y="60">Humano</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="680" y="74">(define estrategia)</text>
+<path d="M680,84 L680,110" fill="none" marker-end="url(#m11-ah)" opacity="0.5" stroke="#34d399" stroke-width="1.8"></path>
+<rect fill="#0e2018" height="34" rx="8" stroke="#34d399" stroke-width="2" width="130" x="615" y="115"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="680" y="137">Loop</text>
+<path d="M745,132 C790,132 790,175 745,175" fill="none" marker-end="url(#m11-ahc)" opacity="0.55" stroke="#38bdf8" stroke-width="1.8"></path>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="10" opacity="0.7" text-anchor="middle" x="805" y="157">repete</text>
+<path d="M680,149 L680,170" fill="none" marker-end="url(#m11-ahc)" opacity="0.5" stroke="#38bdf8" stroke-width="1.8"></path>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="8" stroke="#38bdf8" stroke-width="2" width="120" x="620" y="175"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="680" y="196">Agente IA</text></g>
+<path d="M680,207 L680,228" fill="none" marker-end="url(#m11-ahc)" opacity="0.5" stroke="#38bdf8" stroke-width="1.8"></path>
+<g class="wf-a"><rect fill="#0e1b26" height="32" rx="8" stroke="#38bdf8" stroke-width="2" width="120" x="620" y="233"></rect><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="680" y="254">Agente IA</text></g>
+</svg>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Loop Engineering</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Humano define o plano e os critérios uma vez</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Loop acorda o agente periodicamente</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Agente trabalha, valida, reporta</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Escalável para múltiplas tarefas</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Prompting Manual</h4>
+<ul class="space-y-3 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Humano fica no terminal a cada instrução</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Não escala para múltiplas tarefas</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Interrupção constante do fluxo de trabalho</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Depende de disponibilidade do humano</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔗 A Analogia com Cron Jobs</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t3-p1">
         Se você já trabalhou com servidores, o conceito de loop engineering vai parecer familiar. Pense num <strong class="text-emerald-400">cron job</strong>: um agendador que acorda um script a cada intervalo definido. Loop Engineering é exatamente isso, mas em vez de rodar um script bash, você acorda um agente de IA com um prompt, e ele decide o que fazer a partir do estado atual do mundo.
       </p>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-emerald-400 mb-4">📋 A Receita Básica de um Loop</h3>
-        <div class="space-y-6">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <span class="text-emerald-400 font-bold text-sm">1</span>
-            </div>
-            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
-              <h4 class="font-semibold text-white mb-1">Definir o input externo</h4>
-              <p class="text-sm text-neutral-400">Um repositório GitHub, uma pasta de documentos, uma API, um banco de dados.</p>
-            </div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <span class="text-emerald-400 font-bold text-sm">2</span>
-            </div>
-            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
-              <h4 class="font-semibold text-white mb-1">Definir o intervalo</h4>
-              <p class="text-sm text-neutral-400">A cada 5 minutos, a cada hora, ou "trabalhe até terminar" (/goal).</p>
-            </div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <span class="text-emerald-400 font-bold text-sm">3</span>
-            </div>
-            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
-              <h4 class="font-semibold text-white mb-1">Definir o critério de conclusão</h4>
-              <p class="text-sm text-neutral-400">"Todas as tarefas marcadas como done", "0 issues abertas", "todos os testes passam".</p>
-            </div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <span class="text-emerald-400 font-bold text-sm">4</span>
-            </div>
-            <div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
-              <h4 class="font-semibold text-white mb-1">Deixar o loop rodar</h4>
-              <p class="text-sm text-neutral-400">O agente acorda, verifica o estado, executa a próxima tarefa, valida, dorme.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-6 italic text-neutral-300">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">📋 A Receita Básica de um Loop</h3>
+<div class="space-y-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">1</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Definir o input externo</h4>
+<p class="text-sm text-neutral-400">Um repositório GitHub, uma pasta de documentos, uma API, um banco de dados.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">2</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Definir o intervalo</h4>
+<p class="text-sm text-neutral-400">A cada 5 minutos, a cada hora, ou "trabalhe até terminar" (/goal).</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">3</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Definir o critério de conclusão</h4>
+<p class="text-sm text-neutral-400">"Todas as tarefas marcadas como done", "0 issues abertas", "todos os testes passam".</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">4</span>
+</div>
+<div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Deixar o loop rodar</h4>
+<p class="text-sm text-neutral-400">O agente acorda, verifica o estado, executa a próxima tarefa, valida, dorme.</p>
+</div>
+</div>
+</div>
+</div>
+<blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-6 italic text-neutral-300">
         "Loop engineering is combining or creating a system around all these things — routines, slash loop — so that we can give a larger scope of work as input to an AI coding assistant and have it work through it incrementally."
         <footer class="text-emerald-400 text-sm mt-1 not-italic">— Cole Medin</footer>
-      </blockquote>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t3-p2">
+</blockquote>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t3-p2">
         A palavra-chave aqui é <strong class="text-emerald-400">incrementalmente</strong>. O ponto central de um loop é que o agente nunca tenta resolver tudo de uma vez. Ele pega uma tarefa por ciclo, executa, valida, e o loop avança. Como Cole diz: "we never want to have a coding agent try to handle too much at once, or it will get completely overwhelmed."
       </p>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
-          <span class="inema-ico-todo" aria-hidden="true">☐</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 4 -->
-    <section id="topico-4" data-inema-topic="modulo-1-1#topico-4" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
-        <h2 class="text-2xl font-bold">👤 As Personas: Boris, Peter e Cole</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t4-p1">
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">👤 As Personas: Boris, Peter e Cole</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t4-p1">
         Para entender Loop Engineering, vale entender quem está por trás da conversa. Cada um traz uma perspectiva diferente, e as diferenças importam.
       </p>
-
-      <div class="space-y-4 mb-6">
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <div class="flex items-center space-x-3 mb-3">
-            <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">BORIS CHERNY</span>
-            <span class="text-neutral-500 text-sm">Head do Claude Code, Anthropic</span>
-          </div>
-          <p class="text-neutral-300 text-sm" data-inema-block="m1-1-t4-p2">Gerencia dezenas de milhares de agentes por dia, segundo ele mesmo. Usa /loop, /goal e /routines no Claude Code como blocos fundamentais. Ele é quem mais promove o conceito de "eu não prompto mais, eu escrevo loops". É importante notar que ele trabalha na Anthropic — e tem acesso a recursos computacionais que a maioria não tem.</p>
-        </div>
-
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <div class="flex items-center space-x-3 mb-3">
-            <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">PETER STEINBERGER</span>
-            <span class="text-neutral-500 text-sm">Criador do OpenClaw</span>
-          </div>
-          <p class="text-neutral-300 text-sm" data-inema-block="m1-1-t4-p3">Outro defensor vocal de loops autônomos. Roda loops que promptam Claude por ele, delegando quase totalmente o ciclo de desenvolvimento. Cole Medin observa que ele opera com "pretty much an infinite budget", o que torna seu setup difícil de replicar para a maioria dos desenvolvedores.</p>
-        </div>
-
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <div class="flex items-center space-x-3 mb-3">
-            <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">COLE MEDIN</span>
-            <span class="text-neutral-500 text-sm">Criador do Archon</span>
-          </div>
-          <p class="text-neutral-300 text-sm" data-inema-block="m1-1-t4-p4">Posição mais cética e prática. Reconhece o valor dos loops, mas questiona: "I am not sold on this idea right now." Construiu sua própria abordagem com workflows determinísticos no Archon, onde o humano controla o processo em vez de delegar completamente ao agente. Seu foco é custo, confiabilidade e observabilidade.</p>
-        </div>
-      </div>
-
-      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
-          <span class="mr-2">🤔</span> Ponto de Reflexão
+<div class="space-y-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="flex items-center space-x-3 mb-3">
+<span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">BORIS CHERNY</span>
+<span class="text-neutral-500 text-sm">Head do Claude Code, Anthropic</span>
+</div>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-1-t4-p2">Gerencia dezenas de milhares de agentes por dia, segundo ele mesmo. Usa /loop, /goal e /routines no Claude Code como blocos fundamentais. Ele é quem mais promove o conceito de "eu não prompto mais, eu escrevo loops". É importante notar que ele trabalha na Anthropic — e tem acesso a recursos computacionais que a maioria não tem.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="flex items-center space-x-3 mb-3">
+<span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">PETER STEINBERGER</span>
+<span class="text-neutral-500 text-sm">Criador do OpenClaw</span>
+</div>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-1-t4-p3">Outro defensor vocal de loops autônomos. Roda loops que promptam Claude por ele, delegando quase totalmente o ciclo de desenvolvimento. Cole Medin observa que ele opera com "pretty much an infinite budget", o que torna seu setup difícil de replicar para a maioria dos desenvolvedores.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="flex items-center space-x-3 mb-3">
+<span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">COLE MEDIN</span>
+<span class="text-neutral-500 text-sm">Criador do Archon</span>
+</div>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-1-t4-p4">Posição mais cética e prática. Reconhece o valor dos loops, mas questiona: "I am not sold on this idea right now." Construiu sua própria abordagem com workflows determinísticos no Archon, onde o humano controla o processo em vez de delegar completamente ao agente. Seu foco é custo, confiabilidade e observabilidade.</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+<span class="mr-2">🤔</span> Ponto de Reflexão
         </h3>
-        <p class="text-neutral-300" data-inema-block="m1-1-t4-p5">Cole Medin levanta um questionamento direto sobre Boris: "Boris Cherny says that there are days he manages tens of thousands of AI agents at once. Like really, is that actually practical? Is that going to scale?" E depois provoca: "I mean, maybe that does explain some of the bugs we have in Claude Code." É uma perspectiva honesta — quem promove loop engineering são pessoas com acesso a recursos que a maioria não tem.</p>
-      </div>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
-          <span class="inema-ico-todo" aria-hidden="true">☐</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 5 -->
-    <section id="topico-5" data-inema-topic="modulo-1-1#topico-5" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
-        <h2 class="text-2xl font-bold">📊 O Fluxo Básico de um Loop</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t5-p1">
+<p class="text-neutral-300" data-inema-block="m1-1-t4-p5">Cole Medin levanta um questionamento direto sobre Boris: "Boris Cherny says that there are days he manages tens of thousands of AI agents at once. Like really, is that actually practical? Is that going to scale?" E depois provoca: "I mean, maybe that does explain some of the bugs we have in Claude Code." É uma perspectiva honesta — quem promove loop engineering são pessoas com acesso a recursos que a maioria não tem.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">📊 O Fluxo Básico de um Loop</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t5-p1">
         No nível mais simples, Cole Medin demonstrou loop engineering com um exemplo direto no Claude Code. Ele passou um documento de especificação (plan.md) com tarefas numeradas e pediu ao Claude Code para usar o skill de loop.
       </p>
-
-      <blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-6 italic text-neutral-300">
+<blockquote class="border-l-4 border-emerald-500/50 pl-4 mb-6 italic text-neutral-300">
         "I know this is a very, very basic example, but I want to stay simple on purpose. But it wrote the prompt: slash loop work through plan.md one task at a time."
         <footer class="text-emerald-400 text-sm mt-1 not-italic">— Cole Medin</footer>
-      </blockquote>
-
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-emerald-400 mb-4">🔧 O que aconteceu na demo</h3>
-        <div class="space-y-4">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <span class="text-emerald-400 font-bold text-sm">1</span>
-            </div>
-            <div class="flex-1">
-              <p class="text-neutral-300 text-sm">Cole passou o prompt pedindo para carregar o "loop skill". O Claude Code carregou a capability e soube como montar o sistema de loop sozinho.</p>
-            </div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <span class="text-emerald-400 font-bold text-sm">2</span>
-            </div>
-            <div class="flex-1">
-              <p class="text-neutral-300 text-sm">O agente identificou que era uma lista sequencial de tarefas e configurou o /loop automaticamente. "It says this is sequential task list, it's going to do the first task, and then it's going to schedule a quick wake up."</p>
-            </div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <span class="text-emerald-400 font-bold text-sm">3</span>
-            </div>
-            <div class="flex-1">
-              <p class="text-neutral-300 text-sm">A cada ciclo, o agente fazia a tarefa, validava, e agendava o próximo wake-up. "It's resuming with a slash loop wake up. And look at that. I didn't write this prompt myself at all."</p>
-            </div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <span class="text-emerald-400 font-bold text-sm">4</span>
-            </div>
-            <div class="flex-1">
-              <p class="text-neutral-300 text-sm">Em dois minutos, já tinha completado duas tarefas. O loop continuaria até concluir todas.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
-          <span class="mr-2">📌</span> O Ponto Central
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4">🔧 O que aconteceu na demo</h3>
+<div class="space-y-4">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">1</span>
+</div>
+<div class="flex-1">
+<p class="text-neutral-300 text-sm">Cole passou o prompt pedindo para carregar o "loop skill". O Claude Code carregou a capability e soube como montar o sistema de loop sozinho.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">2</span>
+</div>
+<div class="flex-1">
+<p class="text-neutral-300 text-sm">O agente identificou que era uma lista sequencial de tarefas e configurou o /loop automaticamente. "It says this is sequential task list, it's going to do the first task, and then it's going to schedule a quick wake up."</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">3</span>
+</div>
+<div class="flex-1">
+<p class="text-neutral-300 text-sm">A cada ciclo, o agente fazia a tarefa, validava, e agendava o próximo wake-up. "It's resuming with a slash loop wake up. And look at that. I didn't write this prompt myself at all."</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+<span class="text-emerald-400 font-bold text-sm">4</span>
+</div>
+<div class="flex-1">
+<p class="text-neutral-300 text-sm">Em dois minutos, já tinha completado duas tarefas. O loop continuaria até concluir todas.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+<span class="mr-2">📌</span> O Ponto Central
         </h3>
-        <p class="text-neutral-300" data-inema-block="m1-1-t5-p2">O Claude Code aqui funciona como orquestrador e worker ao mesmo tempo. Ele monta o loop, escreve o prompt do loop, e executa as tarefas. Para casos simples, isso funciona. Para sistemas mais complexos, como veremos no módulo 1.3, a separação entre orchestrator e workers se torna essencial.</p>
-      </div>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
-          <span class="inema-ico-todo" aria-hidden="true">☐</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 6 -->
-    <section id="topico-6" data-inema-topic="modulo-1-1#topico-6" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold">❓ Questionamentos</h2>
-      </div>
-
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t6-p1">
+<p class="text-neutral-300" data-inema-block="m1-1-t5-p2">O Claude Code aqui funciona como orquestrador e worker ao mesmo tempo. Ele monta o loop, escreve o prompt do loop, e executa as tarefas. Para casos simples, isso funciona. Para sistemas mais complexos, como veremos no módulo 1.3, a separação entre orchestrator e workers se torna essencial.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-1#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">❓ Questionamentos</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t6-p1">
         Antes de mergulhar nos blocos técnicos, vale pausar e levantar questões legítimas que o próprio Cole Medin coloca sobre o conceito.
       </p>
-
-      <div class="space-y-4 mb-6">
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-emerald-400 mb-2">Loop Engineering merece ser um termo próprio?</h4>
-          <p class="text-neutral-300 text-sm" data-inema-block="m1-1-t6-p2">Cole Medin é direto: "I don't even know if it deserves its own term." A ideia de automatizar tarefas com loops e agendadores existe há décadas. O que muda é o componente LLM no centro. Mas a mecânica — cron, wake up, execute, sleep — é a mesma de sempre. Chamar isso de "engineering" é, no mínimo, generoso.</p>
-        </div>
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-emerald-400 mb-2">Quem realmente se beneficia?</h4>
-          <p class="text-neutral-300 text-sm" data-inema-block="m1-1-t6-p3">Os maiores defensores do loop engineering são pessoas com acesso a budgets massivos e infraestrutura de ponta. Boris tem os recursos da Anthropic. Peter opera com orçamento praticamente ilimitado. A questão real é: isso escala para um dev solo ou uma startup com orçamento apertado?</p>
-        </div>
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-emerald-400 mb-2">Autonomia vs. Qualidade: é trade-off?</h4>
-          <p class="text-neutral-300 text-sm" data-inema-block="m1-1-t6-p4">Cole resume: "there is no way you're gonna convince me that loop engineering is the way to get the best results possible with AI coding assistance." Mais autonomia significa menos controle. Menos controle significa mais risco de resultados ruins. Módulo 2.2 vai dissecar isso em detalhe.</p>
-        </div>
-      </div>
-
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
-          <span class="mr-2">⚠️</span> A Provocação de Cole
+<div class="space-y-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-emerald-400 mb-2">Loop Engineering merece ser um termo próprio?</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-1-t6-p2">Cole Medin é direto: "I don't even know if it deserves its own term." A ideia de automatizar tarefas com loops e agendadores existe há décadas. O que muda é o componente LLM no centro. Mas a mecânica — cron, wake up, execute, sleep — é a mesma de sempre. Chamar isso de "engineering" é, no mínimo, generoso.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-emerald-400 mb-2">Quem realmente se beneficia?</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-1-t6-p3">Os maiores defensores do loop engineering são pessoas com acesso a budgets massivos e infraestrutura de ponta. Boris tem os recursos da Anthropic. Peter opera com orçamento praticamente ilimitado. A questão real é: isso escala para um dev solo ou uma startup com orçamento apertado?</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-emerald-400 mb-2">Autonomia vs. Qualidade: é trade-off?</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m1-1-t6-p4">Cole resume: "there is no way you're gonna convince me that loop engineering is the way to get the best results possible with AI coding assistance." Mais autonomia significa menos controle. Menos controle significa mais risco de resultados ruins. Módulo 2.2 vai dissecar isso em detalhe.</p>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center">
+<span class="mr-2">⚠️</span> A Provocação de Cole
         </h3>
-        <p class="text-neutral-300" data-inema-block="m1-1-t6-p5">No final da análise, Cole sintetiza: "I would just fold loop engineering into harness engineering. It doesn't quite deserve its own buzzword. But there are some good ideas here." A ideia não é descartada — é reposicionada. Loop Engineering é um ingrediente, não uma refeição completa.</p>
-      </div>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400">
-          <span class="inema-ico-todo" aria-hidden="true">☐</span>
-          <span class="inema-ico-done hidden" aria-hidden="true">☑</span>
-          <span class="inema-label-todo">Marcar como lido</span>
-          <span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- RESUMO -->
-    <section class="mb-12">
-      <div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
-        <h2 class="text-2xl font-bold mb-6 flex items-center">
-          <span class="mr-3">📋</span> Resumo do Modulo
+<p class="text-neutral-300" data-inema-block="m1-1-t6-p5">No final da análise, Cole sintetiza: "I would just fold loop engineering into harness engineering. It doesn't quite deserve its own buzzword. But there are some good ideas here." A ideia não é descartada — é reposicionada. Loop Engineering é um ingrediente, não uma refeição completa.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-emerald-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span>
+<span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center">
+<span class="mr-3">📋</span> Resumo do Modulo
         </h2>
-        <div class="space-y-4 mb-8">
-          <div class="flex items-start space-x-3">
-            <span class="text-emerald-400 mt-1">✓</span>
-            <div><strong class="text-white">Loop Engineering</strong><span class="text-neutral-400"> — loops automatizados que promptam agentes em vez do humano</span></div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-emerald-400 mt-1">✓</span>
-            <div><strong class="text-white">Origem</strong><span class="text-neutral-400"> — Boris Cherny (Anthropic) e Peter Steinberger (OpenClaw) popularizaram o conceito</span></div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-emerald-400 mt-1">✓</span>
-            <div><strong class="text-white">Mecânica</strong><span class="text-neutral-400"> — cron jobs + LLM: definir input, intervalo, critério de conclusão, e deixar rodar</span></div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-emerald-400 mt-1">✓</span>
-            <div><strong class="text-white">Ceticismo saudável</strong><span class="text-neutral-400"> — Cole Medin: "it doesn't quite deserve its own buzzword, but there are good ideas here"</span></div>
-          </div>
-          <div class="flex items-start space-x-3">
-            <span class="text-emerald-400 mt-1">✓</span>
-            <div><strong class="text-white">Trade-off central</strong><span class="text-neutral-400"> — mais autonomia = menos controle = mais risco se não houver harness</span></div>
-          </div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
-          <h3 class="font-semibold text-emerald-400 mb-2">Proximo Modulo:</h3>
-          <p class="text-neutral-300">1.2 — Os Blocos Fundamentais (/loop, /goal, /routines)</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
-          <a href="modulo-1-2.html" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors">Proximo Modulo →</a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>Loop Engineering — Agentes em Loop Contínuo | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> | 2026</p>
-    </div>
-  </footer>
-
-  <!-- SCRIPTS -->
-  <script>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Loop Engineering</strong><span class="text-neutral-400"> — loops automatizados que promptam agentes em vez do humano</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Origem</strong><span class="text-neutral-400"> — Boris Cherny (Anthropic) e Peter Steinberger (OpenClaw) popularizaram o conceito</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Mecânica</strong><span class="text-neutral-400"> — cron jobs + LLM: definir input, intervalo, critério de conclusão, e deixar rodar</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Ceticismo saudável</strong><span class="text-neutral-400"> — Cole Medin: "it doesn't quite deserve its own buzzword, but there are good ideas here"</span></div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="text-emerald-400 mt-1">✓</span>
+<div><strong class="text-white">Trade-off central</strong><span class="text-neutral-400"> — mais autonomia = menos controle = mais risco se não houver harness</span></div>
+</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Proximo Modulo:</h3>
+<p class="text-neutral-300">1.2 — Os Blocos Fundamentais (/loop, /goal, /routines)</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para Trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-2.html">Proximo Modulo →</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Loop Engineering — Agentes em Loop Contínuo | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> | 2026</p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
     function toggleTopic(button) {
       const topicItem = button.closest('.topic-item');
       const explanation = topicItem.querySelector('.topic-explanation');
@@ -702,9 +651,8 @@
     }
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
   </script>
-
-  <script src="../../assets/learn.js"></script>
-  <script>
+<script src="../../assets/learn.js"></script>
+<script>
     if (window.INEMA && typeof window.INEMA.init === 'function') {
       window.INEMA.init();
     }

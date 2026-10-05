@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="loop-engineering">
-  <title>Trilha 4 — Exemplos Praticos e Prompts | Loop Engineering</title>
 
-  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="loop-engineering" name="inema-course"/>
+<title>Trilha 4 — Exemplos Praticos e Prompts | Loop Engineering</title>
+<!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+<script>
   (function(){try{var h=document.documentElement,D={theme:'inema-dark',font:'inter',fontScale:100,lineWidth:68,leading:1.7,accent:'emerald'};function c(o){var r={};for(var x in o)r[x]=o[x];return r}var p=c(D);try{var raw=localStorage.getItem('inema.prefs');if(raw){var j=JSON.parse(raw);if(j&&typeof j==='object')for(var k in D)if(j[k]!=null)p[k]=j[k]}else{var l=localStorage.getItem('theme');if(l==='light')p.theme='claro';else if(l==='dark')p.theme='inema-dark'}}catch(e){p=c(D)}var T={'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'}};var t=T[p.theme]||T['inema-dark'];if(t.dark===true)h.classList.add('dark');else if(t.dark===false)h.classList.remove('dark');if(t.attr)h.setAttribute('data-theme',t.attr);else h.removeAttribute('data-theme');h.style.colorScheme=t.cs?t.cs:(h.classList.contains('dark')?'dark':'light');h.setAttribute('data-font',p.font||'inter');h.setAttribute('data-accent',p.accent||'emerald');var s=h.style,sc=+p.fontScale||100;s.setProperty('--inema-font-scale',(sc/100).toString());s.setProperty('font-size',sc+'%');s.setProperty('--measure',(+p.lineWidth||68)+'ch');s.setProperty('--lh-body',(+p.leading||1.7).toString());var fam=p.font==='system'?'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif':p.font==='leitura'?'"Atkinson Hyperlegible","Inter",system-ui,sans-serif':'"Inter",system-ui,sans-serif';s.setProperty('--font-body',fam);var A={emerald:[152,76,45],blue:[217,91,60],purple:[258,90,66],amber:[38,92,50],teal:[174,72,41],rose:[350,89,60]};var a=A[p.accent]||A.emerald;s.setProperty('--accent-h',a[0]+'');s.setProperty('--accent-s',a[1]+'%');s.setProperty('--accent-l',a[2]+'%');s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)')}catch(err){try{document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}catch(e){}}})();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -25,11 +24,10 @@
       }
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <!-- Manifesto do curso -->
-  <script type="application/json" data-inema-manifest>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<!-- Manifesto do curso -->
+<script data-inema-manifest="" type="application/json">
   {
     "course": "loop-engineering",
     "tracks": [
@@ -58,8 +56,7 @@
     ]
   }
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
     .topic-explanation { display: none; }
@@ -120,613 +117,590 @@
       .t4-a:nth-child(2){animation-delay:.25s} .t4-a:nth-child(3){animation-delay:.5s}
     }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-
-  <!-- NAVIGATION -->
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-4">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-            <span class="text-2xl">&#x267B;</span>
-            <span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
-          </a>
-          <span class="text-neutral-600">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-        </div>
-        <div class="flex items-center space-x-1 sm:space-x-2">
-          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
-            <span class="sm:hidden">T1</span>
-            <span class="hidden sm:inline">Fundamentos</span>
-          </a>
-          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
-            <span class="sm:hidden">T2</span>
-            <span class="hidden sm:inline">Vantagens</span>
-          </a>
-          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
-            <span class="sm:hidden">T3</span>
-            <span class="hidden sm:inline">Tecnica</span>
-          </a>
-          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10">
-            <span class="sm:hidden">T4</span>
-            <span class="hidden sm:inline">Pratica</span>
-          </a>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-            </svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HEADER -->
-  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="flex items-center space-x-2 text-sm text-neutral-400 mb-6">
-        <a href="../../index.html" class="hover:text-amber-400">Inicio</a>
-        <span>/</span>
-        <span class="text-amber-400">Trilha 4</span>
-      </nav>
-      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">TRILHA 4</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">&#x1F4CB; Exemplos Praticos e Prompts</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">
+<link href="https://inematds.github.io/loop-engineering/curso/trilha4/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/en/curso/trilha4/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/es/curso/trilha4/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="./" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha4/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha4/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">♻</span>
+<span class="font-bold text-lg hidden sm:inline">Loop Engineering</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span>
+<span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html">
+<span class="sm:hidden">T2</span>
+<span class="hidden sm:inline">Vantagens</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span>
+<span class="hidden sm:inline">Tecnica</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html">
+<span class="sm:hidden">T4</span>
+<span class="hidden sm:inline">Pratica</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<nav class="flex items-center space-x-2 text-sm text-neutral-400 mb-6">
+<a class="hover:text-amber-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<span class="text-amber-400">Trilha 4</span>
+</nav>
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">TRILHA 4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📋 Exemplos Praticos e Prompts</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
         Receitas prontas para copiar e usar: do loop simples ao orchestrator multi-agent, com prompts copiáveis, diagramas de fluxo e checklist de troubleshooting.
       </p>
-      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-amber-400">4</div>
-          <div class="text-xs text-neutral-400">Modulos</div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-amber-400">24</div>
-          <div class="text-xs text-neutral-400">Topicos</div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-amber-400">~2h</div>
-          <div class="text-xs text-neutral-400">Duracao</div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
-          <div class="text-xl font-bold text-amber-400">Pratico</div>
-          <div class="text-xs text-neutral-400">Nivel</div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-    <!-- HERO SVG -->
-    <section class="mb-12">
-      <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
-        <svg viewBox="0 0 1000 220" class="w-full h-auto" role="img" aria-label="Diagrama: progressao dos exemplos praticos, do loop simples ao orchestrator multi-agent com troubleshooting">
-          <defs>
-            <linearGradient id="t4-grad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/>
-            </linearGradient>
-            <filter id="t4-glow" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <pattern id="t4-grid" width="32" height="32" patternUnits="userSpaceOnUse">
-              <circle cx="1.3" cy="1.3" r="1.3" fill="#fbbf24" opacity="0.08"/>
-            </pattern>
-            <marker id="t4-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"/></marker>
-          </defs>
-          <rect x="0" y="0" width="1000" height="220" fill="url(#t4-grid)"/>
-
-          <!-- 4.1 Task Runner -->
-          <g filter="url(#t4-glow)">
-            <rect x="30" y="70" width="180" height="80" rx="14" fill="#1a1506" stroke="url(#t4-grad)" stroke-width="2"/>
-          </g>
-          <text x="120" y="100" text-anchor="middle" fill="#fbbf24" font-family="Inter,sans-serif" font-weight="700" font-size="14">4.1 Task Runner</text>
-          <text x="120" y="120" text-anchor="middle" fill="#fde68a" font-family="Inter,sans-serif" font-size="11">Loop simples</text>
-          <text x="120" y="136" text-anchor="middle" fill="#fde68a" font-family="Inter,sans-serif" font-size="11">plan.md + /loop</text>
-
-          <path d="M210,110 L270,110" fill="none" stroke="#fbbf24" stroke-width="1.8" opacity="0.55" marker-end="url(#t4-ah)"/>
-
-          <!-- 4.2 GitHub Issue Bot -->
-          <rect x="280" y="70" width="180" height="80" rx="14" fill="#1a1506" stroke="#fbbf24" stroke-width="2"/>
-          <text x="370" y="100" text-anchor="middle" fill="#fbbf24" font-family="Inter,sans-serif" font-weight="700" font-size="14">4.2 Issue Bot</text>
-          <text x="370" y="120" text-anchor="middle" fill="#fde68a" font-family="Inter,sans-serif" font-size="11">Orchestrator + workers</text>
-          <text x="370" y="136" text-anchor="middle" fill="#fde68a" font-family="Inter,sans-serif" font-size="11">worktrees + Neon</text>
-
-          <path d="M460,110 L520,110" fill="none" stroke="#fbbf24" stroke-width="1.8" opacity="0.55" marker-end="url(#t4-ah)"/>
-
-          <!-- 4.3 Multi-Agent -->
-          <rect x="530" y="70" width="180" height="80" rx="14" fill="#1a1506" stroke="#fbbf24" stroke-width="2"/>
-          <text x="620" y="100" text-anchor="middle" fill="#fbbf24" font-family="Inter,sans-serif" font-weight="700" font-size="14">4.3 Multi-Agent</text>
-          <text x="620" y="120" text-anchor="middle" fill="#fde68a" font-family="Inter,sans-serif" font-size="11">Spec + rounds</text>
-          <text x="620" y="136" text-anchor="middle" fill="#fde68a" font-family="Inter,sans-serif" font-size="11">HITL checkpoints</text>
-
-          <path d="M710,110 L770,110" fill="none" stroke="#fbbf24" stroke-width="1.8" opacity="0.55" marker-end="url(#t4-ah)"/>
-
-          <!-- 4.4 Anti-Patterns -->
-          <rect x="780" y="70" width="190" height="80" rx="14" fill="#1a0a06" stroke="#ef4444" stroke-width="2"/>
-          <text x="875" y="100" text-anchor="middle" fill="#ef4444" font-family="Inter,sans-serif" font-weight="700" font-size="14">4.4 Anti-Patterns</text>
-          <text x="875" y="120" text-anchor="middle" fill="#fca5a5" font-family="Inter,sans-serif" font-size="11">Troubleshooting</text>
-          <text x="875" y="136" text-anchor="middle" fill="#fca5a5" font-family="Inter,sans-serif" font-size="11">Ready-to-loop checklist</text>
-
-          <!-- Labels -->
-          <text x="120" y="175" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10">BASICO</text>
-          <text x="370" y="175" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10">INTERMEDIARIO</text>
-          <text x="620" y="175" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10">AVANCADO</text>
-          <text x="875" y="175" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-size="10">REFERENCIA</text>
-        </svg>
-      </div>
-    </section>
-
-    <!-- MAPA DA TRILHA -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <a href="#modulo-4-1" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-amber-400 font-bold text-sm">4.1</span>
-            <span class="text-xs text-neutral-500">~30 min</span>
-          </div>
-          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">&#x1F3AF; Loop Simples: Task Runner</h3>
-          <p class="text-xs text-neutral-400">plan.md + /loop skill</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">4</div>
+<div class="text-xs text-neutral-400">Modulos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">24</div>
+<div class="text-xs text-neutral-400">Topicos</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">~2h</div>
+<div class="text-xs text-neutral-400">Duracao</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">Pratico</div>
+<div class="text-xs text-neutral-400">Nivel</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- HERO SVG -->
+<section class="mb-12">
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Diagrama: progressao dos exemplos praticos, do loop simples ao orchestrator multi-agent com troubleshooting" class="w-full h-auto" role="img" viewbox="0 0 1000 220">
+<defs>
+<lineargradient id="t4-grad" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop>
+</lineargradient>
+<filter height="180%" id="t4-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="t4-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.08" r="1.3"></circle>
+</pattern>
+<marker id="t4-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"></path></marker>
+</defs>
+<rect fill="url(#t4-grid)" height="220" width="1000" x="0" y="0"></rect>
+<!-- 4.1 Task Runner -->
+<g filter="url(#t4-glow)">
+<rect fill="#1a1506" height="80" rx="14" stroke="url(#t4-grad)" stroke-width="2" width="180" x="30" y="70"></rect>
+</g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="120" y="100">4.1 Task Runner</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="120" y="120">Loop simples</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="120" y="136">plan.md + /loop</text>
+<path d="M210,110 L270,110" fill="none" marker-end="url(#t4-ah)" opacity="0.55" stroke="#fbbf24" stroke-width="1.8"></path>
+<!-- 4.2 GitHub Issue Bot -->
+<rect fill="#1a1506" height="80" rx="14" stroke="#fbbf24" stroke-width="2" width="180" x="280" y="70"></rect>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="370" y="100">4.2 Issue Bot</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="370" y="120">Orchestrator + workers</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="370" y="136">worktrees + Neon</text>
+<path d="M460,110 L520,110" fill="none" marker-end="url(#t4-ah)" opacity="0.55" stroke="#fbbf24" stroke-width="1.8"></path>
+<!-- 4.3 Multi-Agent -->
+<rect fill="#1a1506" height="80" rx="14" stroke="#fbbf24" stroke-width="2" width="180" x="530" y="70"></rect>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="620" y="100">4.3 Multi-Agent</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="620" y="120">Spec + rounds</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="620" y="136">HITL checkpoints</text>
+<path d="M710,110 L770,110" fill="none" marker-end="url(#t4-ah)" opacity="0.55" stroke="#fbbf24" stroke-width="1.8"></path>
+<!-- 4.4 Anti-Patterns -->
+<rect fill="#1a0a06" height="80" rx="14" stroke="#ef4444" stroke-width="2" width="190" x="780" y="70"></rect>
+<text fill="#ef4444" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="875" y="100">4.4 Anti-Patterns</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="875" y="120">Troubleshooting</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="875" y="136">Ready-to-loop checklist</text>
+<!-- Labels -->
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="120" y="175">BASICO</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="370" y="175">INTERMEDIARIO</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="620" y="175">AVANCADO</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="875" y="175">REFERENCIA</text>
+</svg>
+</div>
+</section>
+<!-- MAPA DA TRILHA -->
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-1">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold text-sm">4.1</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🎯 Loop Simples: Task Runner</h3>
+<p class="text-xs text-neutral-400">plan.md + /loop skill</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold text-sm">4.2</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🐛 GitHub Issue Bot</h3>
+<p class="text-xs text-neutral-400">Orchestrator + 4 workers paralelos</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-3">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold text-sm">4.3</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🤖 Orchestrator Multi-Agent</h3>
+<p class="text-xs text-neutral-400">Spec + rounds + HITL</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold text-sm">4.4</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">⚠ Anti-Patterns</h3>
+<p class="text-xs text-neutral-400">Troubleshooting + checklist</p>
+</a>
+</div>
+</section>
+<!-- CONTEUDO DETALHADO -->
+<h2 class="text-2xl font-bold mb-6">Conteudo detalhado</h2>
+<!-- MODULO 4.1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="modulo-4-1" id="modulo-4-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold">4.1</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🎯 Loop Simples: Task Runner</h3>
+<p class="text-neutral-400 text-sm">Prompt pronto, template de plan.md, como monitorar progresso e prompt pack para download.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📝</span>
+<div><span class="font-medium">O prompt que dispara o loop</span><span class="text-neutral-500 text-sm ml-2">- "Load the loop skill"</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O prompt minimo para ativar o sistema de loop no Claude Code, pedindo que ele carregue a capability e processe as tarefas do plan.md uma por uma.</p></div>
+<div><span class="text-amber-400 font-semibold">Prompt pronto:</span><p class="text-neutral-300 text-sm font-mono bg-dark-800 p-2 rounded">Load the loop skill, work through plan.md one task at a time</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📋</span>
+<div><span class="font-medium">Template de plan.md</span><span class="text-neutral-500 text-sm ml-2">- Estrutura com 5 tarefas</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Template de plan.md com tarefas numeradas, criterios de aceitacao e checkboxes para o agente marcar conforme completa.</p></div>
+<div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A qualidade do plan.md determina a qualidade do output. Tarefas vagas geram resultados vagos.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔍</span>
+<div><span class="font-medium">Monitorando o progresso</span><span class="text-neutral-500 text-sm ml-2">- Wake-ups e validacao automatica</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Como acompanhar o loop em execucao: cada ciclo o agente faz a tarefa, valida e agenda o proximo wake-up automaticamente.</p></div>
+<div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Slash loop wake up. Validacao por ciclo. Logs do terminal. Status do plan.md.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">⚙</span>
+<div><span class="font-medium">Configurando exit conditions</span><span class="text-neutral-500 text-sm ml-2">- Quando o loop deve parar</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Criterios explicitos de conclusao: todas as tarefas marcadas, /goal atingido, max iterations como safety net.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">📦</span>
+<div><span class="font-medium">Variacoes do prompt</span><span class="text-neutral-500 text-sm ml-2">- Diferentes cenarios de uso</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Variacoes do prompt para diferentes cenarios: refactoring, migracao, documentacao, testes.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📥</span>
+<div><span class="font-medium">Prompt pack download</span><span class="text-neutral-500 text-sm ml-2">- Todos os prompts prontos</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Compilacao de todos os prompts deste modulo em formato copiavel, prontos para uso imediato no Claude Code.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-1')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-1.html">Ver Completo</a>
+</div>
+</div>
+<!-- MODULO 4.2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="modulo-4-2" id="modulo-4-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold">4.2</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🐛 Loop Intermediario: GitHub Issue Bot</h3>
+<p class="text-neutral-400 text-sm">Orchestrator session + 4 workers paralelos, worktrees para isolamento, database branches com Neon.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🏗</span>
+<div><span class="font-medium">Setup do orchestrator</span><span class="text-neutral-500 text-sm ml-2">- Sessao principal + workers</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Configuracao da sessao principal de Claude Code como orchestrator que despacha workflows de fix para cada issue em paralelo.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🌳</span>
+<div><span class="font-medium">Worktrees para isolamento</span><span class="text-neutral-500 text-sm ml-2">- Workers nao pisam uns nos outros</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Cada worker opera em sua propria worktree Git, garantindo isolamento total de codigo entre sessoes paralelas.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">💾</span>
+<div><span class="font-medium">Database branches com Neon</span><span class="text-neutral-500 text-sm ml-2">- Isolamento de dados</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Neon permite criar branches do banco de dados por worker, evitando que mudancas paralelas conflitem no schema ou nos dados.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🔄</span>
+<div><span class="font-medium">Fluxo completo: issue ate PR</span><span class="text-neutral-500 text-sm ml-2">- Extract, fix, validate, review</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O pipeline completo: extrair issue, buscar contexto, classificar, implementar fix, validar testes, criar PR e fazer code review.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">💰</span>
+<div><span class="font-medium">Mix de modelos por step</span><span class="text-neutral-500 text-sm ml-2">- Haiku pra classify, Claude pra implement</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Otimizacao de custo usando modelos menores onde reasoning e simples e modelos maiores apenas onde e necessario.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📥</span>
+<div><span class="font-medium">Prompt pack download</span><span class="text-neutral-500 text-sm ml-2">- Prompts do issue bot</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pack com os prompts do orchestrator, workers e review, prontos para adaptar ao seu repositorio.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-2')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-2.html">Ver Completo</a>
+</div>
+</div>
+<!-- MODULO 4.3 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="modulo-4-3" id="modulo-4-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold">4.3</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🤖 Loop Avancado: Orchestrator Multi-Agent</h3>
+<p class="text-neutral-400 text-sm">Spec document como input, orchestrator planeja rounds e workers, validacao entre rounds, human-in-the-loop.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📄</span>
+<div><span class="font-medium">Spec document como input</span><span class="text-neutral-500 text-sm ml-2">- O contrato do sistema</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O spec document e o documento de especificacao completo que o orchestrator usa para planejar todo o trabalho, dividir em rounds e despachar workers.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🎯</span>
+<div><span class="font-medium">Orchestrator planeja rounds</span><span class="text-neutral-500 text-sm ml-2">- Divisao inteligente de trabalho</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O orchestrator analisa a spec e decide quantos rounds serao necessarios, quantos workers por round e quais tarefas cada worker recebe.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">⚙</span>
+<div><span class="font-medium">Workers executam e reportam</span><span class="text-neutral-500 text-sm ml-2">- Resultados no state store</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Cada worker executa sua tarefa e grava os resultados no banco externo (Postgres/Neon), permitindo que o orchestrator acompanhe sem depender do context window.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">✅</span>
+<div><span class="font-medium">Validacao entre rounds</span><span class="text-neutral-500 text-sm ml-2">- O orchestrator decide o proximo passo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Apos cada round, o orchestrator valida os resultados dos workers antes de lancar o proximo round, evitando propagacao de erros.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🛑</span>
+<div><span class="font-medium">Human-in-the-loop checkpoints</span><span class="text-neutral-500 text-sm ml-2">- Humano aprova antes de continuar</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pontos de pausa onde o humano precisa aprovar o resultado antes do loop continuar, evitando o problema de "rodar um dia e voltar pra lixo".</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📥</span>
+<div><span class="font-medium">Prompt pack download</span><span class="text-neutral-500 text-sm ml-2">- Prompts do multi-agent</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pack completo com prompts do orchestrator, workers, validacao e HITL, adaptaveis para qualquer projeto.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-3')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-3.html">Ver Completo</a>
+</div>
+</div>
+<!-- MODULO 4.4 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="modulo-4-4" id="modulo-4-4">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold">4.4</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">⚠ Anti-Patterns e Troubleshooting</h3>
+<p class="text-neutral-400 text-sm">Os erros mais comuns, como debugar, e um checklist visual de "ready to loop".</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">♾</span>
+<div><span class="font-medium">Loop infinito sem exit condition</span><span class="text-neutral-500 text-sm ml-2">- O erro mais caro</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Loop sem criterio de parada definido: o agente roda indefinidamente, gastando tokens sem convergir para resultado.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">💥</span>
+<div><span class="font-medium">Context window overflow</span><span class="text-neutral-500 text-sm ml-2">- Quando o LLM afoga</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Looping na mesma sessao bloat o context, degradando qualidade. A solucao e state externo e sessoes separadas por worker.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🚨</span>
+<div><span class="font-medium">Port conflicts em sessoes paralelas</span><span class="text-neutral-500 text-sm ml-2">- Workers brigando por portas</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Quando multiplos workers tentam usar a mesma porta de rede, causando falhas silenciosas. A solucao e alocar portas dinamicamente.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">👣</span>
+<div><span class="font-medium">Workers pisando uns nos outros</span><span class="text-neutral-500 text-sm ml-2">- Conflitos de codigo e dados</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Workers sem isolamento adequado (sem worktrees, sem database branches) editam os mesmos arquivos e geram conflitos de merge.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🔍</span>
+<div><span class="font-medium">Debugando com logs do dashboard</span><span class="text-neutral-500 text-sm ml-2">- Observabilidade pratica</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Como usar os logs do Agent Control Plane para identificar decisoes ruins do orchestrator, workers lentos e erros de propagacao.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">✅</span>
+<div><span class="font-medium">Checklist: Ready to Loop</span><span class="text-neutral-500 text-sm ml-2">- Verificacao antes de disparar</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Checklist visual com todos os pre-requisitos que devem ser verificados antes de iniciar qualquer loop: exit conditions, state store, isolamento, budget, observabilidade.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-4-4')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors" href="modulo-4-4.html">Ver Completo</a>
+</div>
+</div>
+<!-- NAVEGACAO -->
+<section class="mb-12">
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha3/index.html">
+          ← Trilha 3: Tecnica
         </a>
-        <a href="#modulo-4-2" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-amber-400 font-bold text-sm">4.2</span>
-            <span class="text-xs text-neutral-500">~30 min</span>
-          </div>
-          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">&#x1F41B; GitHub Issue Bot</h3>
-          <p class="text-xs text-neutral-400">Orchestrator + 4 workers paralelos</p>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="../../index.html">
+          Voltar ao Curso →
         </a>
-        <a href="#modulo-4-3" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-amber-400 font-bold text-sm">4.3</span>
-            <span class="text-xs text-neutral-500">~30 min</span>
-          </div>
-          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">&#x1F916; Orchestrator Multi-Agent</h3>
-          <p class="text-xs text-neutral-400">Spec + rounds + HITL</p>
-        </a>
-        <a href="#modulo-4-4" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-amber-400 font-bold text-sm">4.4</span>
-            <span class="text-xs text-neutral-500">~30 min</span>
-          </div>
-          <h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">&#x26A0; Anti-Patterns</h3>
-          <p class="text-xs text-neutral-400">Troubleshooting + checklist</p>
-        </a>
-      </div>
-    </section>
-
-    <!-- CONTEUDO DETALHADO -->
-    <h2 class="text-2xl font-bold mb-6">Conteudo detalhado</h2>
-
-    <!-- MODULO 4.1 -->
-    <div id="modulo-4-1" data-inema-module="modulo-4-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-amber-400 font-bold">4.1</span>
-          <span class="text-xs text-neutral-500">~30 min</span>
-        </div>
-        <h3 class="text-2xl font-bold mb-2">&#x1F3AF; Loop Simples: Task Runner</h3>
-        <p class="text-neutral-400 text-sm">Prompt pronto, template de plan.md, como monitorar progresso e prompt pack para download.</p>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">&#x1F4DD;</span>
-            <div><span class="font-medium">O prompt que dispara o loop</span><span class="text-neutral-500 text-sm ml-2">- "Load the loop skill"</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O prompt minimo para ativar o sistema de loop no Claude Code, pedindo que ele carregue a capability e processe as tarefas do plan.md uma por uma.</p></div>
-              <div><span class="text-amber-400 font-semibold">Prompt pronto:</span><p class="text-neutral-300 text-sm font-mono bg-dark-800 p-2 rounded">Load the loop skill, work through plan.md one task at a time</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">&#x1F4CB;</span>
-            <div><span class="font-medium">Template de plan.md</span><span class="text-neutral-500 text-sm ml-2">- Estrutura com 5 tarefas</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Template de plan.md com tarefas numeradas, criterios de aceitacao e checkboxes para o agente marcar conforme completa.</p></div>
-              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A qualidade do plan.md determina a qualidade do output. Tarefas vagas geram resultados vagos.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">&#x1F50D;</span>
-            <div><span class="font-medium">Monitorando o progresso</span><span class="text-neutral-500 text-sm ml-2">- Wake-ups e validacao automatica</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Como acompanhar o loop em execucao: cada ciclo o agente faz a tarefa, valida e agenda o proximo wake-up automaticamente.</p></div>
-              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Slash loop wake up. Validacao por ciclo. Logs do terminal. Status do plan.md.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">&#x2699;</span>
-            <div><span class="font-medium">Configurando exit conditions</span><span class="text-neutral-500 text-sm ml-2">- Quando o loop deve parar</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Criterios explicitos de conclusao: todas as tarefas marcadas, /goal atingido, max iterations como safety net.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">&#x1F4E6;</span>
-            <div><span class="font-medium">Variacoes do prompt</span><span class="text-neutral-500 text-sm ml-2">- Diferentes cenarios de uso</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Variacoes do prompt para diferentes cenarios: refactoring, migracao, documentacao, testes.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">&#x1F4E5;</span>
-            <div><span class="font-medium">Prompt pack download</span><span class="text-neutral-500 text-sm ml-2">- Todos os prompts prontos</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Compilacao de todos os prompts deste modulo em formato copiavel, prontos para uso imediato no Claude Code.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-4-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-4-1.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <!-- MODULO 4.2 -->
-    <div id="modulo-4-2" data-inema-module="modulo-4-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-amber-400 font-bold">4.2</span>
-          <span class="text-xs text-neutral-500">~30 min</span>
-        </div>
-        <h3 class="text-2xl font-bold mb-2">&#x1F41B; Loop Intermediario: GitHub Issue Bot</h3>
-        <p class="text-neutral-400 text-sm">Orchestrator session + 4 workers paralelos, worktrees para isolamento, database branches com Neon.</p>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">&#x1F3D7;</span>
-            <div><span class="font-medium">Setup do orchestrator</span><span class="text-neutral-500 text-sm ml-2">- Sessao principal + workers</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Configuracao da sessao principal de Claude Code como orchestrator que despacha workflows de fix para cada issue em paralelo.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">&#x1F333;</span>
-            <div><span class="font-medium">Worktrees para isolamento</span><span class="text-neutral-500 text-sm ml-2">- Workers nao pisam uns nos outros</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Cada worker opera em sua propria worktree Git, garantindo isolamento total de codigo entre sessoes paralelas.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">&#x1F4BE;</span>
-            <div><span class="font-medium">Database branches com Neon</span><span class="text-neutral-500 text-sm ml-2">- Isolamento de dados</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Neon permite criar branches do banco de dados por worker, evitando que mudancas paralelas conflitem no schema ou nos dados.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">&#x1F504;</span>
-            <div><span class="font-medium">Fluxo completo: issue ate PR</span><span class="text-neutral-500 text-sm ml-2">- Extract, fix, validate, review</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O pipeline completo: extrair issue, buscar contexto, classificar, implementar fix, validar testes, criar PR e fazer code review.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">&#x1F4B0;</span>
-            <div><span class="font-medium">Mix de modelos por step</span><span class="text-neutral-500 text-sm ml-2">- Haiku pra classify, Claude pra implement</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Otimizacao de custo usando modelos menores onde reasoning e simples e modelos maiores apenas onde e necessario.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">&#x1F4E5;</span>
-            <div><span class="font-medium">Prompt pack download</span><span class="text-neutral-500 text-sm ml-2">- Prompts do issue bot</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pack com os prompts do orchestrator, workers e review, prontos para adaptar ao seu repositorio.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-4-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-4-2.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <!-- MODULO 4.3 -->
-    <div id="modulo-4-3" data-inema-module="modulo-4-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-amber-400 font-bold">4.3</span>
-          <span class="text-xs text-neutral-500">~30 min</span>
-        </div>
-        <h3 class="text-2xl font-bold mb-2">&#x1F916; Loop Avancado: Orchestrator Multi-Agent</h3>
-        <p class="text-neutral-400 text-sm">Spec document como input, orchestrator planeja rounds e workers, validacao entre rounds, human-in-the-loop.</p>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">&#x1F4C4;</span>
-            <div><span class="font-medium">Spec document como input</span><span class="text-neutral-500 text-sm ml-2">- O contrato do sistema</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O spec document e o documento de especificacao completo que o orchestrator usa para planejar todo o trabalho, dividir em rounds e despachar workers.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">&#x1F3AF;</span>
-            <div><span class="font-medium">Orchestrator planeja rounds</span><span class="text-neutral-500 text-sm ml-2">- Divisao inteligente de trabalho</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O orchestrator analisa a spec e decide quantos rounds serao necessarios, quantos workers por round e quais tarefas cada worker recebe.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">&#x2699;</span>
-            <div><span class="font-medium">Workers executam e reportam</span><span class="text-neutral-500 text-sm ml-2">- Resultados no state store</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Cada worker executa sua tarefa e grava os resultados no banco externo (Postgres/Neon), permitindo que o orchestrator acompanhe sem depender do context window.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">&#x2705;</span>
-            <div><span class="font-medium">Validacao entre rounds</span><span class="text-neutral-500 text-sm ml-2">- O orchestrator decide o proximo passo</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Apos cada round, o orchestrator valida os resultados dos workers antes de lancar o proximo round, evitando propagacao de erros.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">&#x1F6D1;</span>
-            <div><span class="font-medium">Human-in-the-loop checkpoints</span><span class="text-neutral-500 text-sm ml-2">- Humano aprova antes de continuar</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pontos de pausa onde o humano precisa aprovar o resultado antes do loop continuar, evitando o problema de "rodar um dia e voltar pra lixo".</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">&#x1F4E5;</span>
-            <div><span class="font-medium">Prompt pack download</span><span class="text-neutral-500 text-sm ml-2">- Prompts do multi-agent</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pack completo com prompts do orchestrator, workers, validacao e HITL, adaptaveis para qualquer projeto.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-4-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-4-3.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <!-- MODULO 4.4 -->
-    <div id="modulo-4-4" data-inema-module="modulo-4-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
-      <div class="p-6 border-b border-dark-600">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-amber-400 font-bold">4.4</span>
-          <span class="text-xs text-neutral-500">~30 min</span>
-        </div>
-        <h3 class="text-2xl font-bold mb-2">&#x26A0; Anti-Patterns e Troubleshooting</h3>
-        <p class="text-neutral-400 text-sm">Os erros mais comuns, como debugar, e um checklist visual de "ready to loop".</p>
-      </div>
-      <div class="divide-y divide-dark-600">
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <span class="text-lg">&#x267E;</span>
-            <div><span class="font-medium">Loop infinito sem exit condition</span><span class="text-neutral-500 text-sm ml-2">- O erro mais caro</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Loop sem criterio de parada definido: o agente roda indefinidamente, gastando tokens sem convergir para resultado.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <span class="text-lg">&#x1F4A5;</span>
-            <div><span class="font-medium">Context window overflow</span><span class="text-neutral-500 text-sm ml-2">- Quando o LLM afoga</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Looping na mesma sessao bloat o context, degradando qualidade. A solucao e state externo e sessoes separadas por worker.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-            <span class="text-lg">&#x1F6A8;</span>
-            <div><span class="font-medium">Port conflicts em sessoes paralelas</span><span class="text-neutral-500 text-sm ml-2">- Workers brigando por portas</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Quando multiplos workers tentam usar a mesma porta de rede, causando falhas silenciosas. A solucao e alocar portas dinamicamente.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-            <span class="text-lg">&#x1F463;</span>
-            <div><span class="font-medium">Workers pisando uns nos outros</span><span class="text-neutral-500 text-sm ml-2">- Conflitos de codigo e dados</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Workers sem isolamento adequado (sem worktrees, sem database branches) editam os mesmos arquivos e geram conflitos de merge.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-            <span class="text-lg">&#x1F50D;</span>
-            <div><span class="font-medium">Debugando com logs do dashboard</span><span class="text-neutral-500 text-sm ml-2">- Observabilidade pratica</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Como usar os logs do Agent Control Plane para identificar decisoes ruins do orchestrator, workers lentos e erros de propagacao.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="topic-item">
-          <button onclick="toggleTopic(this)" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-            <span class="text-lg">&#x2705;</span>
-            <div><span class="font-medium">Checklist: Ready to Loop</span><span class="text-neutral-500 text-sm ml-2">- Verificacao antes de disparar</span></div>
-          </button>
-          <div class="topic-explanation px-6 pb-4">
-            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Checklist visual com todos os pre-requisitos que devem ser verificados antes de iniciar qualquer loop: exit conditions, state store, isolamento, budget, observabilidade.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-        <button onclick="openModal('modal-4-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-        <a href="modulo-4-4.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">Ver Completo</a>
-      </div>
-    </div>
-
-    <!-- NAVEGACAO -->
-    <section class="mb-12">
-      <div class="flex flex-col sm:flex-row gap-4">
-        <a href="../trilha3/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
-          &#x2190; Trilha 3: Tecnica
-        </a>
-        <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">
-          Voltar ao Curso &#x2192;
-        </a>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- MODALS -->
-  <div id="modal-4-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.1</span><span class="font-semibold">Loop Simples: Task Runner</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
-      </div>
-      <iframe src="modulo-4-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-  <div id="modal-4-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.2</span><span class="font-semibold">Loop Intermediario: GitHub Issue Bot</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
-      </div>
-      <iframe src="modulo-4-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-  <div id="modal-4-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.3</span><span class="font-semibold">Loop Avancado: Orchestrator Multi-Agent</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
-      </div>
-      <iframe src="modulo-4-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-  <div id="modal-4-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
-    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
-      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.4</span><span class="font-semibold">Anti-Patterns e Troubleshooting</span></div>
-        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
-      </div>
-      <iframe src="modulo-4-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>Loop Engineering -- Agentes em Loop Continuo - 2026</p>
-      <p class="mt-1"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
-    </div>
-  </footer>
-
-  <!-- SCRIPTS -->
-  <script>
+</div>
+</section>
+</main>
+<!-- MODALS -->
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-1" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.1</span><span class="font-semibold">Loop Simples: Task Runner</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-4-1.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-2" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.2</span><span class="font-semibold">Loop Intermediario: GitHub Issue Bot</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-4-2.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-3" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.3</span><span class="font-semibold">Loop Avancado: Orchestrator Multi-Agent</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-4-3.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-4" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.4</span><span class="font-semibold">Anti-Patterns e Troubleshooting</span></div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-4-4.html"></iframe>
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Loop Engineering -- Agentes em Loop Continuo - 2026</p>
+<p class="mt-1"><a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<!-- SCRIPTS -->
+<script>
     function toggleTopic(button) {
       var topicItem = button.closest('.topic-item');
       var explanation = topicItem.querySelector('.topic-explanation');
@@ -761,7 +735,7 @@
       html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
     });
   </script>
-  <script src="../../assets/learn.js"></script>
-  <script>if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }</script>
+<script src="../../assets/learn.js"></script>
+<script>if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }</script>
 </body>
 </html>

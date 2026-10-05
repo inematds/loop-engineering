@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="loop-engineering">
-  <title>Modulo 4.3 — Loop Avancado: Orchestrator Multi-Agent | Loop Engineering</title>
 
-  <!-- ANTI-FOUC -->
-  <script>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="loop-engineering" name="inema-course"/>
+<title>Modulo 4.3 — Loop Avancado: Orchestrator Multi-Agent | Loop Engineering</title>
+<!-- ANTI-FOUC -->
+<script>
   (function(){try{var h=document.documentElement,D={theme:'inema-dark',font:'inter',fontScale:100,lineWidth:68,leading:1.7,accent:'emerald'};function c(o){var r={};for(var x in o)r[x]=o[x];return r}var p=c(D);try{var raw=localStorage.getItem('inema.prefs');if(raw){var j=JSON.parse(raw);if(j&&typeof j==='object')for(var k in D)if(j[k]!=null)p[k]=j[k]}else{var l=localStorage.getItem('theme');if(l==='light')p.theme='claro';else if(l==='dark')p.theme='inema-dark'}}catch(e){p=c(D)}var T={'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'}};var t=T[p.theme]||T['inema-dark'];if(t.dark===true)h.classList.add('dark');else if(t.dark===false)h.classList.remove('dark');if(t.attr)h.setAttribute('data-theme',t.attr);else h.removeAttribute('data-theme');h.style.colorScheme=t.cs?t.cs:(h.classList.contains('dark')?'dark':'light');h.setAttribute('data-font',p.font||'inter');h.setAttribute('data-accent',p.accent||'emerald');var s=h.style,sc=+p.fontScale||100;s.setProperty('--inema-font-scale',(sc/100).toString());s.setProperty('font-size',sc+'%');s.setProperty('--measure',(+p.lineWidth||68)+'ch');s.setProperty('--lh-body',(+p.leading||1.7).toString());var fam=p.font==='system'?'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif':p.font==='leitura'?'"Atkinson Hyperlegible","Inter",system-ui,sans-serif':'"Inter",system-ui,sans-serif';s.setProperty('--font-body',fam);var A={emerald:[152,76,45],blue:[217,91,60],purple:[258,90,66],amber:[38,92,50],teal:[174,72,41],rose:[350,89,60]};var a=A[p.accent]||A.emerald;s.setProperty('--accent-h',a[0]+'');s.setProperty('--accent-s',a[1]+'%');s.setProperty('--accent-l',a[2]+'%');s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)')}catch(err){try{document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}catch(e){}}})();
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-
-  <script type="application/json" data-inema-manifest>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
   {"course":"loop-engineering","tracks":[{"n":"1","title":"Fundamentos","modules":[{"id":"1-1","title":"O Que E Loop Engineering","topics":6,"href":"curso/trilha1/modulo-1-1.html"},{"id":"1-2","title":"Os Blocos Fundamentais","topics":6,"href":"curso/trilha1/modulo-1-2.html"},{"id":"1-3","title":"Arquitetura Orchestrator-Workers","topics":6,"href":"curso/trilha1/modulo-1-3.html"}]},{"n":"2","title":"Vantagens vs Desvantagens","modules":[{"id":"2-1","title":"Vantagens Reais","topics":6,"href":"curso/trilha2/modulo-2-1.html"},{"id":"2-2","title":"Desvantagens e Riscos","topics":6,"href":"curso/trilha2/modulo-2-2.html"},{"id":"2-3","title":"Quando Usar e Quando Nao Usar","topics":6,"href":"curso/trilha2/modulo-2-3.html"}]},{"n":"3","title":"Implementacao Tecnica","modules":[{"id":"3-1","title":"Loop Basico com Claude Code","topics":6,"href":"curso/trilha3/modulo-3-1.html"},{"id":"3-2","title":"Workflows Deterministicos com Archon","topics":6,"href":"curso/trilha3/modulo-3-2.html"},{"id":"3-3","title":"Dashboard de Controle","topics":6,"href":"curso/trilha3/modulo-3-3.html"},{"id":"3-4","title":"Otimizacao de Custos","topics":6,"href":"curso/trilha3/modulo-3-4.html"}]},{"n":"4","title":"Exemplos Praticos e Prompts","modules":[{"id":"4-1","title":"Loop Simples: Task Runner","topics":6,"href":"curso/trilha4/modulo-4-1.html"},{"id":"4-2","title":"Loop Intermediario: GitHub Issue Bot","topics":6,"href":"curso/trilha4/modulo-4-2.html"},{"id":"4-3","title":"Loop Avancado: Orchestrator Multi-Agent","topics":6,"href":"curso/trilha4/modulo-4-3.html"},{"id":"4-4","title":"Anti-Patterns e Troubleshooting","topics":6,"href":"curso/trilha4/modulo-4-4.html"}]}]}
   </script>
-
-  <style>
+<style>
     body { font-family: 'Inter', sans-serif; }
     .dark body { background-color: #111827; }
     html:not(.dark) body { background-color: #f8fafc; }
@@ -55,71 +52,66 @@
     @media (prefers-reduced-motion: no-preference) { .wf-a{animation:wf-pulse 2.6s ease-in-out infinite} .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s} }
     [id^="topico-"] { scroll-margin-top: 4rem; }
   </style>
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-
-  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-14">
-        <div class="flex items-center space-x-4">
-          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">&#x1F504;</span><span class="font-bold text-lg hidden sm:inline">Loop Engineering</span></a>
-          <span class="text-neutral-600">|</span>
-          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
-        </div>
-        <div class="flex items-center space-x-1 sm:space-x-2">
-          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
-          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Vantagens</span></a>
-          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Tecnica</span></a>
-          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Pratica</span></a>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
-            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <div class="flex items-center space-x-2 text-sm text-neutral-400">
-      <a href="../../index.html" class="hover:text-amber-400">Inicio</a><span>/</span>
-      <a href="index.html" class="hover:text-amber-400">Trilha 4</a><span>/</span>
-      <span class="text-amber-400">Modulo 4.3</span>
-    </div>
-  </nav>
-
-  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULO 4.3</span>
-      <h1 class="text-3xl sm:text-4xl font-bold mb-4">&#x1F916; Loop Avancado: Orchestrator Multi-Agent</h1>
-      <p class="text-lg text-neutral-400 max-w-3xl">O sistema completo: spec document como input, orchestrator planeja rounds, workers executam, state store persiste, human-in-the-loop valida.</p>
-      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">30</div><div class="text-xs text-neutral-400">Minutos</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Avanc.</div><div class="text-xs text-neutral-400">Nivel</div></div>
-        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Hands-on</div><div class="text-xs text-neutral-400">Tipo</div></div>
-      </div>
-    </div>
-  </header>
-
-  <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="4-3" data-inema-track="4">
-
-    <!-- TOPICO 1 -->
-    <section id="topico-1" data-inema-topic="modulo-4-3#topico-1" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
-        <h2 class="text-2xl font-bold">&#x1F4C4; Spec Document como Input</h2>
-      </div>
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t1-p1">
+<link href="https://inematds.github.io/loop-engineering/curso/trilha4/modulo-4-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/en/curso/trilha4/modulo-4-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/loop-engineering/es/curso/trilha4/modulo-4-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-4-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha4/modulo-4-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha4/modulo-4-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html"><span class="text-2xl">🔄</span><span class="font-bold text-lg hidden sm:inline">Loop Engineering</span></a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Vantagens</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Tecnica</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Pratica</span></a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Trilha 4</a><span>/</span>
+<span class="text-amber-400">Modulo 4.3</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULO 4.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🤖 Loop Avancado: Orchestrator Multi-Agent</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">O sistema completo: spec document como input, orchestrator planeja rounds, workers executam, state store persiste, human-in-the-loop valida.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">30</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Avanc.</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Hands-on</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-inema-module="4-3" data-inema-track="4" id="conteudo">
+<!-- TOPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📄 Spec Document como Input</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t1-p1">
         No nivel avancado, o input nao e mais um plan.md com 5 tarefas. E um <strong class="text-amber-400">spec document completo</strong> que descreve uma aplicacao inteira. O orchestrator le a spec, divide em rounds, e despacha workers para construir tudo.
       </p>
-      <blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
         "We send in our initial spec to the orchestrator and it has to reason about that and then figure out how many workers to spin off."
         <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
-      </blockquote>
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-amber-400 mb-4">&#x1F4CB; Exemplo de Spec (Kanban Board)</h3>
-        <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-neutral-300"># Spec: Single Page Kanban Board
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">📋 Exemplo de Spec (Kanban Board)</h3>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-neutral-300"># Spec: Single Page Kanban Board
 
 ## Objetivo
 Criar um Kanban board como web app estatico (HTML + CSS + JS).
@@ -136,34 +128,33 @@ Criar um Kanban board como web app estatico (HTML + CSS + JS).
 - Drag and drop funcional
 - Dados persistem apos reload
 - Layout correto em mobile (320px+)</code></pre>
-      </div>
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t1-p2">
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t1-p2">
         Cole Medin demonstrou exatamente esse cenario: "building a single page Kanban board as a static web app, I just take this prompt and I'll show you it running live right now." O orchestrator recebeu a spec e dividiu o trabalho em rounds automaticamente.
       </p>
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span><span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 2 -->
-    <section id="topico-2" data-inema-topic="modulo-4-3#topico-2" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
-        <h2 class="text-2xl font-bold">&#x1F3AF; Orchestrator Planeja Rounds</h2>
-      </div>
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t2-p1">
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🎯 Orchestrator Planeja Rounds</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t2-p1">
         O orchestrator analisa a spec e decide a estrategia: quantos rounds, quantos workers por round, e quais tarefas cada worker recebe. Essa e a decisao mais critica do sistema, e por isso requer um modelo forte.
       </p>
-      <blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
         "The orchestrator is deciding how to split up the work right now. The orchestrator spent 6,000 tokens with that initial planning and then prompting our first three workers in round number one."
         <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
-      </blockquote>
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-amber-400 mb-4">&#x1F4CB; Prompt do Orchestrator Multi-Agent</h3>
-        <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-amber-300">You are the orchestrator for a multi-agent build system.
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">📋 Prompt do Orchestrator Multi-Agent</h3>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-amber-300">You are the orchestrator for a multi-agent build system.
 
 Input: spec.md (attached)
 State store: Postgres (Neon) at DATABASE_URL
@@ -178,101 +169,82 @@ Your job:
 7. When all spec requirements are met, report completion.
 
 Pause for human approval before starting each new round.</code></pre>
-      </div>
-
-      <!-- SVG: Rounds diagram -->
-      <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
-        <svg viewBox="0 0 900 250" class="w-full h-auto" role="img" aria-label="Diagrama: spec entra no orchestrator que planeja round 1, valida, planeja round 2, valida, ate conclusao">
-          <defs>
-            <pattern id="m43-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#fbbf24" opacity="0.08"/></pattern>
-            <marker id="m43-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"/></marker>
-            <marker id="m43-ahg" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"/></marker>
-          </defs>
-          <rect x="0" y="0" width="900" height="250" fill="url(#m43-grid)"/>
-
-          <!-- Spec -->
-          <rect x="20" y="90" width="100" height="50" rx="10" fill="#1a1506" stroke="#fbbf24" stroke-width="2"/>
-          <text x="70" y="112" text-anchor="middle" fill="#fbbf24" font-family="Inter,sans-serif" font-weight="600" font-size="12">spec.md</text>
-          <text x="70" y="128" text-anchor="middle" fill="#fde68a" font-family="Inter,sans-serif" font-size="10">input</text>
-
-          <path d="M120,115 L160,115" fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.5" marker-end="url(#m43-ah)"/>
-
-          <!-- Orchestrator -->
-          <rect x="170" y="80" width="130" height="70" rx="12" fill="#1a1506" stroke="#fbbf24" stroke-width="2"/>
-          <text x="235" y="108" text-anchor="middle" fill="#fbbf24" font-family="Inter,sans-serif" font-weight="700" font-size="13">Orchestrator</text>
-          <text x="235" y="125" text-anchor="middle" fill="#fde68a" font-family="Inter,sans-serif" font-size="10">planeja rounds</text>
-          <text x="235" y="140" text-anchor="middle" fill="#fde68a" font-family="Inter,sans-serif" font-size="10">valida resultados</text>
-
-          <path d="M300,115 L340,115" fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.5" marker-end="url(#m43-ah)"/>
-
-          <!-- Round 1 -->
-          <rect x="350" y="50" width="120" height="40" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.5"/>
-          <text x="410" y="75" text-anchor="middle" fill="#bfe6ff" font-family="Inter,sans-serif" font-weight="600" font-size="12">Round 1</text>
-          <text x="410" y="30" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10">3 workers</text>
-
-          <rect x="350" y="100" width="120" height="30" rx="6" fill="#0e2018" stroke="#34d399" stroke-width="1.5"/>
-          <text x="410" y="120" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="11">Validate</text>
-
-          <rect x="350" y="145" width="120" height="30" rx="6" fill="#1a1506" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <text x="410" y="165" text-anchor="middle" fill="#fbbf24" font-family="Inter,sans-serif" font-size="10">HITL Approve</text>
-
-          <path d="M470,115 L510,115" fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.5" marker-end="url(#m43-ah)"/>
-
-          <!-- Round 2 -->
-          <rect x="520" y="50" width="120" height="40" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.5"/>
-          <text x="580" y="75" text-anchor="middle" fill="#bfe6ff" font-family="Inter,sans-serif" font-weight="600" font-size="12">Round 2</text>
-          <text x="580" y="30" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10">2 workers</text>
-
-          <rect x="520" y="100" width="120" height="30" rx="6" fill="#0e2018" stroke="#34d399" stroke-width="1.5"/>
-          <text x="580" y="120" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-size="11">Validate</text>
-
-          <rect x="520" y="145" width="120" height="30" rx="6" fill="#1a1506" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <text x="580" y="165" text-anchor="middle" fill="#fbbf24" font-family="Inter,sans-serif" font-size="10">HITL Approve</text>
-
-          <path d="M640,115 L680,115" fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.5" marker-end="url(#m43-ah)"/>
-
-          <!-- Round N -->
-          <rect x="690" y="50" width="90" height="40" rx="8" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <text x="735" y="75" text-anchor="middle" fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" opacity="0.6">Round N</text>
-
-          <path d="M780,70 L830,70 L830,115" fill="none" stroke="#34d399" stroke-width="1.5" opacity="0.5" marker-end="url(#m43-ahg)"/>
-
-          <!-- Done -->
-          <rect x="800" y="100" width="80" height="35" rx="10" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
-          <text x="840" y="123" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-weight="700" font-size="13">Done</text>
-
-          <!-- State Store -->
-          <rect x="350" y="200" width="290" height="35" rx="8" fill="#1a0e20" stroke="#a78bfa" stroke-width="1.5"/>
-          <text x="495" y="222" text-anchor="middle" fill="#a78bfa" font-family="Inter,sans-serif" font-size="12">State Store (Postgres/Neon)</text>
-          <path d="M410,175 L410,198" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.4" stroke-dasharray="3 3"/>
-          <path d="M580,175 L580,198" fill="none" stroke="#a78bfa" stroke-width="1" opacity="0.4" stroke-dasharray="3 3"/>
-        </svg>
-      </div>
-
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span><span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 3 -->
-    <section id="topico-3" data-inema-topic="modulo-4-3#topico-3" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
-        <h2 class="text-2xl font-bold">&#x2699; Workers Executam e Reportam</h2>
-      </div>
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t3-p1">
+</div>
+<!-- SVG: Rounds diagram -->
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6 overflow-hidden">
+<svg aria-label="Diagrama: spec entra no orchestrator que planeja round 1, valida, planeja round 2, valida, ate conclusao" class="w-full h-auto" role="img" viewbox="0 0 900 250">
+<defs>
+<pattern height="32" id="m43-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#fbbf24" opacity="0.08" r="1.3"></circle></pattern>
+<marker id="m43-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"></path></marker>
+<marker id="m43-ahg" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+</defs>
+<rect fill="url(#m43-grid)" height="250" width="900" x="0" y="0"></rect>
+<!-- Spec -->
+<rect fill="#1a1506" height="50" rx="10" stroke="#fbbf24" stroke-width="2" width="100" x="20" y="90"></rect>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="70" y="112">spec.md</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="70" y="128">input</text>
+<path d="M120,115 L160,115" fill="none" marker-end="url(#m43-ah)" opacity="0.5" stroke="#fbbf24" stroke-width="1.5"></path>
+<!-- Orchestrator -->
+<rect fill="#1a1506" height="70" rx="12" stroke="#fbbf24" stroke-width="2" width="130" x="170" y="80"></rect>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="235" y="108">Orchestrator</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="235" y="125">planeja rounds</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="235" y="140">valida resultados</text>
+<path d="M300,115 L340,115" fill="none" marker-end="url(#m43-ah)" opacity="0.5" stroke="#fbbf24" stroke-width="1.5"></path>
+<!-- Round 1 -->
+<rect fill="#0e1b26" height="40" rx="8" stroke="#38bdf8" stroke-width="1.5" width="120" x="350" y="50"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="410" y="75">Round 1</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="410" y="30">3 workers</text>
+<rect fill="#0e2018" height="30" rx="6" stroke="#34d399" stroke-width="1.5" width="120" x="350" y="100"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="410" y="120">Validate</text>
+<rect fill="#1a1506" height="30" rx="6" stroke="#fbbf24" stroke-dasharray="4 3" stroke-width="1.5" width="120" x="350" y="145"></rect>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="410" y="165">HITL Approve</text>
+<path d="M470,115 L510,115" fill="none" marker-end="url(#m43-ah)" opacity="0.5" stroke="#fbbf24" stroke-width="1.5"></path>
+<!-- Round 2 -->
+<rect fill="#0e1b26" height="40" rx="8" stroke="#38bdf8" stroke-width="1.5" width="120" x="520" y="50"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="580" y="75">Round 2</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="580" y="30">2 workers</text>
+<rect fill="#0e2018" height="30" rx="6" stroke="#34d399" stroke-width="1.5" width="120" x="520" y="100"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="580" y="120">Validate</text>
+<rect fill="#1a1506" height="30" rx="6" stroke="#fbbf24" stroke-dasharray="4 3" stroke-width="1.5" width="120" x="520" y="145"></rect>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="580" y="165">HITL Approve</text>
+<path d="M640,115 L680,115" fill="none" marker-end="url(#m43-ah)" opacity="0.5" stroke="#fbbf24" stroke-width="1.5"></path>
+<!-- Round N -->
+<rect fill="#0e1b26" height="40" rx="8" stroke="#38bdf8" stroke-dasharray="4 3" stroke-width="1.5" width="90" x="690" y="50"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" opacity="0.6" text-anchor="middle" x="735" y="75">Round N</text>
+<path d="M780,70 L830,70 L830,115" fill="none" marker-end="url(#m43-ahg)" opacity="0.5" stroke="#34d399" stroke-width="1.5"></path>
+<!-- Done -->
+<rect fill="#0e2018" height="35" rx="10" stroke="#34d399" stroke-width="2" width="80" x="800" y="100"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="840" y="123">Done</text>
+<!-- State Store -->
+<rect fill="#1a0e20" height="35" rx="8" stroke="#a78bfa" stroke-width="1.5" width="290" x="350" y="200"></rect>
+<text fill="#a78bfa" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="495" y="222">State Store (Postgres/Neon)</text>
+<path d="M410,175 L410,198" fill="none" opacity="0.4" stroke="#a78bfa" stroke-dasharray="3 3" stroke-width="1"></path>
+<path d="M580,175 L580,198" fill="none" opacity="0.4" stroke="#a78bfa" stroke-dasharray="3 3" stroke-width="1"></path>
+</svg>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">⚙ Workers Executam e Reportam</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t3-p1">
         Cada worker recebe uma tarefa especifica do orchestrator e opera em <strong class="text-amber-400">sessao propria</strong> com worktree e database branch isolados. Ao concluir, grava os resultados no state store (Postgres), nao no context window.
       </p>
-      <blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
         "Those workers are going to go back and they're going to update the state that we have in our database. And so this is our loop, right? Because then the next time the orchestrator runs, it's going to get that updated state from the workers."
         <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
-      </blockquote>
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-amber-400 mb-4">&#x1F4CB; Prompt Template para Worker</h3>
-        <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-amber-300">You are Worker {{worker_id}} in Round {{round_number}}.
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">📋 Prompt Template para Worker</h3>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-amber-300">You are Worker {{worker_id}} in Round {{round_number}}.
 
 Your task: {{task_description}}
 Spec context: {{relevant_spec_section}}
@@ -288,31 +260,30 @@ Instructions:
    - Notes: any issues encountered
 
 Do NOT modify files outside your assigned scope.</code></pre>
-      </div>
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span><span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 4 -->
-    <section id="topico-4" data-inema-topic="modulo-4-3#topico-4" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
-        <h2 class="text-2xl font-bold">&#x2705; Orchestrator Valida e Lanca Proximo Round</h2>
-      </div>
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t4-p1">
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">✅ Orchestrator Valida e Lanca Proximo Round</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t4-p1">
         Apos cada round, o orchestrator le os resultados do state store, valida se os criterios da spec foram atendidos, e decide se lanca outro round ou declara conclusao. Esse e o <strong class="text-amber-400">ponto de controle</strong> que diferencia um sistema robusto de um loop cego.
       </p>
-      <blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
         "It'll go round by round, doing validation each time. And we can even have human in the loop so that we get to actually take a look at what has happened in the first round before the orchestrator moves on to the next."
         <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
-      </blockquote>
-      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-amber-400 mb-4">&#x1F527; Logica de Validacao entre Rounds</h3>
-        <pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-amber-300">After Round {{N}} completes:
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">🔧 Logica de Validacao entre Rounds</h3>
+<pre class="bg-dark-900 rounded-lg p-4 overflow-x-auto border border-dark-600 text-sm"><code class="text-amber-300">After Round {{N}} completes:
 
 1. Query state store for all worker results in this round
 2. Check: did all workers report success?
@@ -323,111 +294,106 @@ Do NOT modify files outside your assigned scope.</code></pre>
    - Compare output against spec acceptance criteria
 4. If all good: plan Round {{N+1}} with remaining work
 5. If spec is fully satisfied: merge all branches, report done</code></pre>
-      </div>
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span><span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 5 -->
-    <section id="topico-5" data-inema-topic="modulo-4-3#topico-5" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
-        <h2 class="text-2xl font-bold">&#x1F6D1; Human-in-the-Loop Checkpoints</h2>
-      </div>
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t5-p1">
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🛑 Human-in-the-Loop Checkpoints</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t5-p1">
         O human-in-the-loop (HITL) e o que separa um sistema confiavel de um experimento. Sem HITL, voce corre o risco de deixar o loop rodar por horas e voltar para descobrir que o resultado e inutilizavel.
       </p>
-      <blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
+<blockquote class="border-l-4 border-amber-500/50 pl-4 mb-6 italic text-neutral-300">
         "A lot of times people set up these systems to just go, go, go, go. And then you have a run for a day. And by the time it comes back, you just have crap."
         <footer class="text-amber-400 text-sm mt-1 not-italic">-- Cole Medin</footer>
-      </blockquote>
-      <div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-amber-400 mb-4">&#x1F4CB; Onde Colocar Checkpoints</h3>
-        <div class="space-y-4">
-          <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">1</span></div><div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600"><h4 class="font-semibold text-white mb-1">Apos o planejamento</h4><p class="text-sm text-neutral-400">Revise os rounds planejados pelo orchestrator antes de ele comecar a despachar workers.</p></div></div>
-          <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">2</span></div><div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600"><h4 class="font-semibold text-white mb-1">Entre rounds</h4><p class="text-sm text-neutral-400">Valide os resultados do round anterior antes de autorizar o proximo.</p></div></div>
-          <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">3</span></div><div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600"><h4 class="font-semibold text-white mb-1">Antes do merge final</h4><p class="text-sm text-neutral-400">Revise todas as mudancas antes de mergear na branch principal.</p></div></div>
-        </div>
-      </div>
-      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">&#x1F3AF;</span> Ponto de Reflexao</h3>
-        <p class="text-neutral-300" data-inema-block="m4-3-t5-p2">Cole Medin resume a filosofia: "That is the kind of reliability that I feel like we really need to have right now in order to build anything more than simple demos." HITL nao e opcional em sistemas de producao. E o que transforma uma demo em algo usavel.</p>
-      </div>
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span><span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- TOPICO 6 -->
-    <section id="topico-6" data-inema-topic="modulo-4-3#topico-6" class="mb-16">
-      <div class="flex items-center space-x-4 mb-6">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
-        <h2 class="text-2xl font-bold">&#x2753; Questionamentos</h2>
-      </div>
-      <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t6-p1">O orchestrator multi-agent e o pico da complexidade. Questoes que surgem na pratica real.</p>
-      <div class="space-y-4 mb-6">
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-amber-400 mb-2">O custo e justificavel?</h4>
-          <p class="text-neutral-300 text-sm" data-inema-block="m4-3-t6-p2">Cole reporta mais de 1M tokens para uma unica aplicacao simples. O multi-agent multiplica isso. A resposta honesta: depende do valor do output vs. custo do developer humano. Para PoCs, pode valer. Para producao, calcule antes.</p>
-        </div>
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-amber-400 mb-2">Quando a complexidade vira inimiga</h4>
-          <p class="text-neutral-300 text-sm">Nem todo projeto precisa de orchestrator multi-agent. Cole e claro: "I would just fold loop engineering into harness engineering." Se um plan.md simples resolve, nao escale para multi-agent so porque parece mais sofisticado.</p>
-        </div>
-        <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
-          <h4 class="font-semibold text-amber-400 mb-2">Modelo do orchestrator vs. modelo dos workers</h4>
-          <p class="text-neutral-300 text-sm">Cole usa Pi/Kimi para o orchestrator (decisoes de roteamento) e Claude para workers (implementacao real). O orchestrator nao precisa do modelo mais caro, mas precisa de raciocinio confiavel. Teste antes de definir.</p>
-        </div>
-      </div>
-      <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
-        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">&#x1F3AF;</span> Ponto de Reflexao</h3>
-        <p class="text-neutral-300">O multi-agent e uma ferramenta poderosa, mas nao e uma solucao universal. Use quando o problema realmente exige paralelismo, rounds e validacao entre etapas. Para a maioria dos cenarios, o issue bot (4.2) ou ate o task runner (4.1) sao suficientes.</p>
-      </div>
-      <div class="flex justify-start">
-        <button type="button" data-inema-read-toggle aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400">
-          <span class="inema-ico-todo" aria-hidden="true">&#x2610;</span><span class="inema-ico-done hidden" aria-hidden="true">&#x2611;</span>
-          <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- RESUMO -->
-    <section class="mb-12">
-      <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
-        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">&#x1F4CB;</span> Resumo do Modulo</h2>
-        <div class="space-y-4 mb-8">
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">&#x2713;</span><div><strong class="text-white">Spec document</strong><span class="text-neutral-400"> -- input completo que descreve o que construir</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">&#x2713;</span><div><strong class="text-white">Orchestrator planeja rounds</strong><span class="text-neutral-400"> -- divide trabalho em ondas paralelizaveis</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">&#x2713;</span><div><strong class="text-white">Workers + state store</strong><span class="text-neutral-400"> -- executam em sessoes isoladas, reportam via banco</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">&#x2713;</span><div><strong class="text-white">Validacao entre rounds</strong><span class="text-neutral-400"> -- orchestrator verifica antes de avancar</span></div></div>
-          <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">&#x2713;</span><div><strong class="text-white">HITL checkpoints</strong><span class="text-neutral-400"> -- humano aprova em pontos criticos</span></div></div>
-        </div>
-        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
-          <h3 class="font-semibold text-amber-400 mb-2">Proximo Modulo:</h3>
-          <p class="text-neutral-300">4.4 -- Anti-Patterns e Troubleshooting (o que da errado e como consertar)</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="modulo-4-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">&#x2190; Modulo Anterior</a>
-          <a href="modulo-4-4.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Proximo Modulo &#x2192;</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="border-t border-dark-600 py-8 mt-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-      <p>Loop Engineering -- Agentes em Loop Continuo | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a> | 2026</p>
-    </div>
-  </footer>
-
-  <script>
+</blockquote>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">📋 Onde Colocar Checkpoints</h3>
+<div class="space-y-4">
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">1</span></div><div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600"><h4 class="font-semibold text-white mb-1">Apos o planejamento</h4><p class="text-sm text-neutral-400">Revise os rounds planejados pelo orchestrator antes de ele comecar a despachar workers.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">2</span></div><div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600"><h4 class="font-semibold text-white mb-1">Entre rounds</h4><p class="text-sm text-neutral-400">Valide os resultados do round anterior antes de autorizar o proximo.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-sm">3</span></div><div class="flex-1 bg-dark-700/50 rounded-xl p-4 border border-dark-600"><h4 class="font-semibold text-white mb-1">Antes do merge final</h4><p class="text-sm text-neutral-400">Revise todas as mudancas antes de mergear na branch principal.</p></div></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🎯</span> Ponto de Reflexao</h3>
+<p class="text-neutral-300" data-inema-block="m4-3-t5-p2">Cole Medin resume a filosofia: "That is the kind of reliability that I feel like we really need to have right now in order to build anything more than simple demos." HITL nao e opcional em sistemas de producao. E o que transforma uma demo em algo usavel.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">❓ Questionamentos</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t6-p1">O orchestrator multi-agent e o pico da complexidade. Questoes que surgem na pratica real.</p>
+<div class="space-y-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-amber-400 mb-2">O custo e justificavel?</h4>
+<p class="text-neutral-300 text-sm" data-inema-block="m4-3-t6-p2">Cole reporta mais de 1M tokens para uma unica aplicacao simples. O multi-agent multiplica isso. A resposta honesta: depende do valor do output vs. custo do developer humano. Para PoCs, pode valer. Para producao, calcule antes.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-amber-400 mb-2">Quando a complexidade vira inimiga</h4>
+<p class="text-neutral-300 text-sm">Nem todo projeto precisa de orchestrator multi-agent. Cole e claro: "I would just fold loop engineering into harness engineering." Se um plan.md simples resolve, nao escale para multi-agent so porque parece mais sofisticado.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-semibold text-amber-400 mb-2">Modelo do orchestrator vs. modelo dos workers</h4>
+<p class="text-neutral-300 text-sm">Cole usa Pi/Kimi para o orchestrator (decisoes de roteamento) e Claude para workers (implementacao real). O orchestrator nao precisa do modelo mais caro, mas precisa de raciocinio confiavel. Teste antes de definir.</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🎯</span> Ponto de Reflexao</h3>
+<p class="text-neutral-300">O multi-agent e uma ferramenta poderosa, mas nao e uma solucao universal. Use quando o problema realmente exige paralelismo, rounds e validacao entre etapas. Para a maioria dos cenarios, o issue bot (4.2) ou ate o task runner (4.1) sao suficientes.</p>
+</div>
+<div class="flex justify-start">
+<button aria-pressed="false" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm bg-dark-700 hover:bg-dark-600 transition-colors text-neutral-400 hover:text-amber-400" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">☐</span><span aria-hidden="true" class="inema-ico-done hidden">☑</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done hidden">Lido</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Spec document</strong><span class="text-neutral-400"> -- input completo que descreve o que construir</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Orchestrator planeja rounds</strong><span class="text-neutral-400"> -- divide trabalho em ondas paralelizaveis</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Workers + state store</strong><span class="text-neutral-400"> -- executam em sessoes isoladas, reportam via banco</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Validacao entre rounds</strong><span class="text-neutral-400"> -- orchestrator verifica antes de avancar</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">HITL checkpoints</strong><span class="text-neutral-400"> -- humano aprova em pontos criticos</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Proximo Modulo:</h3>
+<p class="text-neutral-300">4.4 -- Anti-Patterns e Troubleshooting (o que da errado e como consertar)</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-4-2.html">← Modulo Anterior</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-4.html">Proximo Modulo →</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Loop Engineering -- Agentes em Loop Continuo | <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> | 2026</p>
+</div>
+</footer>
+<script>
     function toggleTopic(b){const t=b.closest('.topic-item');const e=t.querySelector('.topic-explanation');const m=b.closest('.bg-dark-800');if(m){m.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active')}
     const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
     if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark')}else{themeToggleLightIcon.classList.remove('hidden')}
@@ -436,7 +402,7 @@ Do NOT modify files outside your assigned scope.</code></pre>
     function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
   </script>
-  <script src="../../assets/learn.js"></script>
-  <script>if(window.INEMA&&typeof window.INEMA.init==='function'){window.INEMA.init()}</script>
+<script src="../../assets/learn.js"></script>
+<script>if(window.INEMA&&typeof window.INEMA.init==='function'){window.INEMA.init()}</script>
 </body>
 </html>
